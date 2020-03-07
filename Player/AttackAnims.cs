@@ -18,6 +18,8 @@ public class AttackAnims : MonoBehaviour
     public AudioClip limitBreakAudio;
     AudioSource audioSource;
     GameObject player;
+    //this is a test to see if we have collabignore working.
+    //and heres another test.. 
 
     private void Start()
     {
