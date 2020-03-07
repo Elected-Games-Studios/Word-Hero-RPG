@@ -1,0 +1,1 @@
+17/0/0/0/2/1/1,pie,equip,quip,pique|19/0/0/0/1/2/2,hew,pew,whelp,help,phew|25/0/0/0/1/2/4,hit,inn,nit,tin,ninth,hint,thin|19/0/0/0/1/2/2,add,dad,jaded,dead,jade|25/0/0/0/1/2/4,eon,one,zen,zoo,ozone,ooze,zone|

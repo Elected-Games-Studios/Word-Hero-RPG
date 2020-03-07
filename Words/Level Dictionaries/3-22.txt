@@ -1,0 +1,1 @@
+47/0/0/0/1/6/6,ace,arc,are,car,ear,era,craze,acer,acre,care,czar,race,raze|51/0/0/0/3/6/4,low,owl,sol,sow,flows,flow,fowl,lows,owls,slow,wolf,fowls,wolfs|45/0/0/0/3/6/2,mas,sea,masse,mass,mesa,mess,same,seam,seas,mesas,seams|26/0/0/0/1/3/3,lop,ply,yon,pylon,only,ploy,pony|23/0/0/0/1/0/6,dim,hid,him,hum,mid,mud,humid|

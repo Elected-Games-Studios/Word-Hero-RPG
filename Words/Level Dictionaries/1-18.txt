@@ -1,0 +1,1 @@
+10/0/0/0/0/1/2,tank,ant,tan|10/0/0/0/0/1/2,yeti,tie,yet|13/0/0/0/0/1/3,tube,bet,but,tub|10/0/0/0/0/1/2,trim,mit,rim|14/0/0/0/0/2/2,jest,jet,set,jets|

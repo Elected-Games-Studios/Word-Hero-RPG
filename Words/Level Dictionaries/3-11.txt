@@ -1,0 +1,1 @@
+45/0/0/0/1/4/8,cow,orc,ore,owe,roc,roe,row,woe,cower,core,crew,crow,wore|63/0/0/0/2/8/7,asp,pas,paw,sap,saw,spa,was,swaps,asps,pass,paws,saps,saws,spas,swap,wasp,wasps|46/0/0/0/1/2/11,lip,lit,lop,lot,oil,opt,pit,poi,pot,tip,top,pilot,plot,toil|26/0/0/0/1/3/3,elm,emu,ump,plume,lump,mule,plum|

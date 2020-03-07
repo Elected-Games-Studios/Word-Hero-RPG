@@ -1,0 +1,50 @@
+7/0/0/0/0/1/1, ajee,  jee|
+10/0/0/0/0/1/2, acai,  aia,  caa|
+11/0/0/0/0/2/1, acca,  caa,  caca|
+12/0/0/0/0/3/0, coif,  fico,  foci|
+13/0/0/0/0/1/3, acta,  act,  caa,  cat|
+14/0/0/0/0/2/2, abbe,  abb,  ebb,  babe|
+15/0/0/0/0/3/1, illy,  ill,  lily,  yill|
+16/0/0/0/0/1/4, abbs,  abb,  abs,  bas,  sab|
+17/0/0/0/0/2/3, abba,  aba,  abb,  baa,  baba|
+18/0/0/0/0/3/2, ankh,  han,  nah,  hank,  khan|
+19/0/0/0/0/1/5, abid,  aid,  bad,  bid,  dab,  dib|
+20/0/0/0/0/2/4, addy,  add,  dad,  day,  yad,  dyad|
+21/0/0/0/0/3/3, acid,  aid,  cad,  cid,  cadi,  caid|
+22/0/0/0/0/1/6, agon,  ago,  gan,  goa,  gon,  nag,  nog|
+23/0/0/0/0/2/5, abac,  aba,  baa,  bac,  caa,  cab,  caba|
+24/0/0/0/0/3/4, acme,  ace,  cam,  mac,  mae,  came,  mace|
+25/0/0/0/0/4/3, aced,  ace,  cad,  dae,  cade,  dace,  ecad|
+26/0/0/0/0/2/6, aals,  aal,  aas,  ala,  als,  las,  sal,  alas|
+27/0/0/0/0/3/5, abed,  bad,  bed,  dab,  dae,  deb,  bade,  bead|
+28/0/0/0/0/1/8, aero,  are,  ear,  era,  oar,  ora,  ore,  reo,  roe|
+29/0/0/0/0/2/7, abye,  aby,  aye,  bay,  bey,  bye,  yae,  yea,  baye|
+30/0/0/0/0/3/6, aked,  ake,  dae,  dak,  kae,  kea,  ked,  kade,  kaed|
+31/0/0/0/0/4/5, acts,  act,  cat,  sac,  sat,  tas,  cast,  cats,  scat|
+32/0/0/0/0/2/8, abys,  abs,  aby,  ays,  bas,  bay,  bys,  sab,  say,  bays|
+33/0/0/0/0/3/7, abri,  air,  arb,  bar,  bra,  rai,  ria,  rib,  rabi,  riba|
+34/0/0/0/0/4/6, abut,  bat,  but,  tab,  tau,  tub,  uta,  buat,  tabu,  tuba|
+35/0/0/0/0/5/5, akin,  ain,  ani,  ink,  kai,  kin,  ikan,  kain,  kina,  naik|
+36/0/0/0/0/3/8, ards,  ads,  ard,  ars,  das,  rad,  ras,  sad,  sar,  rads,  sard|
+37/0/0/0/0/4/7, acer,  ace,  arc,  are,  car,  ear,  era,  rec,  acre,  care,  race|
+38/0/0/0/0/5/6, able,  alb,  ale,  bal,  bel,  lab,  lea,  albe,  bael,  bale,  blae|
+39/0/0/0/0/3/9, adry,  ard,  ary,  day,  dry,  rad,  ray,  rya,  yad,  yar,  dray,  yard|
+40/0/0/0/0/4/8, abet,  ate,  bat,  bet,  eat,  eta,  tab,  tae,  tea,  bate,  beat,  beta|
+41/0/0/0/0/5/7, alts,  als,  alt,  las,  lat,  sal,  sat,  tas,  last,  lats,  salt,  slat|
+42/0/0/0/0/6/6, avel,  ale,  ave,  lav,  lea,  lev,  vae,  lave,  leva,  vale,  veal,  vela|
+43/0/0/0/0/4/9, abos,  abo,  abs,  bas,  boa,  bos,  oba,  obs,  sab,  sob,  boas,  obas,  soba|
+44/0/0/0/0/5/8, amen,  ane,  ean,  mae,  man,  men,  mna,  nae,  nam,  mane,  mean,  name,  nema|
+45/0/0/0/0/6/7, alme,  ale,  elm,  lam,  lea,  mae,  mal,  mel,  lame,  leam,  male,  meal,  mela|
+46/0/0/0/0/4/10, aims,  aim,  ais,  ami,  ism,  mas,  mis,  sai,  sam,  sim,  sma,  amis,  saim,  sima|
+47/0/0/0/0/5/9, ager,  age,  are,  ear,  era,  erg,  gae,  gar,  rag,  reg,  areg,  gare,  gear,  rage|
+48/0/0/0/0/6/8, aids,  ads,  aid,  ais,  das,  dis,  ids,  sad,  sai,  dais,  disa,  sadi,  said,  sida|
+49/0/0/0/0/4/11, ayes,  aye,  ays,  eas,  sae,  say,  sea,  sey,  sye,  yae,  yea,  yes,  easy,  eyas,  yeas|
+50/0/0/0/0/5/10, agen,  age,  ane,  ean,  eng,  gae,  gan,  gen,  nae,  nag,  neg,  gaen,  gane,  gean,  gena|
+51/0/0/0/0/6/9, deil,  dei,  del,  die,  eld,  ide,  led,  lei,  lid,  lie,  deli,  diel,  eild,  idle,  lied|
+52/0/0/0/0/4/12, aret,  are,  art,  ate,  ear,  eat,  era,  eta,  rat,  ret,  tae,  tar,  tea,  rate,  tare,  tear|
+53/0/0/0/0/5/11, aery,  are,  ary,  aye,  ear,  era,  ray,  rya,  rye,  yae,  yar,  yea,  ayre,  eyra,  yare,  year|
+54/0/0/0/0/6/10, airs,  air,  ais,  ars,  rai,  ras,  ria,  sai,  sar,  sir,  sri,  aris,  rais,  rias,  sair,  sari|
+55/0/0/0/0/4/13, ante,  ane,  ant,  ate,  ean,  eat,  eta,  nae,  nat,  net,  tae,  tan,  tea,  ten,  etna,  neat,  tane|
+57/0/0/0/0/6/11, ales,  ale,  als,  eas,  els,  las,  lea,  les,  sae,  sal,  sea,  sel,  lase,  leas,  sale,  seal,  slae|
+60/0/0/0/0/6/12, late,  ale,  alt,  ate,  eat,  elt,  eta,  lat,  lea,  let,  tae,  tea,  tel,  leat,  tael,  tale,  teal,  tela|
+64/0/0/0/0/7/12, ares,  are,  ars,  ear,  eas,  era,  ers,  ras,  res,  sae,  sar,  sea,  ser,  arse,  ears,  eras,  rase,  sear,  sera|

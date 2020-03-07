@@ -1,0 +1,1 @@
+66/0/0/0/2/5/12,ale,alt,ate,axe,eat,lat,lax,lea,let,lex,tax,tea,exalt,axel,axle,late,tale,teal,latex|28/0/0/0/1/2/5,age,ago,ego,gam,gem,omega,game,mage|64/0/0/0/2/6/10,den,die,dim,din,end,med,men,mid,min,nim,denim,dime,dine,mend,mien,mind,mine,mined|40/0/0/0/1/5/5,ink,ins,kin,sin,ski,kinks,inks,kink,kins,sink,skin|40/0/0/0/1/5/5,elm,emu,sue,sum,use,mules,elms,emus,mule,muse,slum|
