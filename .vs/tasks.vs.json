@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-WordDatav2",
+      "appliesTo": "_V2/WordDatav2.cs",
+      "type": "launch"
+    }
+  ]
+}
