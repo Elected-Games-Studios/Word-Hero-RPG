@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using System.Management.Instrumentation;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 
-class WordData
+public static class WordData
 {
     private static List<int[,]> regionsSaves; //stacked score over star repeats by region.
+    private static List<int> NumEnemies = new List<int> 
+    {3,3,3,3,4,3,3,3,3,4,4,4,4,4,1,4,4,4,4,5,4,4,4,4,1};
     private static int[,] regionDataScore = new int[3, 25]
     { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -68,6 +71,7 @@ class WordData
                     for (int y = 0; y < 25; y++)
                     {
                         regionsSaves[counter][x, y] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
+                        if()
                         input.Remove(0);
                     }
                 }
@@ -76,11 +80,32 @@ class WordData
             }
         }
     }
-    public static string GetDataLevel(int region, int level, int Dificulty /*all data starts at 0 for these ints*/)
+    private static List<int> GetWord(int dificulty, int level, int region)
     {
-        string levelData;
-        int location = region * 3 + Dificulty;
-        levelData = Region.AllRegions[location][level];
+        List<int> reValue;
+        Random.Range(0, 100);
+        int dicNum = Random.Range(0,1);
+        dicNum = dicNum + 5 + dificulty;
+        for(int x = 0; x < NumEnemies[level]; x++)
+        {
+            switch (dicNum)
+            {
+                case 5:
+                    int checkVal = DifMods[dificulty] + region * 10 - Random.Range(0, 9);
+                    if () ;
+                    reValue.Add();
+            }
+        }
+        return reValue;
+    }
+    public static List<int> GetDataLevel(int region, int level, int Dificulty /*all data starts at 0 for these ints*/)
+    {
+        List<int> levelData;
+        switch (Dificulty)
+        {
+            case 0:
+                
+        }
         return levelData;
     }
     public static string GetWords(int book, int word)
@@ -89,12 +114,16 @@ class WordData
         {
             case 5:
                 return (WordMaster.fiveLetter[word]);
+                break;
             case 6:
                 return (WordMaster.sixLetter[word]);
+                break;
             case 7:
                 return (WordMaster.sevenLetter[word]);
+                break;
             default:
                 return (WordMaster.eightLetter[word]);
+                break;
         }
     }
     public static void DataToSave(int score, int starCount, int region, int level, int dificulty)
