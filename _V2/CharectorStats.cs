@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-class CharectorStats
+public class CharectorStats
 {
     private static List<List<int>> HeroList;
     private static List<int> heroDefault = new List<int> { 0, 0, 0, 0, 0 };
