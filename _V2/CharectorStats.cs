@@ -12,6 +12,7 @@ public class CharectorStats
     private static List<List<int>> HeroList;
     private static List<int> heroDefault = new List<int> { 0, 0, 0, 0, 0 };
     public static int SkillPoints;
+    public static List<int> CurrentHero;
     public static string SaveManagerData()
     {
         string sendSave = "";
