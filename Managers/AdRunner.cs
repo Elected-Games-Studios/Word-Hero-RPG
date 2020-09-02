@@ -11,7 +11,6 @@ public class AdRunner : MonoBehaviour
         {
             Debug.Log("Invoke repeating worked");
         }
-       
     }
     public void CallRequestBanner()
     {
