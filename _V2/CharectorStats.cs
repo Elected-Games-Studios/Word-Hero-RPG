@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 public class CharectorStats
 {
     private static List<List<int>> HeroList;
-    private static List<int> heroDefault = new List<int> { 0, 0, 0, 0, 0 };
+    private static List<int> HeroDefault = new List<int> { 0, 0, 0, 0, 0 };
     public static int SkillPoints;
     public static List<int> CurrentHero;
     public static string SaveManagerData()
@@ -45,7 +45,7 @@ public class CharectorStats
             int counting = 0;
             while (input.IndexOf('|') > 0)
             {
-                HeroList.Add(heroDefault);
+                HeroList.Add(HeroDefault);
                 while (input.IndexOf(',') < input.IndexOf('|'))
                 {
                     HeroList[counter][counting] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
@@ -60,7 +60,7 @@ public class CharectorStats
     }
     public static void NewGame()
     {
-        List<int> tempList = heroDefault;
+        List<int> tempList = HeroDefault;
         tempList.Insert(0, 0);
         HeroList.Add(tempList);
     }

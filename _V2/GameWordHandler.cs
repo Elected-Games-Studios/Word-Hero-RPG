@@ -14,11 +14,7 @@ public static class GameWordHandler
     private static List<string> Words;
     public static void StartLevel()
     {
-<<<<<<< Updated upstream
         WordsIndex = WordData.GetDataLevel(Region, Level, Dificulty);
-=======
-        WordsIndex = WordData.GetDataLevel();
->>>>>>> Stashed changes
         GetActualWords();
     } 
     public static void SetLevelData(int region, int level, int dificulty)
