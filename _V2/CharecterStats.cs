@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class CharectorStats
+public class CharecterStats
 {
     private static List<List<int>> HeroList;
     private static List<int> HeroDefault = new List<int> { 0, 0, 0, 0, 0 };
@@ -64,7 +64,7 @@ public class CharectorStats
         tempList.Insert(0, 0);
         HeroList.Add(tempList);
     }
-    public static List<int> UnlockedCharectors()
+    public static List<int> UnlockedCharecters()
     {
         List<int> Allhero = new List<int> { };
         for (int i = 0; i < HeroList.Count; i++)

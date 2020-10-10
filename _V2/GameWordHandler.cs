@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-
 public static class GameWordHandler
 {
     private static int Region, Level, Dificulty;
@@ -34,23 +33,23 @@ public static class GameWordHandler
     }
     public static int GetPlayerAttack()
     {
-        return CharectorStats.CurrentHero[0];
+        return CharecterStats.CurrentHero[0];
     }
     public static int GetPlayerDefence()
     {
-        return CharectorStats.CurrentHero[1];
+        return CharecterStats.CurrentHero[1];
     }
     public static int GetPlayerSpeed()
     {
-        return CharectorStats.CurrentHero[2];
+        return CharecterStats.CurrentHero[2];
     }
     public static int GetPlayerLuck()
     {
-        return CharectorStats.CurrentHero[3];
+        return CharecterStats.CurrentHero[3];
     }
     public static int GetPlayerCrit()
     {
-        return CharectorStats.CurrentHero[4];
+        return CharecterStats.CurrentHero[4];
     }
 
 }
