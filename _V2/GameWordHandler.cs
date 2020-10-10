@@ -29,7 +29,7 @@ public static class GameWordHandler
         tempcount = tempcount / 2;
         for (int x = 0; x < tempcount; x++)
         {
-            Words.Add(WordData.GetWords(WordsIndex[0], WordsIndex[1+x*2]));
+            Words.Add(Convert.ToString(WordData.GetWords(WordsIndex[0], WordsIndex[1+x*2])));
         }
     }
     public static int GetPlayerAttack()
