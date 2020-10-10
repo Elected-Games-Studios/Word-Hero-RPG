@@ -11,7 +11,7 @@ public static class GameWordHandler
 {
     private static int Region, Level, Dificulty;
     private static List<int> WordsIndex;
-    private static List<string> Words;
+    public static List<string> Words;
     public static void StartLevel()
     {
         WordsIndex = WordData.GetDataLevel(Region, Level, Dificulty);
@@ -29,7 +29,7 @@ public static class GameWordHandler
         tempcount = tempcount / 2;
         for (int x = 0; x < tempcount; x++)
         {
-            Words = WordData.GetWords(WordsIndex[0], WordsIndex[1+x*2]);
+            Words.Add(WordData.GetWords(WordsIndex[0], WordsIndex[1+x*2]));
         }
     }
     public static int GetPlayerAttack()
