@@ -14,14 +14,14 @@ public static class CombatWordManager
 	public static void Shuffle()
 	{
 		List<string> tempList = wordsUsed;
-		string tempWord = tempList[(tempList.count() - 1)];
+		string tempWord = tempList[(tempList.Count() - 1)];
 		tempList = new List<string> { };
-		for (int x = 0; x < tempWord.count(); x++) tempList.add(tempWord[x]);
-		int counter = wordsUsed.count();
+		for (int x = 0; x < tempWord.Count(); x++) tempList.Add(tempWord[x].ToString());
+		int counter = wordsUsed.Count();
 		for (int x = 0; x < counter; x++)
 		{
-			remover = UnityEngine.Random.Range(0, tempList.count());
-			tempLetter = tempList[remover];
+			int remover = UnityEngine.Random.Range(0, tempList.Count());
+			string tempLetter = tempList[remover];
 			tempList.RemoveAt(remover);
 			//your code here
 		}
@@ -29,7 +29,7 @@ public static class CombatWordManager
 	public static void wordBreak(int currentword)
 	{
 		wordsUsed = new List<string[]> { };
-		string[] tempArrString = GameWordHandler.Words[currentword].split(',');
+		string[] tempArrString = GameWordHandler.Words[currentword].Split(',');
 		wordsUsed = tempArrString.ToList;
 		wordsUsed.RemoveAt(0);
 	}
@@ -41,7 +41,7 @@ public static class CombatWordManager
 	{
 		if (checkAdd)
 		{
-			wordsDid.add(checkString);
+			wordsDid.Add(checkString);
 			wordsUsed.Remove(wordsUsed);
 			resetString();
 		}
@@ -52,11 +52,11 @@ public static class CombatWordManager
 	}
 	public static void addToString(string c)
 	{
-		checkString.add(c);
+		checkString.Add(c);
 	}
 	public static void removeString()
 	{
-		checkstring.Remove(checkString.count - 1);
+		checkstring.Remove(checkString.Count() - 1);
 	}
 	public static void resetString()
 	{
