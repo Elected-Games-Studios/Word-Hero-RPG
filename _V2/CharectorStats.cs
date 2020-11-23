@@ -63,7 +63,7 @@ public class CharectorStats
         else
         {
             SkillPoints = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
-            input.RemoveAt(0, 1);
+            input.remove(0, 1);
 
             int counter = 0;
             int counting = 0;
@@ -73,11 +73,11 @@ public class CharectorStats
                 while (input.IndexOf(',') < input.IndexOf('|'))
                 {
                     HeroList[counter][counting] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
-                    input.RemoveAt(0);
+                    input.Remove(0);
                     counting++;
                 }
                 counting = 0;
-                input.RemoveAt(0);
+                input.remove(0);
                 counter++;
             }
         }
