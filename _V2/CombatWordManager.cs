@@ -28,7 +28,7 @@ public static class CombatWordManager
 	}
 	public static void wordBreak(int currentword)
 	{
-		wordsUsed = new List<string[]> { };
+		wordsUsed = new List<string> { };
 		string[] tempArrString = GameWordHandler.Words[currentword].Split(',');
 		wordsUsed = tempArrString.ToList;
 		wordsUsed.RemoveAt(0);
