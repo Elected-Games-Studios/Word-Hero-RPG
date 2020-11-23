@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class eventManagerv2 : MonoBehaviour
+public class EventManagerv2 : MonoBehaviour
 {
     public delegate void LetterHit(int letterId); //SIGNATURE
     public static event LetterHit onLetterHit;
