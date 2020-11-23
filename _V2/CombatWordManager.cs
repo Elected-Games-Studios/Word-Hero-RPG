@@ -56,11 +56,11 @@ public static class CombatWordManager
 	}
 	public static void addToString(string c)
 	{
-		checkString.PadRight(c);
+		checkString.Insert((checkString.Count()-1),c);
 	}
 	public static void removeString()
 	{
-		checkstring.Remove(checkString.Count() - 1);
+		checkString.Remove(checkString.Count() - 1);
 	}
 	public static void resetString()
 	{
