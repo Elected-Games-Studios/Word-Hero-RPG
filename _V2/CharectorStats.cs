@@ -63,7 +63,7 @@ public class CharectorStats
         else
         {
             SkillPoints = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
-            input.remove(0, 1);
+            input.Remove(0, 1);
 
             int counter = 0;
             int counting = 0;
@@ -77,7 +77,7 @@ public class CharectorStats
                     counting++;
                 }
                 counting = 0;
-                input.remove(0);
+                input.Remove(0);
                 counter++;
             }
         }

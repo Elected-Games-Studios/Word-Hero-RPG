@@ -30,7 +30,7 @@ public static class CombatWordManager
 	{
 		wordsUsed = new List<string> { };
 		string[] tempArrString = GameWordHandler.Words[currentword].Split(',');
-		wordsUsed = tempArrString.ToList;
+		wordsUsed = tempArrString.ToList();
 		wordsUsed.RemoveAt(0);
 	}
 	private static bool checkAdd()
@@ -43,7 +43,7 @@ public static class CombatWordManager
 	}
 	public static void checkWord()
 	{
-		if (checkAdd)
+		if (checkAdd())
 		{
 			wordsDid.Add(checkString);
 			wordsUsed.Remove(checkString);

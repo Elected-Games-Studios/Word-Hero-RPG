@@ -40,27 +40,27 @@ public static class GameWordHandler
 
     public static int GetPlayerAttack()
     {
-        return CharecterStats.CurrentHero[0];
+        return CharectorStats.CurrentHero[0];
     }
 
     public static int GetPlayerDefence()
     {
-        return CharecterStats.CurrentHero[1];
+        return CharectorStats.CurrentHero[1];
     }
 
     public static int GetPlayerSpeed()
     {
-        return CharecterStats.CurrentHero[2];
+        return CharectorStats.CurrentHero[2];
     }
 
     public static int GetPlayerLuck()
     {
-        return CharecterStats.CurrentHero[3];
+        return CharectorStats.CurrentHero[3];
     }
 
     public static int GetPlayerCrit()
     {
-        return CharecterStats.CurrentHero[4];
+        return CharectorStats.CurrentHero[4];
     }
 
     public static void Shuffle()
