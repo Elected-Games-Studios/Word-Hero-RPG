@@ -8,10 +8,11 @@ using Debug = UnityEngine.Debug;
 public class LetterListener : MonoBehaviour
 {
     [SerializeField]
-    private eventManagerv2 em;
+    private EventManagerv2 em; // inspector assignement can be mitigated through onEnable assignment
     void OnEnable()
     {
-        eventManagerv2.onLetterHit += AddLetterToCurrent;
+        em = new EventManagerv2();
+        EventManagerv2.onLetterHit += AddLetterToCurrent;
     }
 
     void AddLetterToCurrent(int letterId) //PARAMS HAVE TO MATCH THE DELEGATE SIG
@@ -27,6 +28,6 @@ public class LetterListener : MonoBehaviour
 
     void OnDisable()
     {
-        eventManagerv2.onLetterHit -= AddLetterToCurrent;
+        EventManagerv2.onLetterHit -= AddLetterToCurrent;
     }
 }
