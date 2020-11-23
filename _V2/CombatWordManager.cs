@@ -46,7 +46,7 @@ public static class CombatWordManager
 		if (checkAdd)
 		{
 			wordsDid.Add(checkString);
-			wordsUsed.Remove(wordsUsed);
+			wordsUsed.Remove(checkString);
 			resetString();
 		}
         else
@@ -56,7 +56,7 @@ public static class CombatWordManager
 	}
 	public static void addToString(string c)
 	{
-		checkString.Add(c);
+		checkString.PadRight(c);
 	}
 	public static void removeString()
 	{
