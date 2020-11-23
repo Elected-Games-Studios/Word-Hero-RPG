@@ -33,11 +33,11 @@ public static class CombatWordManager
 		wordsUsed = tempArrString.ToList;
 		wordsUsed.RemoveAt(0);
 	}
-	private static bool checkAdd(string word)
+	private static bool checkAdd()
 	{
 		for(int x = 0; x < wordsUsed.Count; x++)
         {
-			if (wordsUsed[x].Equals(word)) return true;
+			if (wordsUsed[x].Equals(checkString)) return true;
         }
 		return false;
 	}
