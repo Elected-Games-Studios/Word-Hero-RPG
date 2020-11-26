@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 public class CharectorStats
 {
     private static List<List<int>> HeroList;
-    private static List<int> HeroDefault = new List<int> { 0, 0, 0, 0, 0 };
+    private static List<int> HeroDefault = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0 }; // By posistion 0. Hero Index in NameAndTiers 1. Is Level 2. XP Total
+    private static int[] DifArr = new int[5]
+        {15,12,10,8,6};
     private static int[,] HeroDif = new int[49, 5]
     {{2,2,2,2,2},{2,1,3,2,2},{1,2,2,2,3},{2,3,2,1,2},{1,3,2,2,3},{3,1,2,2,2},{2,2,3,2,1},{2,3,2,1,2},{2,1,3,1,3},{2,1,3,3,1},{1,3,1,2,3},{3,1,1,3,2},{2,3,1,1,3},{3,2,1,3,1},{1,3,2,1,3},{2,3,1,1,3},{2,1,3,3,1},{3,1,3,1,2},{3,1,2,1,3},{0,3,2,1,4},{0,2,4,3,1},{2,1,4,3,0},{1,2,4,3,0},{2,1,3,1,2},{0,1,2,3,4},{2,1,3,2,1},{1,1,2,3,2},{1,2,2,1,3},{1,3,2,0,4},{2,2,1,1,3},{3,0,2,1,4},{0,4,1,2,3},{1,3,0,2,4},{1,3,2,0,4},{2,2,1,1,3},{1,2,2,3,1},{2,3,1,1,2},{3,2,1,1,2},{1,2,3,1,2},{1,2,2,3,1},{0,3,4,2,1},{2,1,4,3,0},{1,2,2,1,3},{0,4,1,2,3},{2,1,2,3,1},{1,3,1,0,4},{1,0,2,3,4},{2,3,4,0,1},{0,3,1,2,4}};
     private static List<int> XPT0 = new List<int>
@@ -35,8 +37,94 @@ public class CharectorStats
     { 5000, 10000, 15000 };
     private static List<int> T5Cost = new List<int>
     { 15000, 30000, 75000 };
+    private static List<int[]> T0Stats = new List<int[6]>
+        { {1,10,100,100,100,0}, {10,20,150,110,200,10}};
+    private static List<int[]> T1Stats = new List<int[6]>
+        { {1,15,125,100,150,5}, {50,115,600,500,400,75} };
+    private static List<int[]> T2Stats = new List<int[6]>
+        { {1,25,365,300,200,10}, {75,250,1475,1000,1000,200} };
+    private static List<int[]> T3Stats = new List<int[6]>
+        { {1,35,1100,500,350,25}, {100,431,3080,1500,2500,425} };
+    private static List<int[]> T4Stats = new List<int[6]>
+        { {1,45,2580,750,500,50}, {150,790,6305,2000,5715,1100} };
+    private static List<int[]> T5Stats = new List<int[6]>
+        { {1,100,5055,1000,750,100}, {250,2600,12525,3500,12000,3000} };
+    private static List<string[]> NamesAndtiers = new List<string[2]>
+    { {"Folk","T0"},{"Fighter","T1"},{"Ranger","T1"},{"Rogue","T1"},{"Mage","T1"},{"Cleric","T1"},{"Barbarian","T1"},{"Monk","T1"},{"Hunter","T2"},{"Soldier","T2"},{"Wizard","T2"},{"Acolyte","T2"},{"Thief","T2"},{"Gambler","T2"},{"Archer","T2"},{"Duelist","T2"},{"Berserker","T2"},{"Bard","T2"},{"Trapper","T2"},{"Blade Master","T3"},{"War Mage","T3"},{"Knight","T3"},{"Lancer","T3"},{"Druid","T3"},{"Sorcerer","T3"},{"Priest","T3"},{"Warlock","T3"},{"Arcane Trickster","T3"},{"Assassin","T3"},{"Tactician","T3"},{"Sage (Bard+)","T3"},{"Spell Sniper","T3"},{"Grand Marksman","T3"},{"Dervish","T3"},{"Hightened Monk","T3"},{"Commander","T3"},{"Magician","T3"},{"Jester","T3"},{"Falconer","T3"},{"Tinkerer","T3"},{"Hex Blade","T4"},{"Paladin","T4"},{"Weapon Master","T4"},{"Spellblade","T4"},{"Death Knight","T4"},{"Shadow","T4"},{"Juggernaut","T4"},{"Dragoon","T4"},{"Archmage","T4"},{"Eldrich Knight","T4"},{"Elementalist","T4"},{"Archdruid","T4"},{"Invoker","T4"},{"Shadowmancer","T4"},{"Avatar","T4"},{"Avenger","T4"},{"Blue Mage","T4"},{"Technomancer","T4"},{"Beast Master","T4"},{"Vampire Hunter","T4"},{"Arcane Arrow","T4"},{"Slayer/Executioner","T4"},{"Horizon Walker","T4"},{"Holy Ranger","T4"},{"Lycanthrope","T4"},{"Pirate Lord","T4"},{"Bombardier","T4"},{"Spirit Guardian","T4"},{"Aspect of Gaia","T5"},{"Dragonmaster","T5"},{"Avatar of Vengeance","T5"},{"Chronomancer","T5"} };
     public static int SkillPoints;
     public static List<int> CurrentHero;
+
+    public static int[] GetCharecterStats(int chosenCharecter)
+    {
+        int[] tempStats = new int[7] { };
+        int heroNumber = HeroList[chosenCharecter][0];
+        int heroLvl = HeroList[chosenCharecter][1];
+        string tier = NamesAndtiers[heroNumber][1];
+
+        tempStats[0] = heroNumber;
+        tempStats[1] = heroLvl;
+        heroLvl -= 1;
+        switch (tier)
+        {
+            case "T0":
+                tempStats[2] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][0]] / 10) * (heroLvl * ((T0Stats[1][1] - T0Stats[0][1]) / ((T0Stats[1][0] - T0Stats[0][0]))) + T0Stats[0][1]));
+                tempStats[3] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][1]] / 10) * (heroLvl * ((T0Stats[1][2] - T0Stats[0][2]) / ((T0Stats[1][0] - T0Stats[0][0]))) + T0Stats[0][2]));
+                tempStats[4] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][2]] / 10) * (heroLvl * ((T0Stats[1][3] - T0Stats[0][3]) / ((T0Stats[1][0] - T0Stats[0][0]))) + T0Stats[0][3]));
+                tempStats[5] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][3]] / 10) * (heroLvl * ((T0Stats[1][4] - T0Stats[0][4]) / ((T0Stats[1][0] - T0Stats[0][0]))) + T0Stats[0][4]));
+                tempStats[6] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][4]] / 10) * (heroLvl * ((T0Stats[1][5] - T0Stats[0][5]) / ((T0Stats[1][0] - T0Stats[0][0]))) + T0Stats[0][5]));
+            case "T1":
+                tempStats[2] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][0]] / 10) * (heroLvl * ((T1Stats[1][1] - T1Stats[0][1]) / ((T1Stats[1][0] - T1Stats[0][0]))) + T1Stats[0][1]));
+                tempStats[3] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][1]] / 10) * (heroLvl * ((T1Stats[1][2] - T1Stats[0][2]) / ((T1Stats[1][0] - T1Stats[0][0]))) + T1Stats[0][2]));
+                tempStats[4] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][2]] / 10) * (heroLvl * ((T1Stats[1][3] - T1Stats[0][3]) / ((T1Stats[1][0] - T1Stats[0][0]))) + T1Stats[0][3]));
+                tempStats[5] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][3]] / 10) * (heroLvl * ((T1Stats[1][4] - T1Stats[0][4]) / ((T1Stats[1][0] - T1Stats[0][0]))) + T1Stats[0][4]));
+                tempStats[6] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][4]] / 10) * (heroLvl * ((T1Stats[1][5] - T1Stats[0][5]) / ((T1Stats[1][0] - T1Stats[0][0]))) + T1Stats[0][5]));
+            case "T2":
+                tempStats[2] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][0]] / 10) * (heroLvl * ((T2Stats[1][1] - T2Stats[0][1]) / ((T2Stats[1][0] - T2Stats[0][0]))) + T2Stats[0][1]));
+                tempStats[3] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][1]] / 10) * (heroLvl * ((T2Stats[1][2] - T2Stats[0][2]) / ((T2Stats[1][0] - T2Stats[0][0]))) + T2Stats[0][2]));
+                tempStats[4] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][2]] / 10) * (heroLvl * ((T2Stats[1][3] - T2Stats[0][3]) / ((T2Stats[1][0] - T2Stats[0][0]))) + T2Stats[0][3]));
+                tempStats[5] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][3]] / 10) * (heroLvl * ((T2Stats[1][4] - T2Stats[0][4]) / ((T2Stats[1][0] - T2Stats[0][0]))) + T2Stats[0][4]));
+                tempStats[6] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][4]] / 10) * (heroLvl * ((T2Stats[1][5] - T2Stats[0][5]) / ((T2Stats[1][0] - T2Stats[0][0]))) + T2Stats[0][5]));
+            case "T3":
+                tempStats[2] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][0]] / 10) * (heroLvl * ((T3Stats[1][1] - T3Stats[0][1]) / ((T3Stats[1][0] - T3Stats[0][0]))) + T3Stats[0][1]));
+                tempStats[3] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][1]] / 10) * (heroLvl * ((T3Stats[1][2] - T3Stats[0][2]) / ((T3Stats[1][0] - T3Stats[0][0]))) + T3Stats[0][2]));
+                tempStats[4] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][2]] / 10) * (heroLvl * ((T3Stats[1][3] - T3Stats[0][3]) / ((T3Stats[1][0] - T3Stats[0][0]))) + T3Stats[0][3]));
+                tempStats[5] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][3]] / 10) * (heroLvl * ((T3Stats[1][4] - T3Stats[0][4]) / ((T3Stats[1][0] - T3Stats[0][0]))) + T3Stats[0][4]));
+                tempStats[6] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][4]] / 10) * (heroLvl * ((T3Stats[1][5] - T3Stats[0][5]) / ((T3Stats[1][0] - T3Stats[0][0]))) + T3Stats[0][5]));
+            case "T4":
+                tempStats[2] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][0]] / 10) * (heroLvl * ((T4Stats[1][1] - T4Stats[0][1]) / ((T4Stats[1][0] - T4Stats[0][0]))) + T4Stats[0][1]));
+                tempStats[3] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][1]] / 10) * (heroLvl * ((T4Stats[1][2] - T4Stats[0][2]) / ((T4Stats[1][0] - T4Stats[0][0]))) + T4Stats[0][2]));
+                tempStats[4] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][2]] / 10) * (heroLvl * ((T4Stats[1][3] - T4Stats[0][3]) / ((T4Stats[1][0] - T4Stats[0][0]))) + T4Stats[0][3]));
+                tempStats[5] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][3]] / 10) * (heroLvl * ((T4Stats[1][4] - T4Stats[0][4]) / ((T4Stats[1][0] - T4Stats[0][0]))) + T4Stats[0][4]));
+                tempStats[6] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][4]] / 10) * (heroLvl * ((T4Stats[1][5] - T4Stats[0][5]) / ((T4Stats[1][0] - T4Stats[0][0]))) + T4Stats[0][5]));
+            default:
+                tempStats[2] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][0]] / 10) * (heroLvl * ((T5Stats[1][1] - T5Stats[0][1]) / ((T5Stats[1][0] - T5Stats[0][0]))) + T5Stats[0][1]));
+                tempStats[3] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][1]] / 10) * (heroLvl * ((T5Stats[1][2] - T5Stats[0][2]) / ((T5Stats[1][0] - T5Stats[0][0]))) + T5Stats[0][2]));
+                tempStats[4] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][2]] / 10) * (heroLvl * ((T5Stats[1][3] - T5Stats[0][3]) / ((T5Stats[1][0] - T5Stats[0][0]))) + T5Stats[0][3]));
+                tempStats[5] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][3]] / 10) * (heroLvl * ((T5Stats[1][4] - T5Stats[0][4]) / ((T5Stats[1][0] - T5Stats[0][0]))) + T5Stats[0][4]));
+                tempStats[6] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter][4]] / 10) * (heroLvl * ((T5Stats[1][5] - T5Stats[0][5]) / ((T5Stats[1][0] - T5Stats[0][0]))) + T5Stats[0][5]));
+        }
+        return tempStats;
+    }
+    public static int XPtoNextLvl(int chosenCharecter) 
+    {
+        string teir = NamesAndtiers[HeroList[chosenCharecter][0]][1];
+        switch (tier)
+        {
+            case "T0":
+                return (XPT0(HeroList[chosenCharecter][0] - 1) - HeroList[chosenCharecter][2]);
+            case "T1":
+                return (XPT1(HeroList[chosenCharecter][0] - 1) - HeroList[chosenCharecter][2]);
+            case "T2":
+                return (XPT2(HeroList[chosenCharecter][0] - 1) - HeroList[chosenCharecter][2]);
+            case "T3":
+                return (XPT3(HeroList[chosenCharecter][0] - 1) - HeroList[chosenCharecter][2]);
+            case "T4":
+                return (XPT4(HeroList[chosenCharecter][0] - 1) - HeroList[chosenCharecter][2]);
+            default:
+                return (XPT5(HeroList[chosenCharecter][0] - 1) - HeroList[chosenCharecter][2]);
+        }
+    }
+
     public static string SaveManagerData()
     {
         string sendSave = "";
@@ -97,7 +185,7 @@ public class CharectorStats
         }
         return Allhero;
     }
-    public static List<int> CharStats(int charNum) { return (HeroList[charNum]); }
+    public static List<int> CharStats(int charNum) { return (HeroList[charNum]); }//This is the Old Call Do Not Use
     public static void AutoSkill(int CharUsed)
     {
         int temp = HeroList[CharUsed][1];
