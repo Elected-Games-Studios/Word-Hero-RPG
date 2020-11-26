@@ -146,7 +146,7 @@ public class CharectorStats
         if (input == "")
         {
             NewGame();
-            HeroList[0]=GetCharecterStats(0);
+            HeroList[0]=GetCharecterStats(0).ToList;
         }
         else
         {
@@ -166,7 +166,7 @@ public class CharectorStats
                 }
                 counting = 0;
                 input.Remove(0);
-                HeroList[counter] = GetCharecterStats(counter);
+                HeroList[counter] = GetCharecterStats(counter).ToList;
                 counter++;
             }
         }
@@ -187,7 +187,7 @@ public class CharectorStats
         return Allhero;
     }
     public static List<int> CharStats(int charNum) { return (HeroList[charNum]); }//This is the Old Call Do Not Use
-    public static void AutoSkill(int CharUsed)
+    public static void AutoSkill(int CharUsed)//This is the Old Call Do Not Use
     {
         int temp = HeroList[CharUsed][1];
         if (HeroList[CharUsed][1] > HeroList[CharUsed][2]) HeroList[CharUsed][2]++;
@@ -197,6 +197,6 @@ public class CharectorStats
         else HeroList[CharUsed][1]++;
 
     }
-    public static void ManualSkill(int skill, int CharUsed) => HeroList[CharUsed][skill]++;
-    public static void LevelUP() => SkillPoints++;
+    public static void ManualSkill(int skill, int CharUsed) => HeroList[CharUsed][skill]++;//This is the Old Call Do Not Use
+    public static void LevelUP() => SkillPoints++;//This is the Old Call Do Not Use
 }
