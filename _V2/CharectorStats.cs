@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 public class CharectorStats
 {
     private static List<List<int>> HeroList;//Mine!
-    private static List<int> HeroDefault = new List<int> { 0, 1, 0, 0, 0, 0, 0, 0}; // By posistion 0. Hero Index in NameAndTiers 1. Is Level 2. XP Total 3. Star Count    ###MINE!!!!!
+    private static List<int> HeroDefault = new List<int> 
+    { 0, 1, 0, 0, 0, 0, 0, 0}; // By posistion 0. Hero Index in NameAndTiers 1. Is Level 2. XP Total 3. Star Count    ###MINE!!!!!
     private static int[] DifArr = new int[5]
         {15,12,10,8,6};//Mine!
     private static int[,] HeroDif = new int[49, 5]
@@ -142,19 +143,19 @@ public class CharectorStats
                 return (XPT5(HeroList[chosenCharecter][0] - 1) - HeroList[chosenCharecter][2]);
         }
     }
-    public static bool herosThatCanMelt(int chosenCharecter)//Must be run after each hero is placed in the melt chamber.
+    public static bool herosThatCanMelt(int chosenCharecter)//Must be run after each hero is placed in the melt chamber.  Work On this KYLE!!!!!!
     {
 
     }
-    public static void meltHero(List<int> CharectersMelt,int TargetCharecter)//Send a List of heroes to be melted down must do herosThatCanMelt First to Verify xp is not more than hero can take.
+    public static void meltHero(List<int> CharectersMelt,int TargetCharecter)//Send a List of heroes to be melted down must do herosThatCanMelt First to Verify xp is not more than hero can take.  Work On this KYLE!!!!!!
     {
 
     }
-    public static bool buyHeroUpgradeCheck(int chosenCharecter)//call this to set upgrade button to on
+    public static bool buyHeroUpgradeCheck(int chosenCharecter)//call this to set upgrade button to on  Work On this KYLE!!!!!!
     {
 
     }
-    public static int[] buyHeroUpgrade(int chosenCharecter)//call this to buy hero upgrade
+    public static int[] buyHeroUpgrade(int chosenCharecter)//call this to buy hero upgrade  Work On this KYLE!!!!!!
     {
 
     }
@@ -266,7 +267,6 @@ public class CharectorStats
         }
         return Allhero;
     }
-}
     public static string SaveManagerData()
     {
         string sendSave = "";
@@ -318,3 +318,4 @@ public class CharectorStats
         tempList.Insert(0, 0);
         HeroList.Add(tempList);
     }
+}
