@@ -154,7 +154,8 @@ public class CharectorStats
         }
     private static int[] GetCharecterStats(int chosenCharecter)//Mine!
     {
-        int[] tempStats = new int[8] { };
+        int[] tempStats = new int[8] 
+            { 0, 0, 0, 0, 0, 0, 0, 0 };
         int heroNumber = HeroList[chosenCharecter][0];
         int heroLvl = HeroList[chosenCharecter][1];
         string tier = NamesAndtiers[heroNumber][1];
@@ -232,7 +233,7 @@ public class CharectorStats
     {
         int maxXp = findCurrentMax(chosenCharecter);
         List<int[]> Allhero;
-        int[4] tempHero;
+        int[] tempHero = new int[4] { 0, 0, 0, 0};
         for (int i = 0; i < HeroList.Count; i++)
         {
             if(HeroList[i][2] < maxXp)
@@ -346,7 +347,7 @@ public class CharectorStats
     public static List<int[]> UnlockedCharectors() //This returns a list of All heroes with their values (ListID, HeroID, Level, StarCount)
     {
         List<int[]> Allhero;
-        int[4] tempHero;
+        int[] tempHero = new int[4];
         for (int i = 0; i < HeroList.Count; i++)
         {
             tempHero[0] = i;
