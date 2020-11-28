@@ -70,7 +70,88 @@ public class CharectorStats
     { {"Folk","T0"},{"Fighter","T1"},{"Ranger","T1"},{"Rogue","T1"},{"Mage","T1"},{"Cleric","T1"},{"Barbarian","T1"},{"Monk","T1"},{"Hunter","T2"},{"Soldier","T2"},{"Wizard","T2"},{"Acolyte","T2"},{"Thief","T2"},{"Gambler","T2"},{"Archer","T2"},{"Duelist","T2"},{"Berserker","T2"},{"Bard","T2"},{"Trapper","T2"},{"Blade Master","T3"},{"War Mage","T3"},{"Knight","T3"},{"Lancer","T3"},{"Druid","T3"},{"Sorcerer","T3"},{"Priest","T3"},{"Warlock","T3"},{"Arcane Trickster","T3"},{"Assassin","T3"},{"Tactician","T3"},{"Sage (Bard+)","T3"},{"Spell Sniper","T3"},{"Grand Marksman","T3"},{"Dervish","T3"},{"Hightened Monk","T3"},{"Commander","T3"},{"Magician","T3"},{"Jester","T3"},{"Falconer","T3"},{"Tinkerer","T3"},{"Hex Blade","T4"},{"Paladin","T4"},{"Weapon Master","T4"},{"Spellblade","T4"},{"Death Knight","T4"},{"Shadow","T4"},{"Juggernaut","T4"},{"Dragoon","T4"},{"Archmage","T4"},{"Eldrich Knight","T4"},{"Elementalist","T4"},{"Archdruid","T4"},{"Invoker","T4"},{"Shadowmancer","T4"},{"Avatar","T4"},{"Avenger","T4"},{"Blue Mage","T4"},{"Technomancer","T4"},{"Beast Master","T4"},{"Vampire Hunter","T4"},{"Arcane Arrow","T4"},{"Slayer/Executioner","T4"},{"Horizon Walker","T4"},{"Holy Ranger","T4"},{"Lycanthrope","T4"},{"Pirate Lord","T4"},{"Bombardier","T4"},{"Spirit Guardian","T4"},{"Aspect of Gaia","T5"},{"Dragonmaster","T5"},{"Avatar of Vengeance","T5"},{"Chronomancer","T5"} };//Mine!
     private static int CurrentHero;//Mine!
 
+    //-------------------------End of Variables -----------------------------
 
+    private static void NewGame()//Mine!
+    {
+        HeroList = new List<List<int>> { };
+        List<int> tempList = HeroDefault;
+        tempList.Insert(0, 0);
+        HeroList.Add(tempList);
+    }
+    private static bool canAddXP(int chosenCharecter)//Mine!
+    {
+            string tier = NamesAndtiers[HeroList[chosenCharecter][0]][1];
+            int tierNum;
+            switch (tier)
+            {
+                case "T0":
+                    tierNum = 0;
+                case "T1":
+                    tierNum = 1;
+                case "T2":
+                    tierNum = 2;
+                case "T3":
+                    tierNum = 3;
+                case "T4":
+                    tierNum = 4;
+                default:
+                    tierNum = 5;
+            }
+            int difStar = TeirStartStar[tierNum] - HeroList[chosenCharecter][3];
+            switch (tierNum)
+            {
+                case 0:
+                    return (XPT0[(T0MaxLevel[difStar] - 1)]);
+                case 1:
+                    return (XPT1[(T1MaxLevel[difStar] - 1)]);
+                case 2:
+                    return (XPT2[(T2MaxLevel[difStar] - 1)]);
+                case 3:
+                    return (XPT3[(T3MaxLevel[difStar] - 1)]);
+                case 4:
+                    return (XPT4[(T4MaxLevel[difStar] - 1)]);
+                default:
+                    return (XPT5[(T5MaxLevel[difStar] - 1)]);
+            }
+
+    }
+    private static int findCurrentMax(int chosenCharecter)//Mine!
+        {
+            string tier = NamesAndtiers[HeroList[chosenCharecter][0]][1];
+            int tierNum;
+            switch (tier)
+            {
+                case "T0":
+                    tierNum = 0;
+                case "T1":
+                    tierNum = 1;
+                case "T2":
+                    tierNum = 2;
+                case "T3":
+                    tierNum = 3;
+                case "T4":
+                    tierNum = 4;
+                default:
+                    tierNum = 5;
+            }
+            int difStar = TeirStartStar[tierNum] - HeroList[chosenCharecter][3];
+            switch (tierNum)
+            {
+                case 0:
+                    return (T0MaxLevel[difStar]);
+                case 1:
+                    return (T1MaxLevel[difStar]);
+                case 2:
+                    return (T2MaxLevel[difStar]);
+                case 3:
+                    return (T3MaxLevel[difStar]);
+                case 4:
+                    return (T4MaxLevel[difStar]);
+                default:
+                    return (T5MaxLevel[difStar]);
+            }
+        }
     private static int[] GetCharecterStats(int chosenCharecter)//Mine!
     {
         int[] tempStats = new int[8] { };
@@ -124,6 +205,10 @@ public class CharectorStats
         }
         return tempStats;
     }
+    private static void RemoveHero(int chosenCharecter)
+    {
+        HeroList.RemoveAt(chosenCharecter);
+    }
     public static int XPtoNextLvl(int chosenCharecter) 
     {
         string tier = NamesAndtiers[HeroList[chosenCharecter][0]][1];
@@ -143,56 +228,93 @@ public class CharectorStats
                 return (XPT5(HeroList[chosenCharecter][0] - 1) - HeroList[chosenCharecter][2]);
         }
     }
-    public static bool herosThatCanMelt(int chosenCharecter)//Must be run after each hero is placed in the melt chamber.  Work On this KYLE!!!!!!
+    public static List<int[]> herosThatCanMelt(int chosenCharecter)//Must be run after each hero is placed in the melt chamber.  Returns same as heroes unlocked.
     {
-
+        int maxXp = findCurrentMax(chosenCharecter);
+        List<int[]> Allhero;
+        int[4] tempHero;
+        for (int i = 0; i < HeroList.Count; i++)
+        {
+            if(HeroList[i][2] < maxXp)
+            {
+                tempHero[0] = i;
+                tempHero[1] = HeroList[i][0];
+                tempHero[2] = HeroList[i][1];
+                tempHero[3] = HeroList[i][3];
+                Allhero.add(tempHero);
+            }
+        }
+        return Allhero;
     }
-    public static void meltHero(List<int> CharectersMelt,int TargetCharecter)//Send a List of heroes to be melted down must do herosThatCanMelt First to Verify xp is not more than hero can take.  Work On this KYLE!!!!!!
+    public static void meltHero(List<int> CharectersMelt,int TargetCharecter)//Send a List of heroes to be melted down must do herosThatCanMelt First to Verify xp is not more than hero can take. Send the ListID in LIST FORM.
     {
-
+        for(int x = 0; x < CharectersMelt.Count; x++)
+        {
+            HeroList[TargetCharecter][2] += HeroList[CharectersMelt][2];
+            RemoveHero[CharectersMelt];
+        }
     }
-    public static bool buyHeroUpgradeCheck(int chosenCharecter)//call this to set upgrade button to on  Work On this KYLE!!!!!!
-    {
-
-    }
-    public static int[] buyHeroUpgrade(int chosenCharecter)//call this to buy hero upgrade  Work On this KYLE!!!!!!
-    {
-
-    }
-    private static int findCurrentMax(int chosenCharecter)//Mine!
+    public static bool buyHeroUpgradeCheck(int chosenCharecter)//call this to set upgrade button to on
     {
         string tier = NamesAndtiers[HeroList[chosenCharecter][0]][1];
-        int tierNum;
+        int maxXP = findCurrentMax(chosenCharecter);
         switch (tier)
         {
             case "T0":
-                tierNum = 0;
+                return false;
             case "T1":
-                tierNum = 1;
+                if (HeroList[chosenCharecter][2] == maxXP && TeirNumberStars[1] > HeroList[chosenCharecter][3])
+                {
+                    if(T1Cost(TeirStartStar[tierNum] - HeroList[chosenCharecter][3]) < InvManager.GoldReturn())
+                        return true;
+                }
             case "T2":
-                tierNum = 2;
+                if (HeroList[chosenCharecter][2] == maxXP && TeirNumberStars[2] > HeroList[chosenCharecter][3])
+                {
+                    if (T1Cost(TeirStartStar[tierNum] - HeroList[chosenCharecter][3]) < InvManager.GoldReturn())
+                        return true;
+                }
             case "T3":
-                tierNum = 3;
+                if (HeroList[chosenCharecter][2] == maxXP && TeirNumberStars[3] > HeroList[chosenCharecter][3])
+                {
+                    if (T1Cost(TeirStartStar[tierNum] - HeroList[chosenCharecter][3]) < InvManager.GoldReturn())
+                        return true;
+                }
             case "T4":
-                tierNum = 4;
+                if (HeroList[chosenCharecter][2] == maxXP && TeirNumberStars[4] > HeroList[chosenCharecter][3])
+                {
+                    if (T1Cost(TeirStartStar[tierNum] - HeroList[chosenCharecter][3]) < InvManager.GoldReturn())
+                        return true;
+                }
             default:
-                tierNum = 5;
+                if (HeroList[chosenCharecter][2] == maxXP && TeirNumberStars[5] > HeroList[chosenCharecter][3])
+                {
+                    if (T1Cost(TeirStartStar[tierNum] - HeroList[chosenCharecter][3]) < InvManager.GoldReturn())
+                        return true;
+                }
         }
-        int difStar = TeirStartStar[tierNum] - HeroList[chosenCharecter][3];
-        switch (tierNum)
+        return false;
+    }
+    public static int[] buyHeroUpgrade(int chosenCharecter)//call this to buy hero upgrade
+    {
+        string tier = NamesAndtiers[HeroList[chosenCharecter][0]][1];
+        switch (tier)
         {
-            case 0:
-                return (T0MaxLevel[difStar]);
-            case 1:
-                return (T1MaxLevel[difStar]);
-            case 2:
-                return (T2MaxLevel[difStar]);
-            case 3:
-                return (T3MaxLevel[difStar]);
-            case 4:
-                return (T4MaxLevel[difStar]);
+            case "T1":
+                InvManager.GoldAdd(T1Cost(TeirStartStar[tierNum] - HeroList[chosenCharecter][3]));
+                HeroList[chosenCharecter][3]++;
+            case "T2":
+                InvManager.GoldAdd(T2Cost(TeirStartStar[tierNum] - HeroList[chosenCharecter][3]));
+                HeroList[chosenCharecter][3]++;
+            case "T3":
+                InvManager.GoldAdd(T3Cost(TeirStartStar[tierNum] - HeroList[chosenCharecter][3]));
+                HeroList[chosenCharecter][3]++;
+            case "T4":
+                InvManager.GoldAdd(T4Cost(TeirStartStar[tierNum] - HeroList[chosenCharecter][3]));
+                HeroList[chosenCharecter][3]++;
             default:
-                return (T5MaxLevel[difStar]);
+                InvManager.GoldAdd(T5Cost(TeirStartStar[tierNum] - HeroList[chosenCharecter][3]));
+                HeroList[chosenCharecter][3]++;
         }
     }
     public static void levelUp(int chosenCharecter)
@@ -201,43 +323,6 @@ public class CharectorStats
         {
             HeroList[chosenCharecter][1]++;
         }
-    }
-    private static bool canAddXP(int chosenCharecter)//Mine!
-    {
-            string tier = NamesAndtiers[HeroList[chosenCharecter][0]][1];
-            int tierNum;
-            switch (tier)
-            {
-                case "T0":
-                    tierNum = 0;
-                case "T1":
-                    tierNum = 1;
-                case "T2":
-                    tierNum = 2;
-                case "T3":
-                    tierNum = 3;
-                case "T4":
-                    tierNum = 4;
-                default:
-                    tierNum = 5;
-            }
-            int difStar = TeirStartStar[tierNum] - HeroList[chosenCharecter][3];
-            switch (tierNum)
-            {
-                case 0:
-                    return (XPT0[(T0MaxLevel[difStar] - 1)]);
-                case 1:
-                    return (XPT1[(T1MaxLevel[difStar] - 1)]);
-                case 2:
-                    return (XPT2[(T2MaxLevel[difStar] - 1)]);
-                case 3:
-                    return (XPT3[(T3MaxLevel[difStar] - 1)]);
-                case 4:
-                    return (XPT4[(T4MaxLevel[difStar] - 1)]);
-                default:
-                    return (XPT5[(T5MaxLevel[difStar] - 1)]);
-            }
-
     }
     public static int[] EndofLevel(int xpGained)
     {
@@ -258,16 +343,21 @@ public class CharectorStats
         CurrentHero = chosenCharecter;
         return HeroList[chosenCharecter].ToArray;
     }
-    public static List<int[]> UnlockedCharectors() //Work On this KYLE!!!!!!
+    public static List<int[]> UnlockedCharectors() //This returns a list of All heroes with their values (ListID, HeroID, Level, StarCount)
     {
-        List<int> Allhero = new List<int> { };
+        List<int[]> Allhero;
+        int[4] tempHero;
         for (int i = 0; i < HeroList.Count; i++)
         {
-            Allhero.Add(HeroList[i][0]);
+            tempHero[0] = i;
+            tempHero[1] = HeroList[i][0];
+            tempHero[2] = HeroList[i][1];
+            tempHero[3] = HeroList[i][3];
+            Allhero.add(tempHero);
         }
         return Allhero;
     }
-    public static string SaveManagerData()
+    public static string SaveManagerData()//Save Engine Do Not Call
     {
         string sendSave = "";
         for (int x = 0; x < HeroList.Count; x++)
@@ -281,7 +371,7 @@ public class CharectorStats
         }
         return sendSave;
     }
-    public static void LoadManagerData(string input)
+    public static void LoadManagerData(string input)//Save Engine Do Not Call
     {
         if (input == "")
         {
@@ -310,12 +400,5 @@ public class CharectorStats
                 counter++;
             }
         }
-    }
-    public static void NewGame()
-    {
-        HeroList = new List<List<int>> { };
-        List<int> tempList = HeroDefault;
-        tempList.Insert(0, 0);
-        HeroList.Add(tempList);
     }
 }
