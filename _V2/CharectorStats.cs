@@ -347,7 +347,7 @@ public class CharectorStats
     public static List<int[]> UnlockedCharectors() //This returns a list of All heroes with their values (ListID, HeroID, Level, StarCount)
     {
         List<int[]> Allhero;
-        int[] tempHero = new int[4];
+        int[] tempHero = new int[4] { 0, 0, 0, 0} ;
         for (int i = 0; i < HeroList.Count; i++)
         {
             tempHero[0] = i;
