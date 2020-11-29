@@ -21,7 +21,7 @@ public class InvManager
 	{
 		Items[0] += amount;
 	}
-	public static void GoldRemove(int ammount)
+	public static void GoldRemove(int amount)
 	{
 		Items[0] -= amount;
 	}
