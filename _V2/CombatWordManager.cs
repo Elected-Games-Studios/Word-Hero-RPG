@@ -43,7 +43,7 @@ public static class CombatWordManager
 	}
 	public static void checkWord()
 	{
-		if (checkAdd)
+		if (checkAdd())
 		{
 			wordsDid.Add(checkString);
 			wordsUsed.Remove(checkString);
