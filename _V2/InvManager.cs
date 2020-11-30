@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 public class InvManager
 {
-	private static int[] Items = new int[6]; // 0. Gold, 1.T1 Shard, 2. T2 Shard
+	private static int[] Items = new int[6]; // 0. Gold, 1.T1 Shard, 2. T2 Shard, 3. HP Item, 4. Time Stop, 5. Word Refresh
 
 
 	//-------------------------End of Variables -----------------------------
@@ -21,7 +21,7 @@ public class InvManager
 	{
 		Items[0] += amount;
 	}
-	public static void GoldRemove(int ammount)
+	public static void GoldRemove(int amount)
 	{
 		Items[0] -= amount;
 	}
@@ -37,6 +37,26 @@ public class InvManager
     }
 	public static void CombineT1(int NumOfCombo)
     {
-
+		for(int x = 0; x < NumOfCombo; x++)
+        {
+			CharectorStats.AddCharecter(1);
+		}
     }
+	public static int T2ShardAmount()
+	{
+		return Items[2];
+	}
+	public static int T2ShardNumCombo()
+	{
+		int count = 0;
+		while ((Items[2] - (count * 50)) > 0) count++;
+		return count;
+	}
+	public static void CombineT2(int NumOfCombo)
+	{
+		for (int x = 0; x < NumOfCombo; x++)
+		{
+			CharectorStats.AddCharecter(2);
+		}
+	}
 }

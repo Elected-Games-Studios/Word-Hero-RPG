@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 public class CharectorStats
 {
     private static List<List<int>> HeroList;//Mine!
-    private static List<int> HeroDefault = new List<int> 
+    private static List<int> HeroDefault = new List<int>
     { 0, 1, 0, 0, 0, 0, 0, 0}; // By posistion 0. Hero Index in NameAndTiers 1. Is Level 2. XP Total 3. Star Count    ###MINE!!!!!
     private static int[] DifArr = new int[5]
         {15,12,10,8,6};//Mine!
@@ -18,7 +18,7 @@ public class CharectorStats
     {{2,2,2,2,2},{2,1,3,2,2},{1,2,2,2,3},{2,3,2,1,2},{1,3,2,2,3},{3,1,2,2,2},{2,2,3,2,1},{2,3,2,1,2},{2,1,3,1,3},{2,1,3,3,1},{1,3,1,2,3},{3,1,1,3,2},{2,3,1,1,3},{3,2,1,3,1},{1,3,2,1,3},{2,3,1,1,3},{2,1,3,3,1},{3,1,3,1,2},{3,1,2,1,3},{0,3,2,1,4},{0,2,4,3,1},{2,1,4,3,0},{1,2,4,3,0},{2,1,3,1,2},{0,1,2,3,4},{2,1,3,2,1},{1,1,2,3,2},{1,2,2,1,3},{1,3,2,0,4},{2,2,1,1,3},{3,0,2,1,4},{0,4,1,2,3},{1,3,0,2,4},{1,3,2,0,4},{2,2,1,1,3},{1,2,2,3,1},{2,3,1,1,2},{3,2,1,1,2},{1,2,3,1,2},{1,2,2,3,1},{0,3,4,2,1},{2,1,4,3,0},{1,2,2,1,3},{0,4,1,2,3},{2,1,2,3,1},{1,3,1,0,4},{1,0,2,3,4},{2,3,4,0,1},{0,3,1,2,4}};//Mine!
     private static List<int> XPT0 = new List<int>
     { 100, 300, 600, 1000, 1500, 2100, 2800, 3600, 4500 };//Mine!
-    private static List<int> XPT1 = new List<int> 
+    private static List<int> XPT1 = new List<int>
     { 100, 300, 600, 1000, 1500, 2100, 2800, 3600, 4500, 5500, 6600, 7800, 9100, 10500, 12000, 13600, 15300, 17100, 19000, 21000, 23100, 25300, 27600, 30000, 32500, 35100, 37800, 40600, 43500, 46500, 49600, 52800, 56100, 59500, 63000, 66600, 70300, 74100, 78000, 82000, 86100, 90300, 94600, 99000, 103500, 108100, 112800, 117600, 122500 };//Mine!
     private static List<int> XPT2 = new List<int>
     {200,550,1050,1700,2500,3450,4550,5800,7200,8750,10450,12300,14300,16450,18750,21200,23800,26550,29450,32500,35700,39050,42550,46200,50000,53950,58050,62300,66700,71250,75950,80800,85800,90950,96250,101700,107300,113050,118950,125000,131200,137550,144050,150700,157500,164450,171550,178800,186200,193750,201450,209300,217300,225450,233750,242200,250800,259550,268450,277500,286700,296050,305550,315200,325000,334950,345050,355300,365700,376250,386950,397800,408800,419950};//Mine!
@@ -48,27 +48,29 @@ public class CharectorStats
         { {1,35,1100,500,350,25}, {100,431,3080,1500,2500,425} };//Mine!
     private static int[,] T4Stats = new int[2, 6]
         { {1,45,2580,750,500,50}, {150,790,6305,2000,5715,1100} };//Mine!
-    private static int[,] T5Stats = new int[2,6]
+    private static int[,] T5Stats = new int[2, 6]
         { {1,100,5055,1000,750,100}, {250,2600,12525,3500,12000,3000} };//Mine!
-    private static List<int> TeirStartStar = new List<int> 
+    private static List<int> tierstartStar = new List<int>
     { 0, 0, 0, 1, 2, 3 };//Mine!
-    private static List<int> TeirNumberStars = new List<int> 
+    private static List<int> TeirNumberStars = new List<int>
     { 0, 2, 3, 4, 5, 6 };//Mine!
-    private static List<int> T0MaxLevel = new List<int> 
+    private static List<int> T0MaxLevel = new List<int>
     { 10 };//Mine!
-    private static List<int> T1MaxLevel = new List<int> 
+    private static List<int> T1MaxLevel = new List<int>
     { 10, 25, 50 };//Mine!
-    private static List<int> T2MaxLevel = new List<int> 
+    private static List<int> T2MaxLevel = new List<int>
     { 10, 25, 50, 75 };//Mine!
-    private static List<int> T3MaxLevel = new List<int> 
+    private static List<int> T3MaxLevel = new List<int>
     { 25, 50, 75, 100 };//Mine!
-    private static List<int> T4MaxLevel = new List<int> 
+    private static List<int> T4MaxLevel = new List<int>
     { 50, 75, 100, 150 };//Mine!
-    private static List<int> T5MaxLevel = new List<int> 
+    private static List<int> T5MaxLevel = new List<int>
     { 75, 100, 150, 250 };//Mine!
-    private static string[,] NamesAndtiers = new string[72,2]
+    private static string[,] NamesAndtiers = new string[72, 2]
     { {"Folk","T0"},{"Fighter","T1"},{"Ranger","T1"},{"Rogue","T1"},{"Mage","T1"},{"Cleric","T1"},{"Barbarian","T1"},{"Monk","T1"},{"Hunter","T2"},{"Soldier","T2"},{"Wizard","T2"},{"Acolyte","T2"},{"Thief","T2"},{"Gambler","T2"},{"Archer","T2"},{"Duelist","T2"},{"Berserker","T2"},{"Bard","T2"},{"Trapper","T2"},{"Blade Master","T3"},{"War Mage","T3"},{"Knight","T3"},{"Lancer","T3"},{"Druid","T3"},{"Sorcerer","T3"},{"Priest","T3"},{"Warlock","T3"},{"Arcane Trickster","T3"},{"Assassin","T3"},{"Tactician","T3"},{"Sage (Bard+)","T3"},{"Spell Sniper","T3"},{"Grand Marksman","T3"},{"Dervish","T3"},{"Hightened Monk","T3"},{"Commander","T3"},{"Magician","T3"},{"Jester","T3"},{"Falconer","T3"},{"Tinkerer","T3"},{"Hex Blade","T4"},{"Paladin","T4"},{"Weapon Master","T4"},{"Spellblade","T4"},{"Death Knight","T4"},{"Shadow","T4"},{"Juggernaut","T4"},{"Dragoon","T4"},{"Archmage","T4"},{"Eldrich Knight","T4"},{"Elementalist","T4"},{"Archdruid","T4"},{"Invoker","T4"},{"Shadowmancer","T4"},{"Avatar","T4"},{"Avenger","T4"},{"Blue Mage","T4"},{"Technomancer","T4"},{"Beast Master","T4"},{"Vampire Hunter","T4"},{"Arcane Arrow","T4"},{"Slayer/Executioner","T4"},{"Horizon Walker","T4"},{"Holy Ranger","T4"},{"Lycanthrope","T4"},{"Pirate Lord","T4"},{"Bombardier","T4"},{"Spirit Guardian","T4"},{"Aspect of Gaia","T5"},{"Dragonmaster","T5"},{"Avatar of Vengeance","T5"},{"Chronomancer","T5"} };//Mine!
     private static int CurrentHero;//Mine!
+    private static int[] ShardCounter = new int[2] { 0, 0 };
+    private static List<List<int>> tiersByHero = new List<List<int>> { { 1, 2, 3, 4, 5, 6, 7 }, { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 } , { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 } , { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67 } , { 68, 69, 70, 71 } };
 
     //-------------------------End of Variables -----------------------------
 
@@ -104,7 +106,7 @@ public class CharectorStats
                     tierNum = 5;
                     break;
         }
-            int difStar = TeirStartStar[tierNum] - HeroList[chosenCharecter][3];
+            int difStar = tierstartStar[tierNum] - HeroList[chosenCharecter][3];
             switch (tierNum)
             {
                 case 0:
@@ -147,7 +149,7 @@ public class CharectorStats
                     tierNum = 5;
                     break;
             }
-            int difStar = TeirStartStar[tierNum] - HeroList[chosenCharecter][3];
+            int difStar = tierstartStar[tierNum] - HeroList[chosenCharecter][3];
             switch (tierNum)
             {
                 case 0:
@@ -284,35 +286,35 @@ public class CharectorStats
             case "T1":
                 if (HeroList[chosenCharecter][2] == maxXP && TeirNumberStars[1] > HeroList[chosenCharecter][3])
                 {
-                    if(T1Cost[(TeirStartStar[1] - HeroList[chosenCharecter][3])] < InvManager.GoldReturn())
+                    if(T1Cost[(tierstartStar[1] - HeroList[chosenCharecter][3])] < InvManager.GoldReturn())
                         return true;
                 }
                 break;
             case "T2":
                 if (HeroList[chosenCharecter][2] == maxXP && TeirNumberStars[2] > HeroList[chosenCharecter][3])
                 {
-                    if (T1Cost[(TeirStartStar[2] - HeroList[chosenCharecter][3])] < InvManager.GoldReturn())
+                    if (T1Cost[(tierstartStar[2] - HeroList[chosenCharecter][3])] < InvManager.GoldReturn())
                         return true;
                 }
                 break;
             case "T3":
                 if (HeroList[chosenCharecter][2] == maxXP && TeirNumberStars[3] > HeroList[chosenCharecter][3])
                 {
-                    if (T1Cost[(TeirStartStar[3] - HeroList[chosenCharecter][3])] < InvManager.GoldReturn())
+                    if (T1Cost[(tierstartStar[3] - HeroList[chosenCharecter][3])] < InvManager.GoldReturn())
                         return true;
                 }
                 break;
             case "T4":
                 if (HeroList[chosenCharecter][2] == maxXP && TeirNumberStars[4] > HeroList[chosenCharecter][3])
                 {
-                    if (T1Cost[(TeirStartStar[4] - HeroList[chosenCharecter][3])] < InvManager.GoldReturn())
+                    if (T1Cost[(tierstartStar[4] - HeroList[chosenCharecter][3])] < InvManager.GoldReturn())
                         return true;
                 }
                 break;
             default:
                 if (HeroList[chosenCharecter][2] == maxXP && TeirNumberStars[5] > HeroList[chosenCharecter][3])
                 {
-                    if (T1Cost[(TeirStartStar[5] - HeroList[chosenCharecter][3])] < InvManager.GoldReturn())
+                    if (T1Cost[(tierstartStar[5] - HeroList[chosenCharecter][3])] < InvManager.GoldReturn())
                         return true;
                 }
                 break;
@@ -325,23 +327,23 @@ public class CharectorStats
         switch (tier)
         {
             case "T1":
-                InvManager.GoldAdd(T1Cost[(TeirStartStar[1] - HeroList[chosenCharecter][3])]);
+                InvManager.GoldAdd(T1Cost[(tierstartStar[1] - HeroList[chosenCharecter][3])]);
                 HeroList[chosenCharecter][3]++;
                 break;
             case "T2":
-                InvManager.GoldAdd(T2Cost[(TeirStartStar[2] - HeroList[chosenCharecter][3])]);
+                InvManager.GoldAdd(T2Cost[(tierstartStar[2] - HeroList[chosenCharecter][3])]);
                 HeroList[chosenCharecter][3]++;
                 break;
             case "T3":
-                InvManager.GoldAdd(T3Cost[(TeirStartStar[3] - HeroList[chosenCharecter][3])]);
+                InvManager.GoldAdd(T3Cost[(tierstartStar[3] - HeroList[chosenCharecter][3])]);
                 HeroList[chosenCharecter][3]++;
                 break;
             case "T4":
-                InvManager.GoldAdd(T4Cost[(TeirStartStar[4] - HeroList[chosenCharecter][3])]);
+                InvManager.GoldAdd(T4Cost[(tierstartStar[4] - HeroList[chosenCharecter][3])]);
                 HeroList[chosenCharecter][3]++;
                 break;
             default:
-                InvManager.GoldAdd(T5Cost[(TeirStartStar[5] - HeroList[chosenCharecter][3])]);
+                InvManager.GoldAdd(T5Cost[(tierstartStar[5] - HeroList[chosenCharecter][3])]);
                 HeroList[chosenCharecter][3]++;
                 break;
         }
@@ -385,6 +387,66 @@ public class CharectorStats
             Allhero.Add(tempHero);
         }
         return Allhero;
+    }
+    public static void AddCharecter(int shardT)
+    {
+        List<int> TempHero = HeroDefault;
+        switch (shardT)
+        {
+            case 1:
+                int tempInt = UnityEngine.Random.Range(0, 100);
+                if (ShardCounter[0] == 9)
+                {
+                    TempHero[0] = tiersByHero[2][UnityEngine.Random.Range(0, tiersByHero[2].Count())];
+                    ShardCounter[0] = 0;
+                }
+                else
+                {
+                    switch (tempInt)
+                    {
+                        case int n when (n < 40):
+                            TempHero[0] = tiersByHero[0][UnityEngine.Random.Range(0, tiersByHero[0].Count())];
+                            ShardCounter[0]++;
+                            break;
+                        case int n when (n < 80):
+                            TempHero[0] = tiersByHero[1][UnityEngine.Random.Range(0, tiersByHero[1].Count())];
+                            ShardCounter[0]++;
+                            break;
+                        case int n when (n < 95):
+                            TempHero[0] = tiersByHero[2][UnityEngine.Random.Range(0, tiersByHero[2].Count())];
+                            break;
+                        default:
+                            TempHero[0] = tiersByHero[3][UnityEngine.Random.Range(0, tiersByHero[3].Count())];
+
+                    }
+                }
+                break;
+            default:
+                int tempInt = UnityEngine.Random.Range(0, 10000);
+                if (ShardCounter[1] == 9)
+                {
+                    TempHero[0] = tiersByHero[3][UnityEngine.Random.Range(0, tiersByHero[3].Count())];
+                    ShardCounter[1] = 0;
+                }
+                else
+                {
+                    switch (tempInt)
+                    {
+                        case int n when (n < 8975):
+                            TempHero[0] = tiersByHero[2][UnityEngine.Random.Range(0, tiersByHero[2].Count())];
+                            ShardCounter[1]++;
+                            break;
+                        case int n when (n < 9975):
+                            TempHero[0] = tiersByHero[3][UnityEngine.Random.Range(0, tiersByHero[3].Count())];
+                            break;
+                        default:
+                            TempHero[0] = tiersByHero[4][UnityEngine.Random.Range(0, tiersByHero[4].Count())];
+
+                    }
+                }
+                break;
+        }
+        HeroList.Add(TempHero);
     }
     public static string SaveManagerData()//Save Engine Do Not Call
     {
