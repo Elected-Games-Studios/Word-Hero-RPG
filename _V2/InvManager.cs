@@ -59,4 +59,26 @@ public class InvManager
 			CharectorStats.AddCharecter(2);
 		}
 	}
+	public static string SaveManager()
+    {
+		string sendStr = "";
+		for(int x = 0; x < Items.Count; x++)
+        {
+			sendStr += Items[x].ToString();
+			sendStr += ",";
+        }
+		return sendStr;
+	}
+	public static void LoadManager(string input)
+    {
+		if (input == "")
+		{
+            Items =new int[6] { 0, 0, 0, 0, 0, 0};
+		}
+		for (int x = 0; x < 6; x++)
+		{
+			Items[x] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
+			input.Remove(0, input.IndexOf(','));
+		}
+	}
 }
