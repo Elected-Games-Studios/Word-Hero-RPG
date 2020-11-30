@@ -41,7 +41,7 @@ public static class CombatWordManager
         }
 		return false;
 	}
-	public static void checkWord()
+	public static void checkWord() // OnFingerUp will pack your string and call your attack 
 	{
 		if (checkAdd())
 		{
@@ -54,11 +54,11 @@ public static class CombatWordManager
 			resetString();
 		}
 	}
-	public static void addToString(string c)
+	public static void addToString(string c) // Onletterhit put gameobject letter here as string param
 	{
 		checkString.Insert((checkString.Count()-1),c);
 	}
-	public static void removeString()
+	public static void removeString() // if you want to walk back the the line you can call this and it will remove it 
 	{
 		checkString.Remove(checkString.Count() - 1);
 	}
