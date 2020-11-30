@@ -8,35 +8,10 @@ using System.Threading.Tasks;
 
 public static class GameWordHandler
 {
-    private static int Region, Level, Dificulty;
-    private static List<int> WordsIndex;
-    public static List<string> Words;
-    public static List<string> wordsUsed;
+   
 
-    public static void StartLevel() //called on awake for 
-    {
-        WordsIndex = WordData.GetDataLevel(Region, Level, Dificulty);
-        GetActualWords();
-    }
 
-    public static void
-        SetLevelData(int region, int level,
-            int dificulty) // called at beginning of level, call from Mono around the scene
-    {
-        Region = region;
-        Level = level;
-        Dificulty = dificulty;
-    }
-
-    private static void GetActualWords()
-    {
-        int tempcount = WordsIndex.Count();
-        tempcount = tempcount / 2;
-        for (int x = 0; x < tempcount; x++)
-        {
-            Words.Add(Convert.ToString(WordData.GetWords(WordsIndex[0], WordsIndex[1 + x * 2])));
-        }
-    }
+    
 
     public static void Shuffle()
     {

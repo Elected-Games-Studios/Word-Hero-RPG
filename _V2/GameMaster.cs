@@ -2,7 +2,7 @@
 
 public class GameMaster : MonoBehaviour
 {
-    public static int Region, Level, Difficuly;
+    public static int Region, Level, Difficulty;
         
     //Save stuff
         

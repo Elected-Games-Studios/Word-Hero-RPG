@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 public class CharectorStats
 {
-    private static List<List<int>> HeroList;//Mine!
+    //needed to temporarily make HeroList public to actually access it for stats bc LoadManagerData doesnt have a return value.
+    public static List<List<int>> HeroList;//Mine!
     private static List<int> HeroDefault = new List<int>
     { 0, 1, 0, 0, 0, 0, 0, 0}; // By posistion 0. Hero Index in NameAndTiers 1. Is Level 2. XP Total 3. Star Count    ###MINE!!!!!
     private static int[] DifArr = new int[5]

@@ -8,10 +8,19 @@ using System.Threading.Tasks;
 
 public static class CombatWordManager
 {
-	public static List<string> wordsUsed;
-	public static List<string> wordsDid;
+    private static List<int> WordsIndex;
+    public static List<string> Words;// List of string arrays of all words in the level
+    public static List<string> wordsUsed;//This is the string array, just Comma separated subwords of a single word
+	public static List<string> wordsDid;//This is string array of completed subwords
 	public static string checkString;
-	public static void Shuffle()
+
+    public static void StartLevel() //called on awake for 
+    {
+        WordsIndex = WordData.GetDataLevel(GameMaster.Region, GameMaster.Level, GameMaster.Difficulty);
+        GetActualWords();
+    }
+
+    public static void Shuffle() //KYLE: modify to find longest word
 	{
 		List<string> tempList = wordsUsed;
 		string tempWord = tempList[(tempList.Count() - 1)];
@@ -26,10 +35,21 @@ public static class CombatWordManager
 			//your code here
 		}
 	}
-	public static void wordBreak(int currentword)
+
+    private static void GetActualWords()
+    {
+        int tempcount = WordsIndex.Count();
+        tempcount = tempcount / 2;
+        for (int x = 0; x < tempcount; x++)
+        {
+            Words.Add(Convert.ToString(WordData.GetWords(WordsIndex[0], WordsIndex[1 + x * 2])));
+        }
+    }
+
+    public static void wordBreak(int currentword)//where does this argument come from?
 	{
 		wordsUsed = new List<string> { };
-		string[] tempArrString = GameWordHandler.Words[currentword].Split(',');
+		string[] tempArrString = Words[currentword].Split(',');
 		wordsUsed = tempArrString.ToList();
 		wordsUsed.RemoveAt(0);
 	}
