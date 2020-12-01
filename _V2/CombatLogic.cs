@@ -29,15 +29,30 @@ public class CombatLogic : MonoBehaviour
         CombatWordManager.StartLevel();
         
     }
-    //dictionary is DicNum?
-    void generateBubble()
+
+    void generateBubble() //called once to choose bubble of longest word size, don't need to re-render
     {
-        int i = 0;
-        while(words[i].Count !== Dictionary)
-        {
-            i++;//until i is index of longest word
-        }
-        //drawCircle(int i)
+        CombatWordManager.wordBreak(currentWordIndex); //establishes set of letters. calls side method to set enemy health while parsing the string?
+        
+        //shuffle to acquire longest word, needs to be called after WordBreak
+
+        //drawCircle(use length of max from shuffle)
+    }
+    void populateBubble()
+    {
+        CombatWordManager.wordBreak(currentWordIndex);
+        //populate letter zones
+    }
+
+    //methods to subscribe to onPlayerAttack and onEnemyAttack events in eventmanager
+    void playerTakeDamage()
+    {
+
+    }
+
+    void enemyTakeDamage()
+    {
+
     }
 
     void nextWord()

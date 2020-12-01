@@ -20,10 +20,10 @@ public static class CombatWordManager
         GetActualWords();
     }
 
-    public static void Shuffle() //KYLE: modify to find longest word
+    public static void Shuffle() //KYLE: modify to find longest word and return some form of the letters of that word to populate the circle
 	{
 		List<string> tempList = wordsUsed;
-		string tempWord = tempList[(tempList.Count() - 1)];
+		string tempWord = tempList[(tempList.Count() - 1)];//I have questions about how this works 
 		tempList = new List<string> { };
 		for (int x = 0; x < tempWord.Count(); x++) tempList.Add(tempWord[x].ToString());
 		int counter = wordsUsed.Count();
@@ -46,13 +46,14 @@ public static class CombatWordManager
         }
     }
 
-    public static void wordBreak(int currentword)//where does this argument come from?
+    public static void wordBreak(int currentword)
 	{
 		wordsUsed = new List<string> { };
 		string[] tempArrString = Words[currentword].Split(',');
 		wordsUsed = tempArrString.ToList();
-		wordsUsed.RemoveAt(0);
-	}
+       
+		wordsUsed.RemoveAt(0); //add a line to modify static value for enemy health? Element 0 contains enemy health before first '/'
+    }
 	private static bool checkAdd()
 	{
 		for(int x = 0; x < wordsUsed.Count; x++)
