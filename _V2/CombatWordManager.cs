@@ -10,10 +10,10 @@ public static class CombatWordManager
 {
     private static List<int> WordsIndex;
     public static List<string> Words;// List of string arrays of all words in the level
-    public static List<string> wordsUsed;//This is the string array, just Comma separated subwords of a single word
+    public static List<string> wordsUsed;//This is the string list, just Comma separated subwords of a single word
 	public static List<string> wordsDid;//This is string array of completed subwords
 	public static string checkString;
-
+    //bubbleexists?
     public static void StartLevel() //called on awake for 
     {
         WordsIndex = WordData.GetDataLevel(GameMaster.Region, GameMaster.Level, GameMaster.Difficulty);
@@ -24,6 +24,9 @@ public static class CombatWordManager
 	{
 		List<string> tempList = wordsUsed;
 		string tempWord = tempList[(tempList.Count() - 1)];//I have questions about how this works 
+        //if (!bubble exists)
+        //call generatebubble with tempword.count
+        //bubble exists now
 		tempList = new List<string> { };
 		for (int x = 0; x < tempWord.Count(); x++) tempList.Add(tempWord[x].ToString());
 		int counter = wordsUsed.Count();

@@ -30,13 +30,12 @@ public class CombatLogic : MonoBehaviour
         
     }
 
-    void generateBubble() //called once to choose bubble of longest word size, don't need to re-render
+    public static void generateBubble(int length) //called once to choose bubble of longest word size, don't need to re-render
     {
-        CombatWordManager.wordBreak(currentWordIndex); //establishes set of letters. calls side method to set enemy health while parsing the string?
-        
-        //shuffle to acquire longest word, needs to be called after WordBreak
-
-        //drawCircle(use length of max from shuffle)
+       //switch(length)
+       //case 5:
+       //turn on/ whateverthefuck 5 bubble
+       //case 
     }
     void populateBubble()
     {
