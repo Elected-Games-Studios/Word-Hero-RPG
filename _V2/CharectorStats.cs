@@ -449,7 +449,7 @@ public class CharectorStats
                             break;
                         default:
                             TempHero[0] = tiersByHero[4][UnityEngine.Random.Range(0, tiersByHero[4].Count())];
-
+                            break;
                     }
                 }
                 break;
