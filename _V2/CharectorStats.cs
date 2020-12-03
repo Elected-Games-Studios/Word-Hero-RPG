@@ -71,13 +71,18 @@ public class CharectorStats
     { {"Folk","T0"},{"Fighter","T1"},{"Ranger","T1"},{"Rogue","T1"},{"Mage","T1"},{"Cleric","T1"},{"Barbarian","T1"},{"Monk","T1"},{"Hunter","T2"},{"Soldier","T2"},{"Wizard","T2"},{"Acolyte","T2"},{"Thief","T2"},{"Gambler","T2"},{"Archer","T2"},{"Duelist","T2"},{"Berserker","T2"},{"Bard","T2"},{"Trapper","T2"},{"Blade Master","T3"},{"War Mage","T3"},{"Knight","T3"},{"Lancer","T3"},{"Druid","T3"},{"Sorcerer","T3"},{"Priest","T3"},{"Warlock","T3"},{"Arcane Trickster","T3"},{"Assassin","T3"},{"Tactician","T3"},{"Sage (Bard+)","T3"},{"Spell Sniper","T3"},{"Grand Marksman","T3"},{"Dervish","T3"},{"Hightened Monk","T3"},{"Commander","T3"},{"Magician","T3"},{"Jester","T3"},{"Falconer","T3"},{"Tinkerer","T3"},{"Hex Blade","T4"},{"Paladin","T4"},{"Weapon Master","T4"},{"Spellblade","T4"},{"Death Knight","T4"},{"Shadow","T4"},{"Juggernaut","T4"},{"Dragoon","T4"},{"Archmage","T4"},{"Eldrich Knight","T4"},{"Elementalist","T4"},{"Archdruid","T4"},{"Invoker","T4"},{"Shadowmancer","T4"},{"Avatar","T4"},{"Avenger","T4"},{"Blue Mage","T4"},{"Technomancer","T4"},{"Beast Master","T4"},{"Vampire Hunter","T4"},{"Arcane Arrow","T4"},{"Slayer/Executioner","T4"},{"Horizon Walker","T4"},{"Holy Ranger","T4"},{"Lycanthrope","T4"},{"Pirate Lord","T4"},{"Bombardier","T4"},{"Spirit Guardian","T4"},{"Aspect of Gaia","T5"},{"Dragonmaster","T5"},{"Avatar of Vengeance","T5"},{"Chronomancer","T5"} };//Mine!
     private static int CurrentHero;//Mine!
     private static int[] ShardCounter = new int[2] { 0, 0 };
-    private static List<List<int>> tiersByHero = new List<List<int>> { { 1, 2, 3, 4, 5, 6, 7 }, { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 } , { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 } , { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67 } , { 68, 69, 70, 71 } };
+    private static List<int> T1bh = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+    private static List<int> T2bh = new List<int> { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+    private static List<int> T3bh = new List<int> { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 };
+    private static List<int> T4bh = new List<int> { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67 };
+    private static List<int> T5bh = new List<int> { 68, 69, 70, 71 };
+    private static List<List<int>> tiersByHero = new List<List<int>> {T1bh,T2bh,T3bh,T4bh,T5bh};
 
     //-------------------------End of Variables -----------------------------
 
     private static void NewGame()//Mine!
     {
-        HeroList = new List<List<int>> { };
+        HeroList = new List<List<int>>();
         List<int> tempList = HeroDefault;
         tempList.Insert(0, 0);
         HeroList.Add(tempList);
@@ -391,11 +396,12 @@ public class CharectorStats
     }
     public static void AddCharecter(int shardT)
     {
+        int tempInt;
         List<int> TempHero = HeroDefault;
         switch (shardT)
         {
             case 1:
-                int tempInt = UnityEngine.Random.Range(0, 100);
+                tempInt = UnityEngine.Random.Range(0, 100);
                 if (ShardCounter[0] == 9)
                 {
                     TempHero[0] = tiersByHero[2][UnityEngine.Random.Range(0, tiersByHero[2].Count())];
@@ -418,12 +424,13 @@ public class CharectorStats
                             break;
                         default:
                             TempHero[0] = tiersByHero[3][UnityEngine.Random.Range(0, tiersByHero[3].Count())];
+                            break;
 
                     }
                 }
                 break;
             default:
-                int tempInt = UnityEngine.Random.Range(0, 10000);
+                tempInt = UnityEngine.Random.Range(0, 10000);
                 if (ShardCounter[1] == 9)
                 {
                     TempHero[0] = tiersByHero[3][UnityEngine.Random.Range(0, tiersByHero[3].Count())];
@@ -442,7 +449,7 @@ public class CharectorStats
                             break;
                         default:
                             TempHero[0] = tiersByHero[4][UnityEngine.Random.Range(0, tiersByHero[4].Count())];
-
+                            break;
                     }
                 }
                 break;
