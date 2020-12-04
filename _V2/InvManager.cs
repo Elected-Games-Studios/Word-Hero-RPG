@@ -62,7 +62,7 @@ public class InvManager
 	public static string SaveManager()
     {
 		string sendStr = "";
-		for(int x = 0; x < Items.Count; x++)
+		for(int x = 0; x < Items.Count(); x++)
         {
 			sendStr += Items[x].ToString();
 			sendStr += ",";

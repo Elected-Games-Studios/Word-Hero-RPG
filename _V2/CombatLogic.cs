@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatLogic : MonoBehaviour
 {
@@ -11,36 +12,48 @@ public class CombatLogic : MonoBehaviour
 
     private List<string> words = CombatWordManager.Words;
     private int currentWordIndex;
+    private GameObject bubble;
 
     void Awake()
     {
         //testing only, initializes hero data and chosen character, returns stats to HeroList[0]
         CharectorStats.LoadManagerData("");
         int [] heroStats = CharectorStats.HeroList[0].ToArray();
+        //GameObject bubbles = GetComponentInChildren<bubbles>();
+        pDmg = heroStats[3];
+        pHealth = heroStats[4];
+        pCrit = heroStats[5];
+        pAgi = heroStats[6];
+        pDef = heroStats[7];
 
-        pDmg = heroStats[4];
-        pHealth = heroStats[5];
-        pCrit = heroStats[6];
-        pAgi = heroStats[7];
-        pDef = heroStats[8];
-
-        //calls GetDataLevel and GetActualWords, 
-        //Initializes public static List<string> Words;
         CombatWordManager.StartLevel();
+
+        CombatWordManager.onMaxLengthFound += generateBubble;
+
+    }
+    private void Update()
+    {
         
     }
+    
 
-    public static void generateBubble(int length) //called once to choose bubble of longest word size, don't need to re-render
+    public void generateBubble(int length) //called once to choose bubble of longest word size, don't need to re-render
     {
-       //switch(length)
-       //case 5:
-       //turn on/ whateverthefuck 5 bubble
-       //case 
+        //JUST TO PISS OFF DUSTIN<<
+        bubble = GameObject.Find("Circle " + length + "L");
+            bubble.SetActive(true);
+
+        CombatWordManager.onMaxLengthFound -= generateBubble;
     }
     void populateBubble()
     {
         CombatWordManager.wordBreak(currentWordIndex);
-        //populate letter zones
+        CombatWordManager.InitializeLetters();
+        Text [] textsArray = bubble.GetComponentsInChildren<Text>();
+        for (var i = 0; i < textsArray.Length; i++)
+        {
+            textsArray[i].text = CombatWordManager.shuffledWord[i];
+        }
     }
 
     //methods to subscribe to onPlayerAttack and onEnemyAttack events in eventmanager
@@ -53,7 +66,20 @@ public class CombatLogic : MonoBehaviour
     {
 
     }
+    //onEnemyKilled
+    void stageLoot()
+    {
+        //animations based on enemy exp and loot
+        //private static staged variable
+    }
+    //event onLevelComplete
+    void levelFinished()
+    {
+        //duh, duh-duh da duh, duh, da-daaaaaaaaaaaaaaah
+        //staged items to DB
+    }
 
+    //onenemykilled
     void nextWord()
     {
         currentWordIndex++;

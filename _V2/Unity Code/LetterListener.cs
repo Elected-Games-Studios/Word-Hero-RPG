@@ -23,7 +23,7 @@ public class LetterListener : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        em.FireHit(int.Parse(gameObject.tag));
+        em.HitLetter(int.Parse(gameObject.tag));
     }
 
     void OnDisable()
