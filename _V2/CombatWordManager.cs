@@ -1,5 +1,8 @@
 using System;
+using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices;
@@ -9,11 +12,11 @@ using System.Threading.Tasks;
 public static class CombatWordManager
 {
     public static List<int> WordsIndex;
-    public static List<string> Words;// List of string arrays of all words in the level
+    public static List<string> Words = new List<string> { };// List of string arrays of all words in the level
     public static List<string> currentUsableWords;//This is the string list, just Comma separated subwords of a single word
 	public static List<string> wordsDid;//This is string array of completed subwords
-	public static string checkString;
-    public static List<string> shuffledWord;
+	public static string checkString = "";
+    public static List<string> shuffledWord = new List<string>{ };
     public static string longestWord = "";
     public static event Action<int> onMaxLengthFound;
 
@@ -21,6 +24,10 @@ public static class CombatWordManager
     {
         WordsIndex = WordDatav2.GetDataLevel(GameMaster.Region, GameMaster.Level, GameMaster.Difficulty);
         GetActualWords();
+        wordBreak(0);
+        InitializeLetters();
+        onMaxLengthFound?.Invoke(longestWord.Count());
+        
     }
 
     public static void InitializeLetters()
@@ -32,7 +39,7 @@ public static class CombatWordManager
             i++;
         }
         longestWord = tempList[i];
-        onMaxLengthFound?.Invoke(longestWord.Count());
+        
         Shuffle();	
 	}
 
@@ -40,7 +47,7 @@ public static class CombatWordManager
     {
         List<string> tempList = new List<string> { };
         for (int x = 0; x < longestWord.Count(); x++) tempList.Add(longestWord[x].ToString());
-        int counter = currentUsableWords.Count();
+        int counter = longestWord.Count();
 
         for (int x = 0; x < counter; x++)
         {
@@ -49,6 +56,7 @@ public static class CombatWordManager
             tempList.RemoveAt(remover);
 
             shuffledWord.Add(tempLetter);
+           
         }
     }
 

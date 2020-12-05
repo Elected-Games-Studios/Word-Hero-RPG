@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,10 +13,12 @@ public class CombatLogic : MonoBehaviour
 
     private List<string> words = CombatWordManager.Words;
     private int currentWordIndex;
-    private GameObject bubble;
+    private Image[] bubbles;
+    private GameObject currentBubble;
 
     void Awake()
     {
+        bubbles = GetComponentsInChildren<Image>(true);
         //testing only, initializes hero data and chosen character, returns stats to HeroList[0]
         CharectorStats.LoadManagerData("");
         int [] heroStats = CharectorStats.HeroList[0].ToArray();
@@ -25,10 +28,10 @@ public class CombatLogic : MonoBehaviour
         pCrit = heroStats[5];
         pAgi = heroStats[6];
         pDef = heroStats[7];
-
-        CombatWordManager.StartLevel();
-
         CombatWordManager.onMaxLengthFound += generateBubble;
+        CombatWordManager.StartLevel();
+        
+        
 
     }
     private void Update()
@@ -38,25 +41,25 @@ public class CombatLogic : MonoBehaviour
     
 
     public void generateBubble(int length) //called once to choose bubble of longest word size, don't need to re-render
-    {
-        //JUST TO PISS OFF DUSTIN<<
-        bubble = GameObject.Find("Circle " + length + "L");
-            bubble.SetActive(true);
-
+    {      
+        bubbles[length - 4].gameObject.SetActive(true);
+        populateBubble();
         CombatWordManager.onMaxLengthFound -= generateBubble;
     }
-    void populateBubble()
+
+    public void populateBubble()
     {
+        int length = CombatWordManager.longestWord.Length;
         CombatWordManager.wordBreak(currentWordIndex);
-        CombatWordManager.InitializeLetters();
-        Text [] textsArray = bubble.GetComponentsInChildren<Text>();
-        for (var i = 0; i < textsArray.Length; i++)
+        currentBubble = bubbles[length - 4].gameObject;
+        Text [] lettersArr = currentBubble.GetComponentsInChildren<Text>();
+        for(int i = 0; i < length; i++)
         {
-            textsArray[i].text = CombatWordManager.shuffledWord[i];
+            lettersArr[i].text = CombatWordManager.shuffledWord[i].ToUpper();
         }
     }
 
-    //methods to subscribe to onPlayerAttack and onEnemyAttack events in eventmanager
+    //event methods
     void playerTakeDamage()
     {
 
@@ -75,7 +78,7 @@ public class CombatLogic : MonoBehaviour
     //event onLevelComplete
     void levelFinished()
     {
-        //duh, duh-duh da duh, duh, da-daaaaaaaaaaaaaaah
+    
         //staged items to DB
     }
 
