@@ -3,31 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 public class LetterListener : MonoBehaviour
 {
+    private bool ticked;
     [SerializeField]
     private EventManagerv2 em; // inspector assignement can be mitigated through onEnable assignment
+
+    private void Awake()
+    {
+        
+    }
     void OnEnable()
     {
-        em = new EventManagerv2();
-        EventManagerv2.onLetterHit += AddLetterToCurrent;
+        TouchInput.allTickedOff += untick;
     }
 
-    void AddLetterToCurrent(int letterId) //PARAMS HAVE TO MATCH THE DELEGATE SIG
+    public void AddLetterToCurrent()
     {
-        if(letterId == Int32.Parse(gameObject.tag))
-            Debug.Log(letterId);
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        em.HitLetter(int.Parse(gameObject.tag));
+        if (!ticked)
+        {
+            ticked = true;
+            CombatWordManager.addToString(GetComponent<Text>().text);
+        }
+        
     }
 
     void OnDisable()
     {
-        EventManagerv2.onLetterHit -= AddLetterToCurrent;
+        TouchInput.allTickedOff -= untick;
+    }
+
+    void untick()
+    {
+        ticked = false;
     }
 }

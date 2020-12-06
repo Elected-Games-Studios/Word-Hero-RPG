@@ -16,6 +16,13 @@ public class CombatLogic : MonoBehaviour
     private Image[] bubbles;
     private GameObject currentBubble;
 
+    //temporary
+    private Slider slider;
+    //end temporary^
+
+    public event Action<int> onDamageEnemy;
+    public event Action onDamagePlayer;
+
     void Awake()
     {
         bubbles = GetComponentsInChildren<Image>(true);
@@ -29,10 +36,18 @@ public class CombatLogic : MonoBehaviour
         pAgi = heroStats[6];
         pDef = heroStats[7];
         CombatWordManager.onMaxLengthFound += generateBubble;
-        CombatWordManager.StartLevel();
-        
-        
+        CombatWordManager.onCorrectWord += spelledWord;
+        onDamageEnemy += enemyTakeDamage;
+        onDamagePlayer += playerTakeDamage;
 
+        CombatWordManager.StartLevel();
+        eHealth = CombatWordManager.enemyHealth * 10;
+
+        //temp
+        slider = GameObject.FindGameObjectWithTag("EnemyHP").GetComponent<Slider>();
+        slider.maxValue = eHealth;
+        slider.value = eHealth;
+        //^ end temp
     }
     private void Update()
     {
@@ -65,11 +80,37 @@ public class CombatLogic : MonoBehaviour
 
     }
 
-    void enemyTakeDamage()
+    void enemyTakeDamage(int length)
     {
 
+        int totalDmg = pDmg * length * checkCrit();
+        Debug.Log("total dmg" + totalDmg);
+        eHealth -= totalDmg - 0;                        //CHANGE LATER!!!!!!!!!!!!!
+        slider.value = eHealth;
     }
-    //onEnemyKilled
+
+    int checkCrit()
+    {
+        int result;
+        int roll = UnityEngine.Random.Range(0, 10000);
+        if(pCrit >= roll)
+        {
+            Debug.Log("crit");
+            result = 2;
+        }
+        else
+        {
+            Debug.Log("not crit");
+            result = 1;
+        }
+        return result;
+    }
+
+    void spelledWord(int length)
+    {
+        onDamageEnemy?.Invoke(length);
+    }
+
     void stageLoot()
     {
         //animations based on enemy exp and loot
@@ -88,5 +129,11 @@ public class CombatLogic : MonoBehaviour
         currentWordIndex++;
     }
 
-    
+    private void OnDisable()
+    {
+        CombatWordManager.onCorrectWord -= spelledWord;
+        onDamageEnemy -= enemyTakeDamage;
+        onDamagePlayer -= playerTakeDamage;
+    }
+
 }

@@ -14,11 +14,15 @@ public static class CombatWordManager
     public static List<int> WordsIndex;
     public static List<string> Words = new List<string> { };// List of string arrays of all words in the level
     public static List<string> currentUsableWords;//This is the string list, just Comma separated subwords of a single word
-	public static List<string> wordsDid;//This is string array of completed subwords
+    public static List<string> wordsSpelled;//This is string array of completed subwords
+    public static int enemyHealth;
 	public static string checkString = "";
     public static List<string> shuffledWord = new List<string>{ };
     public static string longestWord = "";
     public static event Action<int> onMaxLengthFound;
+    public static event Action onUpdateString;
+    public static event Action<int> onCorrectWord;
+    
 
     public static void StartLevel() //called on awake for 
     {
@@ -72,17 +76,19 @@ public static class CombatWordManager
 
     public static void wordBreak(int currentword)
 	{
-		currentUsableWords = new List<string> { };
+        wordsSpelled = new List<string> { };
+        currentUsableWords = new List<string> { };
 		string[] tempArrString = Words[currentword].Split(',');
 		currentUsableWords = tempArrString.ToList();
-      
-		currentUsableWords.RemoveAt(0); //add a line to modify static value for enemy health? Element 0 contains enemy health before first '/'
+        string [] frontNums = currentUsableWords[0].Split('/');
+        enemyHealth = Convert.ToInt32(frontNums[0]);
+		currentUsableWords.RemoveAt(0); 
     }
 	private static bool checkAdd()
 	{
-		for(int x = 0; x < currentUsableWords.Count; x++)
+		for(int x = 0; x < currentUsableWords.Count(); x++)
         {
-			if (currentUsableWords[x].Equals(checkString)) return true;
+			if (currentUsableWords[x].ToUpper().Equals(checkString.ToUpper())) return true;
         }
 		return false;
 	}
@@ -90,8 +96,10 @@ public static class CombatWordManager
 	{
 		if (checkAdd())
 		{
-			wordsDid.Add(checkString);
-			currentUsableWords.Remove(checkString);
+            UnityEngine.Debug.Log("was a word");
+			wordsSpelled.Add(checkString);
+			currentUsableWords.Remove(checkString.ToLower());
+            onCorrectWord?.Invoke(checkString.Count());
 			resetString();
 		}
         else
@@ -99,16 +107,19 @@ public static class CombatWordManager
 			resetString();
 		}
 	}
-	public static void addToString(string c) // Onletterhit put gameobject letter here as string param
+	public static void addToString(string c) 
 	{
-		checkString.Insert((checkString.Count()-1),c);
+        checkString += c;
+        onUpdateString?.Invoke();
 	}
 	public static void removeString() // if you want to walk back the the line you can call this and it will remove it 
 	{
-		checkString.Remove(checkString.Count() - 1);
-	}
+		checkString.Remove(checkString.Count()-1);
+        onUpdateString?.Invoke();
+    }
 	public static void resetString()
 	{
 		checkString = "";
-	}
+        onUpdateString?.Invoke();
+    }
 }
