@@ -6,6 +6,13 @@ using System.Threading;
 
 public class IRCconnection
 {
+    //Hash ID's
+    public static string GoogleHash;
+    public static string FBHash; //Facebook Hash
+    public static string AppleHash;
+
+
+
     // server to connect to (edit at will)
     public static string SERVER = "irc.changeme.com";
     // server port (6667 by default)
