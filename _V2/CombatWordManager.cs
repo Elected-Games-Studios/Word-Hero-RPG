@@ -26,7 +26,9 @@ public static class CombatWordManager
 
     public static void StartLevel() //called on awake for 
     {
-        WordsIndex = WordDatav2.GetDataLevel(GameMaster.Region, GameMaster.Level, GameMaster.Difficulty);
+        WordsIndex = new List<int>();
+        //WordsIndex = WordDatav2.GetDataLevel(GameMaster.Region, GameMaster.Level, GameMaster.Difficulty);
+        WordsIndex = WordDatav2.GetDataLevel(0,0,0);
         GetActualWords();
         wordBreak(0);
         InitializeLetters();

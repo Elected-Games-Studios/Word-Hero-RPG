@@ -41,7 +41,7 @@ public class CombatLogic : MonoBehaviour
         onDamagePlayer += playerTakeDamage;
 
         CombatWordManager.StartLevel();
-        eHealth = CombatWordManager.enemyHealth * 10;
+        eHealth = CombatWordManager.enemyHealth * 5;
 
         //temp
         slider = GameObject.FindGameObjectWithTag("EnemyHP").GetComponent<Slider>();
@@ -85,7 +85,7 @@ public class CombatLogic : MonoBehaviour
 
         int totalDmg = pDmg * length * checkCrit();
         Debug.Log("total dmg" + totalDmg);
-        eHealth -= totalDmg - 0;                        //CHANGE LATER!!!!!!!!!!!!!
+        eHealth -= totalDmg;                      //CHANGE LATER!!!!!!!!!!!!!
         slider.value = eHealth;
     }
 
