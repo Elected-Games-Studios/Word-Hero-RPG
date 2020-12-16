@@ -10,7 +10,7 @@ public class StringChecker: MonoBehaviour
 
     private void Awake()
     {
-        currentString = GetComponent<Text>();
+        currentString = GameObject.Find("CurrentWord").GetComponent<Text>();
     }
 
     private void OnEnable()

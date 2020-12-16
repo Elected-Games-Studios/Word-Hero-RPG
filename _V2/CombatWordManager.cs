@@ -51,6 +51,7 @@ public static class CombatWordManager
 
     public static void Shuffle()
     {
+        shuffledWord.Clear();
         List<string> tempList = new List<string> { };
         for (int x = 0; x < longestWord.Count(); x++) tempList.Add(longestWord[x].ToString());
         int counter = longestWord.Count();
@@ -98,7 +99,6 @@ public static class CombatWordManager
 	{
 		if (checkAdd())
 		{
-            UnityEngine.Debug.Log("was a word");
 			wordsSpelled.Add(checkString);
 			currentUsableWords.Remove(checkString.ToLower());
             onCorrectWord?.Invoke(checkString.Count());
