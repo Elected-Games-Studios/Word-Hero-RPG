@@ -8,7 +8,7 @@ using Debug = UnityEngine.Debug;
 
 public class LetterListener : MonoBehaviour
 {
-    private bool ticked;
+    public bool ticked;
     [SerializeField]
     private EventManagerv2 em; // inspector assignement can be mitigated through onEnable assignment
 
@@ -27,6 +27,7 @@ public class LetterListener : MonoBehaviour
         {
             ticked = true;
             CombatWordManager.addToString(GetComponent<Text>().text);
+            
         }
         
     }

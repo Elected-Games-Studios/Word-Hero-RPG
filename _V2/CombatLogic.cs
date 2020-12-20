@@ -9,7 +9,7 @@ public class CombatLogic : MonoBehaviour
     //references to player, enemy, letter nodes
     private int pDmg, pHealth, pCrit, pAgi, pDef;
 
-    private int eDmg, eHealth, eCrit, eAgi, eDef;
+    private int eDmg, eHealth, eCrit;
 
     private List<string> words = CombatWordManager.Words;
     int wordsLeft = CombatWordManager.Words.Count;
@@ -23,8 +23,6 @@ public class CombatLogic : MonoBehaviour
     
     private Slider slider;
     //end temporary^
-
-
 
     public event Action<int> onDamageEnemy;
     public event Action onDamagePlayer;
@@ -43,7 +41,7 @@ public class CombatLogic : MonoBehaviour
         pCrit = heroStats[5];
         pAgi = heroStats[6];
         pDef = heroStats[7];
-
+        eCrit = 200;
         //event subs
         CombatWordManager.onMaxLengthFound += generateBubble;
         CombatWordManager.onCorrectWord += spelledWord;
@@ -61,8 +59,7 @@ public class CombatLogic : MonoBehaviour
     private void Update()
     {
         
-    }
-    
+    }   
 
     public void generateBubble(int length) //called once to choose bubble of longest word size, don't need to re-render
     {      
