@@ -16,12 +16,21 @@ public class TouchInput : MonoBehaviour
     private List<Vector3> points = new List<Vector3>();
     private List<RaycastResult> results = new List<RaycastResult>();
     public static event Action allTickedOff;
-
+    private GameObject blankOne;
+    private GameObject blankTwo;
+    private List<GameObject> allHits = new List<GameObject>();
+  
     //lineRendering
     private LineRenderer lr;
 
     void Start()
     {
+        blankOne = new GameObject();
+        blankTwo = new GameObject();
+        blankOne.transform.position = new Vector3(999f, 999f, 999f);
+        blankTwo.transform.position = new Vector3(999f, 999f, 999f);
+        allHits.Add(blankOne);
+        allHits.Add(blankTwo);
         lr = GameObject.FindWithTag("Line").GetComponent<LineRenderer>();
         m_Raycaster = GetComponent<GraphicRaycaster>();
         m_EventSystem = GetComponent<EventSystem>();
@@ -49,6 +58,9 @@ public class TouchInput : MonoBehaviour
         if (Input.GetButtonUp("Fire1"))
         {
             points.Clear();
+            allHits.Clear();
+            allHits.Add(blankOne);
+            allHits.Add(blankTwo);
             lr.gameObject.SetActive(false);
             allTickedOff?.Invoke();
             isSwiping = false;
@@ -65,23 +77,39 @@ public class TouchInput : MonoBehaviour
     {
         foreach (RaycastResult result in results)
         {
-            
+
             lr.gameObject.SetActive(true);
             touchedLetter = true;
-
-            if (result.gameObject.GetComponent<LetterListener>().ticked == false) //only add to points if not added yet
+            if (result.gameObject.transform.position == allHits[allHits.Count - 2].transform.position && result.gameObject.GetComponent<LetterListener>().ticked == true)
             {
-                points.Add(result.gameObject.transform.position);
+                allHits[allHits.Count - 1].GetComponent<LetterListener>().RemoveLetterFromCurrent(); //ticks false
+                allHits.RemoveAt(allHits.Count - 1);
+                points.RemoveAt(points.Count - 1);
+                
                 for (int i = 0; i < points.Count; i++)
                 {
-
                     lr.positionCount = points.Count;
                     lr.SetPositions(points.ToArray());
-
                 }
             }
-            result.gameObject.GetComponent<LetterListener>().AddLetterToCurrent(); //ticks letter true
+            else if (result.gameObject.GetComponent<LetterListener>().ticked == false) //only add to points if not added yet
+            {
+                points.Add(result.gameObject.transform.position);
+                allHits.Add(result.gameObject);
+                result.gameObject.GetComponent<LetterListener>().AddLetterToCurrent(); //ticks letter true
+                for (int i = 0; i < points.Count; i++)
+                {
+                    lr.positionCount = points.Count;
+                    lr.SetPositions(points.ToArray());                 
+                }
+            }
+
+            
+
+            
+            
         }
+        
     }
 }
 

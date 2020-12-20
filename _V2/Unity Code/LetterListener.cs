@@ -26,9 +26,13 @@ public class LetterListener : MonoBehaviour
         if (!ticked)
         {
             ticked = true;
-            CombatWordManager.addToString(GetComponent<Text>().text);
-            
-        }
+            CombatWordManager.addToString(GetComponent<Text>().text);         
+        }      
+    }
+    public void RemoveLetterFromCurrent()
+    {              
+            ticked = false;
+            CombatWordManager.removeString();
         
     }
 

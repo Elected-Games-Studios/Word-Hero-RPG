@@ -116,7 +116,7 @@ public static class CombatWordManager
 	}
 	public static void removeString() // if you want to walk back the the line you can call this and it will remove it 
 	{
-		checkString.Remove(checkString.Count()-1);
+		checkString = checkString.Remove(checkString.Length-1);
         onUpdateString?.Invoke();
     }
 	public static void resetString()
