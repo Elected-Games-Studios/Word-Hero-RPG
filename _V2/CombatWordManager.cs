@@ -22,6 +22,7 @@ public static class CombatWordManager
     public static event Action<int> onMaxLengthFound;
     public static event Action onUpdateString;
     public static event Action<int> onCorrectWord;
+    public static event Action playerKilledTrigger;
     
 
     public static void StartLevel() //called on awake for 
@@ -123,5 +124,9 @@ public static class CombatWordManager
 	{
 		checkString = "";
         onUpdateString?.Invoke();
+    }
+    public static void GameOverTrigger()
+    {
+        playerKilledTrigger?.Invoke();
     }
 }

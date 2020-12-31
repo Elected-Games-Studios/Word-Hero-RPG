@@ -11,6 +11,8 @@ public class CombatLogic : MonoBehaviour
 
     private int eDmg, eHealth, eCrit;
 
+    public static bool isPlayerAlive = true;
+
     private List<string> words = CombatWordManager.Words;
     int wordsLeft = CombatWordManager.Words.Count;
     private int currentWordIndex;
@@ -20,17 +22,20 @@ public class CombatLogic : MonoBehaviour
     //temporary
     [SerializeField]
     private Text toSpell;
-    
+    private Slider HPSlider;
+    private Text HPText;
     private Slider slider;
     //end temporary^
 
     public event Action<int> onDamageEnemy;
-    public event Action onDamagePlayer;
+    public event Action<int> onDamagePlayer;
     public event Action onEnemyKilled;
     public event Action onLevelComplete;
+    public event Action onPlayerKilled;
 
     void Awake()
     {
+
         bubbles = GetComponentsInChildren<Image>(true);
         //testing only, initializes hero data and chosen character, returns stats to HeroList[0]
         CharectorStats.LoadManagerData("");
@@ -41,6 +46,7 @@ public class CombatLogic : MonoBehaviour
         pCrit = heroStats[5];
         pAgi = heroStats[6];
         pDef = heroStats[7];
+        eDmg = 20; //TOCHANGE
         eCrit = 200;
         //event subs
         CombatWordManager.onMaxLengthFound += generateBubble;
@@ -50,22 +56,38 @@ public class CombatLogic : MonoBehaviour
         onEnemyKilled += nextWord;
         onEnemyKilled += stageLoot;
         onLevelComplete += levelFinished;
+        onPlayerKilled += playerKilled;
 
         CombatWordManager.StartLevel();
-
+        InitializePlayer();
         InitializeEnemy();
-
+        StartCoroutine(CombatTimer());
     }
     private void Update()
     {
-        
+
     }   
+
+    IEnumerator CombatTimer()
+    {
+        while (isPlayerAlive)//combat is happening, or something
+        {
+            yield return new WaitForSeconds(3f); //AGI modifies this input
+            Debug.Log("ondamageplayer invoke");
+            onDamagePlayer?.Invoke(eDmg);
+        }
+
+    }
 
     public void generateBubble(int length) //called once to choose bubble of longest word size, don't need to re-render
     {      
         bubbles[length - 4].gameObject.SetActive(true);
         populateBubble();
         CombatWordManager.onMaxLengthFound -= generateBubble;
+    }
+    void removeBubble()//onPlayerKilled
+    {
+        currentBubble.SetActive(false);
     }
 
     public void populateBubble()
@@ -82,6 +104,7 @@ public class CombatLogic : MonoBehaviour
         //temp
         toSpell.text = string.Join(" ", CombatWordManager.currentUsableWords);
     }
+   
 
     private void InitializeEnemy()
     {
@@ -93,18 +116,29 @@ public class CombatLogic : MonoBehaviour
         slider.value = eHealth;
         //^ end temp
     }
-
-
+    private void InitializePlayer()
+    {
+        HPSlider = GameObject.FindGameObjectWithTag("PlayerHP").GetComponent<Slider>();
+        HPText = HPSlider.GetComponentInChildren<Text>();
+        HPSlider.maxValue = pHealth;
+        HPSlider.value = pHealth;
+        HPText.text = HPSlider.value.ToString() + "/" + HPSlider.maxValue.ToString() + "  ";
+    }
 
     //event methods
-    void playerTakeDamage()
+    void playerTakeDamage(int damage)
     {
-
+        pHealth -= damage;
+        HPSlider.value -= damage;
+        HPText.text = HPSlider.value.ToString() + "/" + HPSlider.maxValue.ToString() + "  ";
+        if(pHealth <= 0)
+        {
+            onPlayerKilled?.Invoke();
+        }
     }
 
     void enemyTakeDamage(int length)
     {
-
         int totalDmg = pDmg * length * checkCrit();
        // Debug.Log("total dmg" + totalDmg);
         eHealth -= totalDmg;
@@ -113,7 +147,6 @@ public class CombatLogic : MonoBehaviour
             onEnemyKilled?.Invoke();
         }
         slider.value = eHealth;
-
         //temp
         toSpell.text = string.Join(" ", CombatWordManager.currentUsableWords);
     }
@@ -172,6 +205,16 @@ public class CombatLogic : MonoBehaviour
  
     }
 
+    //onPlayerKilled
+    void playerKilled()
+    {
+        Debug.Log("gameover sequence");
+        isPlayerAlive = false;
+        removeBubble();
+        CombatWordManager.resetString();
+        CombatWordManager.GameOverTrigger();
+    }
+
     private void OnDisable()
     {
         //unsubs
@@ -180,6 +223,7 @@ public class CombatLogic : MonoBehaviour
         onDamagePlayer -= playerTakeDamage;
         onEnemyKilled -= nextWord;
         onEnemyKilled -= stageLoot;
+        onPlayerKilled -= playerKilled;
     }
 
 }
