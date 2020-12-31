@@ -9,7 +9,7 @@ public class CombatLogic : MonoBehaviour
     //references to player, enemy, letter nodes
     private int pDmg, pHealth, pCrit, pAgi, pDef;
 
-    private int eDmg, eHealth, eCrit;
+    private int eDmg, eAgi, eHealth, eCrit;
 
     public static bool isPlayerAlive = true;
 
@@ -48,6 +48,7 @@ public class CombatLogic : MonoBehaviour
         pDef = heroStats[7];
         eDmg = 20; //TOCHANGE
         eCrit = 200;
+        eAgi = 10;
         //event subs
         CombatWordManager.onMaxLengthFound += generateBubble;
         CombatWordManager.onCorrectWord += spelledWord;
@@ -72,8 +73,8 @@ public class CombatLogic : MonoBehaviour
     {
         while (isPlayerAlive)//combat is happening, or something
         {
-            yield return new WaitForSeconds(3f); //AGI modifies this input
-            Debug.Log("ondamageplayer invoke");
+            float difference = (pAgi - eAgi);
+            yield return new WaitForSeconds(5f + (difference/100));
             onDamagePlayer?.Invoke(eDmg);
         }
 
