@@ -69,7 +69,7 @@ public class CharectorStats
     { 75, 100, 150, 250 };//Mine!
     private static string[,] NamesAndtiers = new string[72, 2]
     { {"Folk","T0"},{"Fighter","T1"},{"Ranger","T1"},{"Rogue","T1"},{"Mage","T1"},{"Cleric","T1"},{"Barbarian","T1"},{"Monk","T1"},{"Hunter","T2"},{"Soldier","T2"},{"Wizard","T2"},{"Acolyte","T2"},{"Thief","T2"},{"Gambler","T2"},{"Archer","T2"},{"Duelist","T2"},{"Berserker","T2"},{"Bard","T2"},{"Trapper","T2"},{"Blade Master","T3"},{"War Mage","T3"},{"Knight","T3"},{"Lancer","T3"},{"Druid","T3"},{"Sorcerer","T3"},{"Priest","T3"},{"Warlock","T3"},{"Arcane Trickster","T3"},{"Assassin","T3"},{"Tactician","T3"},{"Sage (Bard+)","T3"},{"Spell Sniper","T3"},{"Grand Marksman","T3"},{"Dervish","T3"},{"Hightened Monk","T3"},{"Commander","T3"},{"Magician","T3"},{"Jester","T3"},{"Falconer","T3"},{"Tinkerer","T3"},{"Hex Blade","T4"},{"Paladin","T4"},{"Weapon Master","T4"},{"Spellblade","T4"},{"Death Knight","T4"},{"Shadow","T4"},{"Juggernaut","T4"},{"Dragoon","T4"},{"Archmage","T4"},{"Eldrich Knight","T4"},{"Elementalist","T4"},{"Archdruid","T4"},{"Invoker","T4"},{"Shadowmancer","T4"},{"Avatar","T4"},{"Avenger","T4"},{"Blue Mage","T4"},{"Technomancer","T4"},{"Beast Master","T4"},{"Vampire Hunter","T4"},{"Arcane Arrow","T4"},{"Slayer/Executioner","T4"},{"Horizon Walker","T4"},{"Holy Ranger","T4"},{"Lycanthrope","T4"},{"Pirate Lord","T4"},{"Bombardier","T4"},{"Spirit Guardian","T4"},{"Aspect of Gaia","T5"},{"Dragonmaster","T5"},{"Avatar of Vengeance","T5"},{"Chronomancer","T5"} };//Mine!
-    private static int CurrentHero;//Mine!
+    public static int CurrentHero;//Mine! JOE: TEMPORARILY MADE PUBLIC UNTIL BETTER WAY TO ACCESS THIS
     private static int[] ShardCounter = new int[2] { 0, 0 };
     private static List<int> T1bh = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
     private static List<int> T2bh = new List<int> { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
@@ -172,7 +172,7 @@ public class CharectorStats
                     return (T5MaxLevel[difStar]);
             }
         }
-    private static int[] GetCharecterStats(int chosenCharecter)//Mine!
+    public static int[] GetCharecterStats(int chosenCharecter)//Mine! JOE: Had to set to public, couldn't find origin point.
     {
         int[] tempStats = new int[8] 
             { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -186,6 +186,7 @@ public class CharectorStats
         heroLvl -= 1;
 
         switch (tier)
+            //this is off by -1 Level -- Dylan and Joe <3
         {
             case "T0":
                 tempStats[3] = Convert.ToInt32((DifArr[HeroDif[chosenCharecter, 0]] / 10) * (heroLvl * ((T0Stats[1,1] - T0Stats[0,1]) / ((T0Stats[1,0] - T0Stats[0,0]))) + T0Stats[0,1]));
