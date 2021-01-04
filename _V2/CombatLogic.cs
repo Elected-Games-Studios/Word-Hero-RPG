@@ -39,7 +39,8 @@ public class CombatLogic : MonoBehaviour
         bubbles = GetComponentsInChildren<Image>(true);
         //testing only, initializes hero data and chosen character, returns stats to HeroList[0]
         CharectorStats.LoadManagerData("");
-        int [] heroStats = CharectorStats.HeroList[0].ToArray();
+        int [] heroStats = CharectorStats.SetCurrentHero(0);
+        
         //GameObject bubbles = GetComponentInChildren<bubbles>();
         pDmg = heroStats[3];
         pHealth = heroStats[4];

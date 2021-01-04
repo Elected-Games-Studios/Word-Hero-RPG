@@ -9,12 +9,7 @@ public class InitializeHeroList : MonoBehaviour
     {
         
         CharectorStats.LoadManagerData("");
-        CharectorStats.SetCurrentHero(CharectorStats.HeroList[0][0]);
-        for(var i = 0; i < CharectorStats.HeroList[0].ToArray().Length; i++)
-        {
-            var gay = (CharectorStats.HeroList[0].ToArray());
-            Debug.Log(gay[i].ToString());
-        }
+        
 
         SceneManager.LoadScene(1);
     }
