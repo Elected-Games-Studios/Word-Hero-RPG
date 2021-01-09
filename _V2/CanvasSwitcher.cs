@@ -13,7 +13,7 @@ public class CanvasSwitcher : MonoBehaviour
     {
         menuButton = GetComponent<Button>();
         menuButton.onClick.AddListener(OnButtonClicked);
-        canvasManager = CanvasDisplayManager.GetInstance();
+        canvasManager = CanvasDisplayManager.instance;
     }
 
     void OnButtonClicked()

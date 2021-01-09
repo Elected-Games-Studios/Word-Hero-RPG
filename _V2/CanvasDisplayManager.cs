@@ -11,24 +11,29 @@ public enum CanvasType
     RegionMap,
     HeroHome,
     HeroSelected,
+    Gameplay,
     ClassUp,
     Enhance,
     Multiplayer,
     PvP
 }
 
-public class CanvasDisplayManager : Singleton<CanvasDisplayManager>
+public class CanvasDisplayManager : MonoBehaviour
 {
     public static event Action Rise;
     public static event Action Revert;
     public static event Action GenerateHeroTiles;
-
+    public static CanvasDisplayManager instance;
     List<CanvasController> canvasControllerList;
     CanvasController lastActiveCanvas;
+    CanvasController desiredCanvas;
 
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
+        //base.Awake();
+        instance = this;
+        lastActiveCanvas = new CanvasController();
+        desiredCanvas = new CanvasController();
         canvasControllerList = GetComponentsInChildren<CanvasController>().ToList();
         canvasControllerList.ForEach(x => x.gameObject.SetActive(false));
         SwitchCanvas(CanvasType.MainMenu);
@@ -40,8 +45,9 @@ public class CanvasDisplayManager : Singleton<CanvasDisplayManager>
         {
             lastActiveCanvas.gameObject.SetActive(false);
         }
-
+        
         CanvasController desiredCanvas = canvasControllerList.Find(x => x.canvasType == _type);
+        
         if (desiredCanvas != null)
         {
             desiredCanvas.gameObject.SetActive(true);
