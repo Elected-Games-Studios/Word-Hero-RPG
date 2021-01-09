@@ -10,7 +10,7 @@ public class StatValues : MonoBehaviour
 
     private void Start()
     {
-        int[] heroStats = CharectorStats.SetCurrentHero(CharectorStats.tempChosen);
+        int[] heroStats = CharectorStats.SetCurrentHero(CharectorStats.tempChosen); //displays stats of hero picked from tile but not necessarily selected
         objects[0].GetComponent<Text>().text = heroStats[2].ToString();//XP
         objects[1].GetComponent<Text>().text = heroStats[5].ToString();//health
         objects[2].GetComponent<Text>().text = heroStats[4].ToString();//dmg

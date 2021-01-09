@@ -260,6 +260,7 @@ public static class CharectorStats
     }
     public static List<int[]> herosThatCanMelt(int chosenCharecter)//Must be run after each hero is placed in the melt chamber.  Returns same as heroes unlocked.
     {
+        //Can we modify to exclude from the returned list the chosen character?? i.e. you can't melt what you're using by accident. From Joe
         int maxXp = findCurrentMax(chosenCharecter);
         List<int[]> Allhero = new List<int[]> { };
         int[] tempHero = new int[4] { 0, 0, 0, 0};

@@ -9,6 +9,7 @@ public class TileListButtonControl : MonoBehaviour
     private List<GameObject> buttons;
     private List<int[]> AllHeros;
 
+
     private void Awake()
     {
         buttons = new List<GameObject>();
@@ -31,7 +32,7 @@ public class TileListButtonControl : MonoBehaviour
             buttons.Add(button);
             button.SetActive(true);
 
-            button.GetComponent<TileListButton>().SetText(CharectorStats.HeroName(AllHeros[i][0]) + i);
+            button.GetComponent<TileListButton>().SetText(CharectorStats.HeroName(AllHeros[i][1]));
            
             button.transform.SetParent(buttonTemplate.transform.parent, false);
 
@@ -40,7 +41,7 @@ public class TileListButtonControl : MonoBehaviour
 
     public void ButtonClicked(int buttonIdx)
     {
-        CharectorStats.tempChosen = buttonIdx;
-        
+        CharectorStats.tempChosen = buttonIdx;       
     }
+
 }
