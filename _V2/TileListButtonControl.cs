@@ -16,7 +16,10 @@ public class TileListButtonControl : MonoBehaviour
     }
     public void GenButtons()
     {
-        AllHeros = CharectorStats.UnlockedCharectors();
+        for(int i=0;i< CharectorStats.numOfHeroes(); i++)
+        {
+            AllHeros.Add(CharectorStats.UnlockedCharectors(i));
+        }
         if(buttons.Count > 0)
         {
 
