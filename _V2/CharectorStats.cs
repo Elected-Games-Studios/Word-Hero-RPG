@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 public static class CharectorStats
 {
     //needed to temporarily make HeroList public to actually access it for stats bc LoadManagerData doesnt have a return value.
-    private static List<List<int>> HeroList = new List<List<int>> { };//Mine!
-    private static List<int> HeroDefault = new List<int>
+    private static List<int[]> HeroList = new List<List<int>> { };//Mine!
+    private static int[] HeroDefault = new int[10]
     { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 }; // 0-Idx 1-Lvl 2-XP 3-Stars 4-dmg 5-health 6-crit 7-agi 8-def 9-XPtoNextLevel     ###MINE!!!!!
     private static int[] DifArr = new int[5]
         {15,12,10,8,6};//Mine!
@@ -436,7 +436,7 @@ public static class CharectorStats
     public static void AddCharecter(int shardT)
     {
         int tempInt;
-        List<int> TempHero = HeroDefault;
+        int[] TempHero = HeroDefault;
         switch (shardT)
         {
             case 1:
