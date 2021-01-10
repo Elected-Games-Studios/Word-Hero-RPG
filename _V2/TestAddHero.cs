@@ -6,6 +6,7 @@ public class TestAddHero : MonoBehaviour
 {
     public void TestAddHeroClicked()
     {
+        CharectorStats.ShardCounter[1] = 9;
         CharectorStats.AddCharecter(1);
         
     }

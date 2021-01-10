@@ -7,7 +7,7 @@ public class TileListButtonControl : MonoBehaviour
     [SerializeField]
     private GameObject buttonTemplate;
     private List<GameObject> buttons;
-    private List<int[]> AllHeros;
+    private List<int[]> AllHeros = new List<int[]> { };
 
 
     private void Awake()
@@ -18,7 +18,7 @@ public class TileListButtonControl : MonoBehaviour
     {
         for(int i=0;i< CharectorStats.numOfHeroes(); i++)
         {
-            AllHeros.Add(CharectorStats.UnlockedCharectors(i));
+            AllHeros.Add(CharectorStats.UnlockedCharector(i));
         }
         if(buttons.Count > 0)
         {
@@ -33,6 +33,8 @@ public class TileListButtonControl : MonoBehaviour
         {
             GameObject button = Instantiate(buttonTemplate) as GameObject;
             buttons.Add(button);
+            int temp = AllHeros[i][1];
+            Debug.Log(temp);
             button.SetActive(true);
 
             button.GetComponent<TileListButton>().SetText(CharectorStats.HeroName(AllHeros[i][1]));
@@ -44,7 +46,7 @@ public class TileListButtonControl : MonoBehaviour
 
     public void ButtonClicked(int buttonIdx)
     {
-        CharectorStats.tempChosen = buttonIdx;       
+        CharectorStats.setTempHero(buttonIdx);      
     }
 
 }

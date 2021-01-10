@@ -21,7 +21,7 @@ public class MeltHeroGridManager : MonoBehaviour
     }
     public void RefreshMeltableHeros()
     {
-        MeltableHeros = CharectorStats.herosThatCanMelt(CharectorStats.tempChosen);
+        MeltableHeros = CharectorStats.herosThatCanMelt(CharectorStats.getTempHero());
         if (buttons.Count > 0)
         {
 
@@ -68,6 +68,6 @@ public class MeltHeroGridManager : MonoBehaviour
 
     public void MeltHeros()
     {
-        CharectorStats.meltHero(SelectedToMelt, CharectorStats.tempChosen);
+        CharectorStats.meltHero(SelectedToMelt, CharectorStats.getTempHero());
     }
 }
