@@ -10,8 +10,8 @@ public class EnhanceListButton : MonoBehaviour
     [SerializeField]
     private MeltHeroGridManager btnControl;
     private int thisButtonIndex;
-
     private string myTextString;
+    private bool clicked = false;
 
     public void SetIndex(int num)
     {
@@ -25,7 +25,8 @@ public class EnhanceListButton : MonoBehaviour
     }
 
     public void OnClick()
-    {
-        btnControl.MeltableButtonClicked(thisButtonIndex);
+    {      
+       btnControl.MeltableButtonClicked(thisButtonIndex, clicked);
+        clicked = !clicked;
     }
 }

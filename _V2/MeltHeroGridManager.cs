@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class MeltHeroGridManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject buttonTemplate;
+    [SerializeField]
+    private MelterXPBar xpslide;
     private List<GameObject> buttons;
     private List<int[]> MeltableHeros;
     private List<int> SelectedToMelt;
@@ -42,12 +44,28 @@ public class MeltHeroGridManager : MonoBehaviour
         }
     }
 
-    public void MeltableButtonClicked(int buttonIdx)
+    public void MeltableButtonClicked(int buttonIdx, bool clicked)
     {
-        SelectedToMelt.Add(MeltableHeros[buttonIdx][0]);//<<what number should this effing be?! my head hertz
-        //highlight, other image modifications
-        RefreshMeltableHeros();
+        Debug.Log("Melt btn clicked");
+        if (clicked == false)
+        {
+            Debug.Log("clicked was false");
+            SelectedToMelt.Add(MeltableHeros[buttonIdx][1]);//<<what number should this effing be?! my head hertz
+                                                            //highlight, other image modifications
+            RefreshMeltableHeros();
+            xpslide.UpdateSlider();
+        }
+        else
+        {
+            Debug.Log("clicked was true");
+            SelectedToMelt.Remove(MeltableHeros[buttonIdx][1]);
+            //dehighlight
+            RefreshMeltableHeros();
+            xpslide.UpdateSlider();
+        }
+
     }
+
     public void MeltHeros()
     {
         CharectorStats.meltHero(SelectedToMelt, CharectorStats.tempChosen);
