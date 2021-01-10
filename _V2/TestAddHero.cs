@@ -8,6 +8,7 @@ public class TestAddHero : MonoBehaviour
     {
         CharectorStats.ShardCounter[1] = 9;
         CharectorStats.AddCharecter(1);
+        //Debug.Log(CharectorStats.numOfHeroes());
         
     }
 }

@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 public static class CharectorStats
 {
     //needed to temporarily make HeroList public to actually access it for stats bc LoadManagerData doesnt have a return value.
-    private static List<List<int>> HeroList;//Mine!
+    private static List<List<int>> HeroList = new List<List<int>> { };//Mine!
     private static List<int> HeroDefault = new List<int>
-    { 0, 1, 0, 0, 0, 0, 0, 0, 0}; // 0-Idx 1-Lvl 2-XP 3-Stars 4-dmg 5-health 6-crit 7-agi 8-def 9-XPtoNextLevel     ###MINE!!!!!
+    { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 }; // 0-Idx 1-Lvl 2-XP 3-Stars 4-dmg 5-health 6-crit 7-agi 8-def 9-XPtoNextLevel     ###MINE!!!!!
     private static int[] DifArr = new int[5]
         {15,12,10,8,6};//Mine!
     private static int[,] HeroDif = new int[49, 5]
@@ -88,10 +88,7 @@ public static class CharectorStats
 
     private static void NewGame()//Mine!
     {
-        HeroList = new List<List<int>>();
-        List<int> tempList = HeroDefault;
-        tempList.Insert(0, 0);
-        HeroList.Add(tempList);
+        HeroList.Add(HeroDefault);
     }
     private static int canAddXP(int chosenCharecter)//Mine!
     {
@@ -391,7 +388,7 @@ public static class CharectorStats
     }
     public static string HeroName(int chosenCharecter)
     {
-        return NamesAndtiers[HeroList[chosenCharecter][0], 0];
+        return NamesAndtiers[chosenCharecter, 0];
     }
     public static void levelUp(int chosenCharecter)
     {

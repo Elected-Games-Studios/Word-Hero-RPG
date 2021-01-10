@@ -16,8 +16,14 @@ public class TileListButtonControl : MonoBehaviour
     }
     public void GenButtons()
     {
+        AllHeros.Clear();
         for(int i=0;i< CharectorStats.numOfHeroes(); i++)
         {
+            Debug.Log(CharectorStats.UnlockedCharector(i)[0]);
+            Debug.Log(CharectorStats.UnlockedCharector(i)[1]);
+
+            Debug.Log(CharectorStats.UnlockedCharector(i)[2]);
+            Debug.Log(CharectorStats.UnlockedCharector(i)[3]);
             AllHeros.Add(CharectorStats.UnlockedCharector(i));
         }
         if(buttons.Count > 0)
@@ -34,7 +40,7 @@ public class TileListButtonControl : MonoBehaviour
             GameObject button = Instantiate(buttonTemplate) as GameObject;
             buttons.Add(button);
             int temp = AllHeros[i][1];
-            Debug.Log(temp);
+            //Debug.Log(temp);
             button.SetActive(true);
 
             button.GetComponent<TileListButton>().SetText(CharectorStats.HeroName(AllHeros[i][1]));
