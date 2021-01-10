@@ -69,14 +69,19 @@ public static class CharectorStats
     { 75, 100, 150, 250 };//Mine!
     private static string[,] NamesAndtiers = new string[72, 2]
     { {"Folk","T0"},{"Fighter","T1"},{"Ranger","T1"},{"Rogue","T1"},{"Mage","T1"},{"Cleric","T1"},{"Barbarian","T1"},{"Monk","T1"},{"Hunter","T2"},{"Soldier","T2"},{"Wizard","T2"},{"Acolyte","T2"},{"Thief","T2"},{"Gambler","T2"},{"Archer","T2"},{"Duelist","T2"},{"Berserker","T2"},{"Bard","T2"},{"Trapper","T2"},{"Blade Master","T3"},{"War Mage","T3"},{"Knight","T3"},{"Lancer","T3"},{"Druid","T3"},{"Sorcerer","T3"},{"Priest","T3"},{"Warlock","T3"},{"Arcane Trickster","T3"},{"Assassin","T3"},{"Tactician","T3"},{"Sage (Bard+)","T3"},{"Spell Sniper","T3"},{"Grand Marksman","T3"},{"Dervish","T3"},{"Hightened Monk","T3"},{"Commander","T3"},{"Magician","T3"},{"Jester","T3"},{"Falconer","T3"},{"Tinkerer","T3"},{"Hex Blade","T4"},{"Paladin","T4"},{"Weapon Master","T4"},{"Spellblade","T4"},{"Death Knight","T4"},{"Shadow","T4"},{"Juggernaut","T4"},{"Dragoon","T4"},{"Archmage","T4"},{"Eldrich Knight","T4"},{"Elementalist","T4"},{"Archdruid","T4"},{"Invoker","T4"},{"Shadowmancer","T4"},{"Avatar","T4"},{"Avenger","T4"},{"Blue Mage","T4"},{"Technomancer","T4"},{"Beast Master","T4"},{"Vampire Hunter","T4"},{"Arcane Arrow","T4"},{"Slayer/Executioner","T4"},{"Horizon Walker","T4"},{"Holy Ranger","T4"},{"Lycanthrope","T4"},{"Pirate Lord","T4"},{"Bombardier","T4"},{"Spirit Guardian","T4"},{"Aspect of Gaia","T5"},{"Dragonmaster","T5"},{"Avatar of Vengeance","T5"},{"Chronomancer","T5"} };//Mine!
-    private static int CurrentHero = 0;//Mine! Joe edited to default at 0
-    public static int tempChosen;// Joe labeled this<< HELP
-    private static int[] ShardCounter = new int[2] { 0, 0 };
-    private static List<int> T1bh = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
-    private static List<int> T2bh = new List<int> { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
-    private static List<int> T3bh = new List<int> { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 };
-    private static List<int> T4bh = new List<int> { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67 };
-    private static List<int> T5bh = new List<int> { 68, 69, 70, 71 };
+    private static int[] CurrentHero = new int[2] {0,0};//Mine! Joe edited to default at 0
+    private static int[] ShardCounter = new int[2] 
+    { 0, 0 };
+    private static List<int> T1bh = new List<int> 
+    { 1, 2, 3, 4, 5, 6, 7 };
+    private static List<int> T2bh = new List<int> 
+    { 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+    private static List<int> T3bh = new List<int> 
+    { 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39 };
+    private static List<int> T4bh = new List<int> 
+    { 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67 };
+    private static List<int> T5bh = new List<int> 
+    { 68, 69, 70, 71 };
     private static List<List<int>> tiersByHero = new List<List<int>> {T1bh,T2bh,T3bh,T4bh,T5bh};
 
     //-------------------------End of Variables -----------------------------
@@ -369,40 +374,38 @@ public static class CharectorStats
             HeroList[chosenCharecter][1]++;
         }
     }
-    public static int GetCurrentHero() => CurrentHero;
+    public static int GetCurrentHero() => CurrentHero[1];
+    public static void setTempHero(int Hero) => CurrentHero[0] = Hero;
+    public static int getTempHero() => CurrentHero[0];
     public static int[] EndofLevel(int xpGained)
     {
-        if (canAddXP(CurrentHero) > (HeroList[CurrentHero][2] + xpGained))
+        if (canAddXP(CurrentHero[1]) > (HeroList[CurrentHero[1]][2] + xpGained))
         {
-            HeroList[CurrentHero][2] += xpGained;
-            levelUp(CurrentHero);
-            return HeroList[CurrentHero].ToArray();
+            HeroList[CurrentHero[1]][2] += xpGained;
+            levelUp(CurrentHero[1]);
+            return HeroList[CurrentHero[1]].ToArray();
         }
         else
         {
-            HeroList[CurrentHero][2] = canAddXP(CurrentHero);
-            return HeroList[CurrentHero].ToArray();
+            HeroList[CurrentHero[1]][2] = canAddXP(CurrentHero[1]);
+            return HeroList[CurrentHero[1]].ToArray();
         }
     }
     public static int[] SetCurrentHero(int chosenCharecter)
     {
-        CurrentHero = chosenCharecter;
+        CurrentHero[1] = chosenCharecter;
         return HeroList[chosenCharecter].ToArray();
     }
-    public static List<int[]> UnlockedCharectors() //This returns a list of All heroes with their values (ListID, HeroID, Level, StarCount)
+    public static int[] UnlockedCharectors(int charecterNum) //This returns a list of All heroes with their values (ListID, HeroID, Level, StarCount)
     {
-        List<int[]> Allhero = new List<int[]> { };
         int[] tempHero = new int[4] { 0, 0, 0, 0} ;
-        for (int i = 0; i < HeroList.Count; i++)
-        {
-            tempHero[0] = i; //idx for sorting list becomes whatever index they are in herolist
-            tempHero[1] = HeroList[i][0];//tmphero 1 is herolist 0--Number
-            tempHero[2] = HeroList[i][1];//level
-            tempHero[3] = HeroList[i][3];//something...
-            Allhero.Add(tempHero);
-        }
-        return Allhero;
+        tempHero[0] = i; //idx for sorting list becomes whatever index they are in herolist
+        tempHero[1] = HeroList[i][0];//tmphero 1 is herolist 0--Number
+        tempHero[2] = HeroList[i][1];//level
+        tempHero[3] = HeroList[i][3];//something...
+        return tempHero;
     }
+    public static int numOfHeroes() => HeroList.Count();
     public static void AddCharecter(int shardT)
     {
         int tempInt;
