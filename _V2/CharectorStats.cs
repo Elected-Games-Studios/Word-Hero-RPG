@@ -250,17 +250,43 @@ public static class CharectorStats
         switch (tier)
         {
             case "T0":
-                return (XPT0[(HeroList[chosenCharecter][0] - 1)] - HeroList[chosenCharecter][2]);
+                return (XPT0[(HeroList[chosenCharecter][1])] - HeroList[chosenCharecter][2]);
             case "T1":
-                return (XPT1[(HeroList[chosenCharecter][0] - 1)] - HeroList[chosenCharecter][2]);
+                return (XPT1[(HeroList[chosenCharecter][1])] - HeroList[chosenCharecter][2]);
             case "T2":
-                return (XPT2[(HeroList[chosenCharecter][0] - 1)] - HeroList[chosenCharecter][2]);
+                return (XPT2[(HeroList[chosenCharecter][1])] - HeroList[chosenCharecter][2]);
             case "T3":
-                return (XPT3[(HeroList[chosenCharecter][0] - 1)] - HeroList[chosenCharecter][2]);
+                return (XPT3[(HeroList[chosenCharecter][1])] - HeroList[chosenCharecter][2]);
             case "T4":
-                return (XPT4[(HeroList[chosenCharecter][0] - 1)] - HeroList[chosenCharecter][2]);
+                return (XPT4[(HeroList[chosenCharecter][1])] - HeroList[chosenCharecter][2]);
             default:
-                return (XPT5[(HeroList[chosenCharecter][0] - 1)] - HeroList[chosenCharecter][2]);
+                return (XPT5[(HeroList[chosenCharecter][1])] - HeroList[chosenCharecter][2]);
+        }
+    }
+    public static int[2] XPStartEnd(int chosenCharecter) 
+    {
+        string tier = NamesAndtiers[HeroList[chosenCharecter][0], 1];
+        int[] temp;
+        switch (tier)
+        {
+            case "T0":
+                temp = new int[2] { XPT0[(HeroList[chosenCharecter][1])] - 1, XPT0[(HeroList[chosenCharecter][1])]};
+                return temp;
+            case "T1":
+                temp = new int[2] { XPT1[(HeroList[chosenCharecter][1])] - 1, XPT1[(HeroList[chosenCharecter][1])] };
+                return temp;
+            case "T2":
+                temp = new int[2] { XPT2[(HeroList[chosenCharecter][1])] - 1, XPT2[(HeroList[chosenCharecter][1])] };
+                return temp;
+            case "T3":
+                temp = new int[2] { XPT3[(HeroList[chosenCharecter][1])] - 1, XPT3[(HeroList[chosenCharecter][1])] };
+                return temp;
+            case "T4":
+                temp = new int[2] { XPT4[(HeroList[chosenCharecter][1])] - 1, XPT4[(HeroList[chosenCharecter][1])] };
+                return temp;
+            default:
+                temp = new int[2] { XPT5[(HeroList[chosenCharecter][1])] - 1, XPT5[(HeroList[chosenCharecter][1])] };
+                return temp;
         }
     }
     public static List<int[]> herosThatCanMelt(int chosenCharecter)//Must be run after each hero is placed in the melt chamber.  Returns same as heroes unlocked.
@@ -375,7 +401,11 @@ public static class CharectorStats
         }
     }
     public static int GetCurrentHero() => CurrentHero[1];
-    public static void setTempHero(int Hero) => CurrentHero[0] = Hero;
+    public static void setTempHero(int Hero)
+    {
+        CurrentHero[0] = chosenCharecter;
+        return HeroList[Hero].ToArray();
+    }
     public static int getTempHero() => CurrentHero[0];
     public static int[] EndofLevel(int xpGained)
     {
