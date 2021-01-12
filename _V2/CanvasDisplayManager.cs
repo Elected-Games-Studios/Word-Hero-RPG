@@ -13,7 +13,6 @@ public enum CanvasType
     HeroSelected,
     LoadingScreen,
     Gameplay,
-    ClassUp,
     Enhance,
     Multiplayer,
     PvP
@@ -21,9 +20,8 @@ public enum CanvasType
 
 public class CanvasDisplayManager : MonoBehaviour
 {
-    public static event Action Rise;
-    public static event Action Revert;
-    public static event Action GenerateHeroTiles;
+    public static event Action Rise, Revert, GoAway, ComeBack, GenerateHeroTiles;
+
     public static CanvasDisplayManager instance;
     List<CanvasController> canvasControllerList;
     CanvasController lastActiveCanvas;
@@ -60,6 +58,7 @@ public class CanvasDisplayManager : MonoBehaviour
             switch (desiredCanvas.canvasType)
             {
                 case CanvasType.HeroSelected:
+                    ComeBack?.Invoke();
                     Rise?.Invoke();
                     break;
                 case CanvasType.MainMenu:
@@ -68,6 +67,9 @@ public class CanvasDisplayManager : MonoBehaviour
                 case CanvasType.HeroHome:
                     GenerateHeroTiles?.Invoke();
                     Revert?.Invoke();
+                    break;
+                case CanvasType.Enhance:
+                    GoAway?.Invoke();
                     break;
           
                 default:
