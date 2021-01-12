@@ -24,7 +24,6 @@ public class MeltHeroGridManager : MonoBehaviour
         MeltableHeros = CharectorStats.herosThatCanMelt(CharectorStats.getTempHero());
         if (buttons.Count > 0)
         {
-
             foreach (GameObject button in buttons)
             {
                 Destroy(button.gameObject);
@@ -46,10 +45,8 @@ public class MeltHeroGridManager : MonoBehaviour
 
     public void MeltableButtonClicked(int buttonIdx, bool clicked)
     {
-        Debug.Log("Melt btn clicked");
         if (clicked == false)
         {
-            Debug.Log("clicked was false");
             SelectedToMelt.Add(MeltableHeros[buttonIdx][1]);//<<what number should this effing be?! my head hertz
                                                             //highlight, other image modifications
             RefreshMeltableHeros();
@@ -57,7 +54,6 @@ public class MeltHeroGridManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("clicked was true");
             SelectedToMelt.Remove(MeltableHeros[buttonIdx][1]);
             //dehighlight
             RefreshMeltableHeros();

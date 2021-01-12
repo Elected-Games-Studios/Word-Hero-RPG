@@ -11,6 +11,7 @@ public enum CanvasType
     RegionMap,
     HeroHome,
     HeroSelected,
+    LoadingScreen,
     Gameplay,
     ClassUp,
     Enhance,
@@ -28,6 +29,10 @@ public class CanvasDisplayManager : MonoBehaviour
     CanvasController lastActiveCanvas;
     CanvasController desiredCanvas;
 
+    public CanvasController GetLastActiveCanvas()
+    {
+        return lastActiveCanvas;
+    }
     protected void Awake()
     {
         //base.Awake();

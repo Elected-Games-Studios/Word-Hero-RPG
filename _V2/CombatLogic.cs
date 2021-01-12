@@ -41,7 +41,6 @@ public class CombatLogic : MonoBehaviour
         CharectorStats.LoadManagerData("");
         int [] heroStats = CharectorStats.SetCurrentHero(0);
         
-        //GameObject bubbles = GetComponentInChildren<bubbles>();
         pDmg = heroStats[3];
         pHealth = heroStats[4];
         pCrit = heroStats[5];
