@@ -495,6 +495,7 @@ public static class CharectorStats
                 break;
         }
         HeroList.Add(TempHero);
+        HeroList[HeroList.Count()-1] = GetCharecterStats(HeroList.Count() - 1);
     }
     public static string SaveManagerData()//Save Engine Do Not Call
     {
