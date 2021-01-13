@@ -19,11 +19,6 @@ public class TileListButtonControl : MonoBehaviour
         AllHeros.Clear();
         for(int i=0;i< CharectorStats.numOfHeroes(); i++)
         {
-            Debug.Log(CharectorStats.UnlockedCharector(i)[0]);
-            Debug.Log(CharectorStats.UnlockedCharector(i)[1]);
-
-            Debug.Log(CharectorStats.UnlockedCharector(i)[2]);
-            Debug.Log(CharectorStats.UnlockedCharector(i)[3]);
             AllHeros.Add(CharectorStats.UnlockedCharector(i));
         }
         if(buttons.Count > 0)
