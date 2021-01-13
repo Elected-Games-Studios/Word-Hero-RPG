@@ -187,7 +187,6 @@ public static class CharectorStats
         tempStats[1] = heroLvl;
         tempStats[2] = HeroList[chosenCharecter][2];
         tempStats[2] = HeroList[chosenCharecter][3];
-        heroLvl -= 1;
 
         switch (tier)
             //this is off by -1 Level -- Dylan and Joe <3
@@ -235,6 +234,7 @@ public static class CharectorStats
                 tempStats[8] = Convert.ToInt32((DifArr[HeroDif[heroNumber, 4]] / 10) * (heroLvl * ((T5Stats[1, 5] - T5Stats[0, 5]) / ((T5Stats[1, 0] - T5Stats[0, 0]))) + T5Stats[0, 5]));
                 break;
         }
+        tempStats[9] = XPtoNextLvl(chosenCharecter);
         return tempStats;
     }
     private static void RemoveHero(int chosenCharecter)
