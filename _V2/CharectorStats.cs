@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 public static class CharectorStats
 {
     //needed to temporarily make HeroList public to actually access it for stats bc LoadManagerData doesnt have a return value.
-    private static List<int[]> HeroList = new List<List<int>> { };//Mine!
+    private static List<int[]> HeroList = new List<int[]> { };//Mine!
     private static int[] HeroDefault = new int[10]
     { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 }; // 0-Idx 1-Lvl 2-XP 3-Stars 4-dmg 5-health 6-crit 7-agi 8-def 9-XPtoNextLevel     ###MINE!!!!!
     private static int[] DifArr = new int[5]
@@ -461,7 +461,7 @@ public static class CharectorStats
                             break;
                         case int n when (n < 95):
                             break;
-                            TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
+                            TempHero[0] = tiersByHero[2][UnityEngine.Random.Range(0, tiersByHero[2].Count())];
                         default:
                             TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
                             break;
@@ -515,7 +515,7 @@ public static class CharectorStats
         if (input == "")
         {
             NewGame();
-            HeroList[0]=GetCharecterStats(0).ToList();
+            HeroList[0] = GetCharecterStats(0);
         }
         else
         {
@@ -532,7 +532,7 @@ public static class CharectorStats
                 }
                 counting = 0;
                 input.Remove(0);
-                HeroList[counter] = GetCharecterStats(counter).ToList();
+                HeroList[counter] = GetCharecterStats(counter);
                 counter++;
             }
         }
