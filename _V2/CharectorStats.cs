@@ -495,7 +495,6 @@ public static class CharectorStats
                 break;
         }
         HeroList.Add(TempHero);
-        break;
     }
     public static string SaveManagerData()//Save Engine Do Not Call
     {
