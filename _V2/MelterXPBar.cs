@@ -5,8 +5,17 @@ using UnityEngine.UI;
 
 public class MelterXPBar : MonoBehaviour
 {
+    [SerializeField]
+    private Text heroText;
     private int[] bounds;
     private int[] tempHero;
+
+ 
+    public void SetText()
+    {
+        int[] nameTemp = CharectorStats.setTempHero(CharectorStats.getTempHero());
+        heroText.text = CharectorStats.HeroName(nameTemp[0]);
+    }
     public void UpdateSlider()
     {
         bounds = CharectorStats.XPStartEnd(CharectorStats.getTempHero());

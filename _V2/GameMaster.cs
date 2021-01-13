@@ -9,6 +9,8 @@ public class GameMaster : MonoBehaviour
 
     private void Awake()
     {
+        Region = 0;
+        Difficulty = 0;
         userIds[0] = (Social.Active.localUser.id);
     }
 
