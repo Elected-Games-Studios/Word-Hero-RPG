@@ -177,8 +177,8 @@ public static class CharectorStats
         }
     public static int[] GetCharecterStats(int chosenCharecter)//Mine! JOE: Had to set to public, couldn't find origin point.
     {
-        int[] tempStats = new int[9] 
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        int[] tempStats = new int[10] 
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         int heroNumber = HeroList[chosenCharecter][0];
         int heroLvl = HeroList[chosenCharecter][1];
         string tier = NamesAndtiers[heroNumber,1];
@@ -437,13 +437,14 @@ public static class CharectorStats
     {
         int tempInt;
         int[] TempHero = HeroDefault;
+        Random rand = new Random();
         switch (shardT)
         {
             case 1:
                 tempInt = UnityEngine.Random.Range(0, 100);
                 if (ShardCounter[0] == 9)
                 {
-                    TempHero[0] = tiersByHero[2][UnityEngine.Random.Range(0, tiersByHero[2].Count())];
+                    TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
                     ShardCounter[0] = 0;
                 }
                 else
@@ -451,28 +452,28 @@ public static class CharectorStats
                     switch (tempInt)
                     {
                         case int n when (n < 40):
-                            TempHero[0] = tiersByHero[0][UnityEngine.Random.Range(0, tiersByHero[0].Count())];
+                            TempHero[0] = tiersByHero[0][rand.Next(0, tiersByHero[0].Count())];
                             ShardCounter[0]++;
                             break;
                         case int n when (n < 80):
-                            TempHero[0] = tiersByHero[1][UnityEngine.Random.Range(0, tiersByHero[1].Count())];
+                            TempHero[0] = tiersByHero[1][rand.Next(0, tiersByHero[1].Count())];
                             ShardCounter[0]++;
                             break;
                         case int n when (n < 95):
                             break;
-                            TempHero[0] = tiersByHero[2][UnityEngine.Random.Range(0, tiersByHero[2].Count())];
+                            TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
                         default:
-                            TempHero[0] = tiersByHero[3][UnityEngine.Random.Range(0, tiersByHero[3].Count())];
+                            TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
                             break;
 
                     }
                 }
                 break;
             default:
-                tempInt = UnityEngine.Random.Range(0, 10000);
+                tempInt = rand.Next(0, 10000);
                 if (ShardCounter[1] == 9)
                 {
-                    TempHero[0] = tiersByHero[3][UnityEngine.Random.Range(0, tiersByHero[3].Count())];
+                    TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
                     ShardCounter[1] = 0;
                 }
                 else
@@ -480,14 +481,14 @@ public static class CharectorStats
                     switch (tempInt)
                     {
                         case int n when (n < 8975):
-                            TempHero[0] = tiersByHero[2][UnityEngine.Random.Range(0, tiersByHero[2].Count())];
+                            TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
                             ShardCounter[1]++;
                             break;
                         case int n when (n < 9975):
-                            TempHero[0] = tiersByHero[3][UnityEngine.Random.Range(0, tiersByHero[3].Count())];
+                            TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
                             break;
                         default:
-                            TempHero[0] = tiersByHero[4][UnityEngine.Random.Range(0, tiersByHero[4].Count())];
+                            TempHero[0] = tiersByHero[4][rand.Next(0, tiersByHero[4].Count())];
                             break;
                     }
                 }
