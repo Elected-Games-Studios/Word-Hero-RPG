@@ -441,7 +441,7 @@ public static class CharectorStats
         switch (shardT)
         {
             case 1:
-                tempInt = UnityEngine.Random.Range(0, 100);
+                tempInt = rand.Next(0, 100);
                 if (ShardCounter[0] == 9)
                 {
                     TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
