@@ -189,7 +189,7 @@ public static class CharectorStats
         tempStats[2] = HeroList[chosenCharecter][3];
 
         switch (tier)
-            //this is off by -1 Level -- Dylan and Joe <3
+            //this is off by -1 Level -- Dylan and Joe <3  x = c * (a2-a1)/(b2-b1) + a1
         {
             case "T0":
                 tempStats[4] = Convert.ToInt32((DifArr[HeroDif[heroNumber, 0]] / 10) * (((heroLvl * ((T0Stats[1,1] - T0Stats[0,1]) / ((T0Stats[1,0] - T0Stats[0,0])))) + T0Stats[0,1])));
