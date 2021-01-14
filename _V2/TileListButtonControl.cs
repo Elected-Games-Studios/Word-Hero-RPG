@@ -6,6 +6,7 @@ public class TileListButtonControl : MonoBehaviour
 {
     [SerializeField]
     private GameObject buttonTemplate;
+    private TileListButton currentBtn;
     private List<GameObject> buttons;
     private List<int[]> AllHeros = new List<int[]> { };
 
@@ -39,15 +40,12 @@ public class TileListButtonControl : MonoBehaviour
             button.SetActive(true);
 
             button.GetComponent<TileListButton>().SetText(CharectorStats.HeroName(AllHeros[i][1]));
-           
+            button.GetComponent<TileListButton>().SetIndex(i);
             button.transform.SetParent(buttonTemplate.transform.parent, false);
 
         }
     }
 
-    public void ButtonClicked(int buttonIdx)
-    {
-        CharectorStats.setTempHero(buttonIdx);      
-    }
+   
 
 }

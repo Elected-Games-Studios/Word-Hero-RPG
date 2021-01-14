@@ -27,26 +27,23 @@ public class CombatLogic : MonoBehaviour
     private Slider slider;
     //end temporary^
 
-    public event Action<int> onDamageEnemy;
-    public event Action<int> onDamagePlayer;
-    public event Action onEnemyKilled;
-    public event Action onLevelComplete;
-    public event Action onPlayerKilled;
+    public event Action<int> onDamageEnemy, onDamagePlayer;
+    public event Action onEnemyKilled, onLevelComplete, onPlayerKilled;
 
     void Awake()
     {
 
         bubbles = GetComponentsInChildren<Image>(true);
         //testing only, initializes hero data and chosen character, returns stats to HeroList[0]
-        CharectorStats.LoadManagerData("");
-        int [] heroStats = CharectorStats.SetCurrentHero(0);
+        //CharectorStats.LoadManagerData("");
+        int[] heroStats = CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero());
         
-        pDmg = heroStats[3];
-        pHealth = heroStats[4];
-        pCrit = heroStats[5];
-        pAgi = heroStats[6];
-        pDef = heroStats[7];
-        eDmg = 20; //TOCHANGE
+        pDmg = heroStats[4];
+        pHealth = heroStats[5];
+        pCrit = heroStats[6];
+        pAgi = heroStats[7];
+        pDef = heroStats[8];
+        eDmg = 1; //TOCHANGE
         eCrit = 200;
         eAgi = 10;
         //event subs

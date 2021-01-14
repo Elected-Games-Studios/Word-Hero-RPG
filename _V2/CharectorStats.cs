@@ -459,9 +459,9 @@ public static class CharectorStats
                             TempHero[0] = tiersByHero[1][rand.Next(0, tiersByHero[1].Count())];
                             ShardCounter[0]++;
                             break;
-                        case int n when (n < 95):
-                            break;
+                        case int n when (n < 95):                            
                             TempHero[0] = tiersByHero[2][UnityEngine.Random.Range(0, tiersByHero[2].Count())];
+                            break;
                         default:
                             TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
                             break;

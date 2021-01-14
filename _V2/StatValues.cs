@@ -8,7 +8,7 @@ public class StatValues : MonoBehaviour
     [SerializeField]
     private List<GameObject> objects = new List<GameObject> { };
 
-    private void Start()
+    public void DisplayStats()
     {
         int[] heroStats = CharectorStats.setTempHero(CharectorStats.getTempHero()); //displays stats of hero picked from tile but not necessarily selected
         objects[0].GetComponent<Text>().text = heroStats[2].ToString();//XP

@@ -33,7 +33,6 @@ public class CanvasDisplayManager : MonoBehaviour
     }
     protected void Awake()
     {
-        //base.Awake();
         instance = this;
         lastActiveCanvas = new CanvasController();
         desiredCanvas = new CanvasController();
