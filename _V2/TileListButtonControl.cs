@@ -34,9 +34,7 @@ public class TileListButtonControl : MonoBehaviour
         for (int i = 0; i < AllHeros.Count; i++)
         {
             GameObject button = Instantiate(buttonTemplate) as GameObject;
-            buttons.Add(button);
-            int temp = AllHeros[i][1];
-            //Debug.Log(temp);
+            buttons.Add(button);           
             button.SetActive(true);
 
             button.GetComponent<TileListButton>().SetText(CharectorStats.HeroName(AllHeros[i][1]));

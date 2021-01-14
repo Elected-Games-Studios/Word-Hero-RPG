@@ -12,10 +12,13 @@ public class EnhanceListButton : MonoBehaviour
     private int thisButtonIndex;
     private string myTextString;
     private bool clicked = false;
+    private Button btn;
 
     public void SetIndex(int num)
     {
         thisButtonIndex = num;
+        btn = GetComponent<Button>();
+        btn.onClick.AddListener(OnClick);
     }
 
     public void SetText(string textString) //change to image tile later

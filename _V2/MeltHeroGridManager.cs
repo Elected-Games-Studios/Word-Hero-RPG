@@ -18,9 +18,11 @@ public class MeltHeroGridManager : MonoBehaviour
     {
         buttons = new List<GameObject>();
         SelectedToMelt = new List<int>();
+        MeltableHeros = new List<int[]>();
     }
     public void RefreshMeltableHeros()
     {
+        MeltableHeros.Clear();
         MeltableHeros = CharectorStats.herosThatCanMelt(CharectorStats.getTempHero());
         if (buttons.Count > 0)
         {
@@ -37,7 +39,7 @@ public class MeltHeroGridManager : MonoBehaviour
             button.SetActive(true);
 
             button.GetComponent<EnhanceListButton>().SetText(CharectorStats.HeroName(MeltableHeros[i][1]));
-
+            button.GetComponent<EnhanceListButton>().SetIndex(i);
             button.transform.SetParent(buttonTemplate.transform.parent, false);
 
         }
@@ -47,6 +49,8 @@ public class MeltHeroGridManager : MonoBehaviour
     {
         if (clicked == false)
         {
+            Debug.Log("button idx: " + buttonIdx);
+            
             SelectedToMelt.Add(MeltableHeros[buttonIdx][1]);//<<what number should this effing be?! my head hertz
                                                             //highlight, other image modifications
             RefreshMeltableHeros();
