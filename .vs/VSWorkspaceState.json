@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\_V2"
+    "\\_V2",
+    "\\_V2\\Unity Code"
   ],
-  "SelectedNode": "\\_V2\\TestAddHero.cs",
+  "SelectedNode": "\\_V2\\Unity Code\\SoloCombat.cs",
   "PreviewInSolutionExplorer": false
 }

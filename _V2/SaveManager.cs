@@ -11,11 +11,11 @@ public static class SaveManager
     public static byte[] SaveParse()
     {
         string tempSave = new string();
-        tempSave += WordDatav2.LoadManagerData(tempLoad);
+        tempSave += WordDatav2.SaveManagerData();
         tempSave += '#';
-        tempSave += InvManager.LoadManager(tempLoad);
+        tempSave += InvManager.SaveManager();
         tempSave += '#';
-        tempSave += CharectorStats.LoadManagerData(tempLoad);
+        tempSave += CharectorStats.SaveManagerData();
         return (Encoding.UTF8.GetBytes(tempSave));
     }
     public static void LoadSplit(string Loadstr)
