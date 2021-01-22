@@ -502,7 +502,7 @@ public static class CharectorStats
         string sendSave = "";
         for (int x = 0; x < HeroList.Count; x++)
         {
-            for (int y = 0; y < 4; y++)
+            for (int y = 0; y < 10; y++)
             {
                 sendSave += HeroList[x][y].ToString();
                 sendSave += ",";
@@ -528,11 +528,11 @@ public static class CharectorStats
                 while (input.IndexOf(',') < input.IndexOf('|'))
                 {
                     HeroList[counter][counting] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
-                    input.Remove(0);
+                    input.Remove(0, (input.IndexOf(',') - 1));
                     counting++;
                 }
                 counting = 0;
-                input.Remove(0);
+                input.Remove(0, (input.IndexOf('|') - 1));
                 HeroList[counter] = GetCharecterStats(counter);
                 counter++;
             }
