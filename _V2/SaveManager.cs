@@ -10,7 +10,7 @@ public static class SaveManager
 {
     public static string SaveParse()
     {
-        string tempSave = new string();
+        string tempSave = "";
         tempSave += WordDatav2.SaveManagerData();
         tempSave += '#';
         tempSave += InvManager.SaveManager();
