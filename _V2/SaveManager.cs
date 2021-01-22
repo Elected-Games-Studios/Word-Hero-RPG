@@ -18,9 +18,8 @@ public static class SaveManager
         tempSave += CharectorStats.SaveManagerData();
         return (tempSave);
     }
-    public static void LoadSplit(byte[] loadData)
+    public static void LoadSplit(string Loadstr)
     {
-        string Loadstr = System.Text.Encoding.UTF8.GetString(loadData);
         string[] tempLoad = Loadstr.Split('#');
         if (tempLoad.Length > 0)
         {
