@@ -40,118 +40,7 @@ public class PlayServices : MonoBehaviour
         GetComponent<AdManager>().Indestructable();
     }
 
-    string GameDataToString()
-    {
-        if (stats == null)
-        {
-            stats = PlayerStats.Instance;
-        }
-        //feedback.text = "Game Data Writing...";
-        Debug.Log("GameDataToString has Run Successfully");
-        string gameDataString = stats.heroXP.ToString() + " " +
-            stats.playerDamage.ToString() + " " +
-            stats.pDmgLvl.ToString() + " " +
-            stats.playerHealth.ToString() + " " +
-            stats.pHpLvl.ToString() + " " +
-            stats.playerSpeed.ToString() + " " +
-            stats.pSpLvl.ToString() + " " +
-            stats.playerEvade.ToString() + " " +
-            stats.pEvLvl.ToString() + " " +
-            stats.playerLuck.ToString() + " " +
-            stats.pLkLvl.ToString() + " " +
-            stats.heroLevel.ToString() + " " +
-            stats.xpToLevel.ToString() + " " +
-            stats.skillPoints.ToString() + " " +
-            stats.xpIncrease.ToString() + " " +
-            stats.healthPU.ToString() + " " +
-            stats.secondWindPU.ToString() + " " +
-            stats.timePU.ToString() + " " +
-            stats.shieldPU.ToString() + " " +
-            stats.playerGold.ToString() + " " +
-            stats.activeHero.ToString() + " " +
-            stats.isClassOne.ToString() + " " +
-            stats.isClassTwo.ToString() + " " +
-            stats.isClassThree.ToString() + " " +
-            stats.isClassFour.ToString() + " " +
-            stats.regionProgress.ToString() + " " +
-            stats.levelProgress.ToString() + " " +
-            stats.endlessRecord.ToString() + " " +
-            stats.date + " " +
-            stats.dailyActive.ToString();
-
-        for(int i = 0; i < stats.levelStars.Length; i++)
-        {
-            gameDataString += " " + stats.levelStars[i].ToString();
-        }
-
-        //feedback.text = "Game Data Written";
-        return gameDataString;
-    }
-
-    void StringToGameData(string localData)
-    {
-        if(stats == null)
-        {
-            stats = PlayerStats.Instance;
-        }
-
-        string[] gameLoadData = localData.Split(' ');
-        stats.heroXP = int.Parse(gameLoadData[0]);
-        stats.playerDamage = int.Parse(gameLoadData[1]);
-        stats.pDmgLvl = int.Parse(gameLoadData[2]);
-        stats.playerHealth = int.Parse(gameLoadData[3]);
-        stats.pHpLvl = int.Parse(gameLoadData[4]);
-        stats.playerSpeed = float.Parse(gameLoadData[5]);
-        stats.pSpLvl = int.Parse(gameLoadData[6]);
-        stats.playerEvade = int.Parse(gameLoadData[7]);
-        stats.pEvLvl = int.Parse(gameLoadData[8]);
-        stats.playerLuck = int.Parse(gameLoadData[9]);
-        stats.pLkLvl = int.Parse(gameLoadData[10]);
-        stats.heroLevel = int.Parse(gameLoadData[11]);
-        stats.xpToLevel = int.Parse(gameLoadData[12]);
-        stats.skillPoints = int.Parse(gameLoadData[13]);
-        stats.xpIncrease = int.Parse(gameLoadData[14]);
-        stats.healthPU = int.Parse(gameLoadData[15]);
-        stats.secondWindPU = int.Parse(gameLoadData[16]);
-        stats.timePU = int.Parse(gameLoadData[17]);
-        stats.shieldPU = int.Parse(gameLoadData[18]);
-        stats.playerGold = int.Parse(gameLoadData[19]);
-        stats.activeHero = int.Parse(gameLoadData[20]);
-
-        if (gameLoadData[21] == "true")
-        { stats.isClassOne = true; }
-        else
-        { stats.isClassOne = false; }
-
-        if (gameLoadData[22] == "true")
-        { stats.isClassTwo = true; }
-        else
-        { stats.isClassTwo = false; }
-
-        if (gameLoadData[23] == "true")
-        { stats.isClassThree = true; }
-        else
-        { stats.isClassThree = false; }
-
-        if (gameLoadData[24] == "true")
-        { stats.isClassFour = true; }
-        else
-        { stats.isClassFour = false; }
-
-        stats.regionProgress = int.Parse(gameLoadData[25]);
-        stats.levelProgress = int.Parse(gameLoadData[26]);
-        stats.endlessRecord = int.Parse(gameLoadData[27]);
-        stats.date = int.Parse(gameLoadData[28]);
-        //if(gameLoadData[29] == "true")
-        //{ stats.dailyActive = true; }
-        //else
-        //{ stats.dailyActive = false; }
-
-        for(int i = 30; i < 105; i++)
-        {
-            stats.levelStars[i - 30] = int.Parse(gameLoadData[i]);
-        }
-    }
+    string GameDataToString() => SaveManager.SaveParse();
 
     private void SignIn()
     {
@@ -316,30 +205,26 @@ public class PlayServices : MonoBehaviour
                 {
                     if (cloudDataString != "")
                     {
-                        StringToGameData(cloudDataString);
+                        SaveManager.LoadSplit(cloudDataString);
                         isCloudDataLoaded = true;
-                        Invoke("MoveToNextScene", 1f);
                     }
                     else
                     {
-                        Invoke("MoveToNextScene", 3f);
+                        WordDatav2.LoadManagerData("");
+                        CharectorStats.LoadManagerData("");
                     }
                 }
                 else
                 {
-                    Invoke("MoveToNextScene", 3f);
+                    WordDatav2.LoadManagerData("");
+                    CharectorStats.LoadManagerData("");
                 }
             }
             else
             {
-                Invoke("MoveToNextScene", 3f);
+                WordDatav2.LoadManagerData("");
+                CharectorStats.LoadManagerData("");
             }
-
-            //Debug.Log("Cloud Data Loaded. And the Game knows it");
-        }
-        else
-        {
-            Invoke("MoveToNextScene", 3f);
         }
     }
 

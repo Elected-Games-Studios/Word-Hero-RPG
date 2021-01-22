@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 public static class SaveManager
 {
-    public static byte[] SaveParse()
+    public static string SaveParse()
     {
         string tempSave = new string();
         tempSave += WordDatav2.SaveManagerData();
@@ -16,13 +16,17 @@ public static class SaveManager
         tempSave += InvManager.SaveManager();
         tempSave += '#';
         tempSave += CharectorStats.SaveManagerData();
-        return (Encoding.UTF8.GetBytes(tempSave));
+        return (tempSave);
     }
-    public static void LoadSplit(string Loadstr)
+    public static void LoadSplit(byte[] loadData)
     {
+        string Loadstr = System.Text.Encoding.UTF8.GetString(loadData);
         string[] tempLoad = Loadstr.Split('#');
-        WordDatav2.LoadManagerData(tempLoad[0]);
-        InvManager.LoadManager(tempLoad[1]);
-        CharectorStats.LoadManagerData(tempLoad[2]);
+        if (tempLoad.Length > 0)
+        {
+            WordDatav2.LoadManagerData(tempLoad[0]);
+            InvManager.LoadManager(tempLoad[1]);
+            CharectorStats.LoadManagerData(tempLoad[2]);
+        }
     }
 }
