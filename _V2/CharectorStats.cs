@@ -302,7 +302,7 @@ public static class CharectorStats
     {
         //Can we modify to exclude from the returned list the chosen character?? i.e. you can't melt what you're using by accident. From Joe
         int maxXp = findCurrentMax(chosenCharecter);
-        List<int> Allhero = new int { };
+        List<int> Allhero = new List<int> {};
         for (int i = 0; i < HeroList.Count; i++)
         {
             if(HeroList[i][2] < maxXp && i != chosenCharecter && HeroesToBeMelted.Find(i) > -1)
