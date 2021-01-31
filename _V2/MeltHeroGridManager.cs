@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class MeltHeroGridManager : MonoBehaviour
 {
@@ -10,20 +11,24 @@ public class MeltHeroGridManager : MonoBehaviour
     [SerializeField]
     private MelterXPBar xpslide;
     private List<GameObject> buttons;
-    private List<int[]> MeltableHeros;
+    private List<int> MeltableHeros;
     private List<int> SelectedToMelt;
+    private int xpToBeAdded;
+    private List<int[]> allHeroStats;
 
 
     private void Awake()
     {
+        allHeroStats = new List<int[]>() {};
+        xpToBeAdded = 0;
+        SelectedToMelt = new List<int>() { };
         buttons = new List<GameObject>();
-        SelectedToMelt = new List<int>();
-        MeltableHeros = new List<int[]>();
+        MeltableHeros = new List<int>();
     }
-    public void RefreshMeltableHeros()
+    public void InitializeMeltGrid()
     {
         MeltableHeros.Clear();
-        MeltableHeros = CharectorStats.herosThatCanMelt(CharectorStats.getTempHero());
+        MeltableHeros = CharectorStats.heroesThatCanMelt(CharectorStats.getTempHero(), xpToBeAdded, SelectedToMelt);
         if (buttons.Count > 0)
         {
             foreach (GameObject button in buttons)
@@ -38,30 +43,36 @@ public class MeltHeroGridManager : MonoBehaviour
             buttons.Add(button);
             button.SetActive(true);
 
-            button.GetComponent<EnhanceListButton>().SetText(CharectorStats.HeroName(MeltableHeros[i][1]));
+            button.GetComponent<EnhanceListButton>().SetText(CharectorStats.HeroName(MeltableHeros[i]));
             button.GetComponent<EnhanceListButton>().SetIndex(i);
             button.transform.SetParent(buttonTemplate.transform.parent, false);
 
         }
     }
+    public void RefreshMeltableHeros() {
+        MeltableHeros.Clear();
+        MeltableHeros = CharectorStats.heroesThatCanMelt(CharectorStats.getTempHero(), xpToBeAdded, SelectedToMelt);
+        for (int i = 0; i < buttons.Count; i++)
+        {
+           
 
+        }
+    }
     public void MeltableButtonClicked(int buttonIdx, bool clicked)
     {
         if (clicked == false)
-        {
-            Debug.Log("button idx: " + buttonIdx);
-            
-            SelectedToMelt.Add(MeltableHeros[buttonIdx][1]);//<<what number should this effing be?! my head hertz
-                                                            //highlight, other image modifications
-            RefreshMeltableHeros();
+        {          
+            SelectedToMelt.Add(MeltableHeros[buttonIdx]);
+            Debug.Log("highlighting");
             xpslide.UpdateSlider();
+            clicked = true;
         }
         else
         {
-            SelectedToMelt.Remove(MeltableHeros[buttonIdx][1]);
-            //dehighlight
-            RefreshMeltableHeros();
+            SelectedToMelt.Remove(MeltableHeros[buttonIdx]);
+            Debug.Log("Dehighlighting");          
             xpslide.UpdateSlider();
+            clicked = false;
         }
 
     }

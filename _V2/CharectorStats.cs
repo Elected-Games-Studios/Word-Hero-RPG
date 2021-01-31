@@ -90,7 +90,7 @@ public static class CharectorStats
     {
         HeroList.Add(HeroDefault);
     }
-    private static int canAddXP(int chosenCharecter)//Mine!
+    private static int XPthatCanBeAdded(int chosenCharecter)//Mine!
     {
             string tier = NamesAndtiers[(HeroList[chosenCharecter][0]),1];
             int tierNum;
@@ -133,7 +133,7 @@ public static class CharectorStats
             }
 
     }
-    private static int findCurrentMax(int chosenCharecter)//Mine!
+    private static int findCurrentMaxLevel(int chosenCharecter)//Mine!
         {
             string tier = NamesAndtiers[HeroList[chosenCharecter][0],1];
             int tierNum;
@@ -160,19 +160,19 @@ public static class CharectorStats
             }
             int difStar = tierstartStar[tierNum] - HeroList[chosenCharecter][3];
             switch (tierNum)
-            {
+             {
                 case 0:
-                    return XPT0[(T0MaxLevel[difStar])-1];
+                    return (T0MaxLevel[difStar]);
                 case 1:
-                    return XPT1[(T1MaxLevel[difStar]) - 1];
+                    return (T1MaxLevel[difStar]);
                 case 2:
-                    return XPT2[(T2MaxLevel[difStar]) - 1];
+                    return (T2MaxLevel[difStar]);
                 case 3:
-                    return XPT3[(T3MaxLevel[difStar]) - 1];
+                    return (T3MaxLevel[difStar]);
                 case 4:
-                    return XPT4[(T4MaxLevel[difStar]) - 1];
+                    return (T4MaxLevel[difStar]);
                 default:
-                    return XPT5[(T5MaxLevel[difStar]) - 1];
+                    return (T5MaxLevel[difStar]);
             }
         }
     public static int[] GetCharecterStats(int chosenCharecter)//Mine! JOE: Had to set to public, couldn't find origin point.
@@ -242,7 +242,7 @@ public static class CharectorStats
     {
         HeroList.RemoveAt(chosenCharecter);
     }
-    public static int XPtoNextLvl(int chosenCharecter) 
+    private static int XPtoNextLvl(int chosenCharecter) 
     {
         string tier = NamesAndtiers[HeroList[chosenCharecter][0],1];
         switch (tier)
@@ -300,12 +300,11 @@ public static class CharectorStats
     }
     public static List<int> heroesThatCanMelt(int chosenCharecter, int currentXPAdded, List<int> HeroesToBeMelted)//Must be run after each hero is placed in the melt chamber.  Returns same as heroes unlocked.
     {
-        //Can we modify to exclude from the returned list the chosen character?? i.e. you can't melt what you're using by accident. From Joe
-        int maxXp = findCurrentMax(chosenCharecter);
+        int maxXp = findCurrentMaxLevel(chosenCharecter);
         List<int> Allhero = new List<int> {};
         for (int i = 0; i < HeroList.Count; i++)
         {
-            if((HeroList[i][2] < maxXp) && (i != chosenCharecter) && (HeroesToBeMelted.IndexOf(i) != -1))
+            if((HeroList[i][2] < maxXp) && (i != chosenCharecter) && (HeroesToBeMelted.IndexOf(i) == -1))
             {
                 Allhero.Add(i);
             }
@@ -323,7 +322,7 @@ public static class CharectorStats
     public static bool buyHeroUpgradeCheck(int chosenCharecter)//call this to set upgrade button to on
     {
         string tier = NamesAndtiers[HeroList[chosenCharecter][0],1];
-        int maxXP = findCurrentMax(chosenCharecter);
+        int maxXP = findCurrentMaxLevel(chosenCharecter);
         switch (tier)
         {
             case "T0":
@@ -399,7 +398,7 @@ public static class CharectorStats
     }
     public static void levelUp(int chosenCharecter)
     {
-        if (HeroList[chosenCharecter][1] < findCurrentMax(chosenCharecter))
+        if (HeroList[chosenCharecter][1] < findCurrentMaxLevel(chosenCharecter))
         {
             HeroList[chosenCharecter][1]++;
         }
@@ -413,7 +412,7 @@ public static class CharectorStats
     public static int getTempHero() => CurrentHero[0];
     public static int[] EndofLevel(int xpGained)
     {
-        if (canAddXP(CurrentHero[1]) > (HeroList[CurrentHero[1]][2] + xpGained))
+        if (XPthatCanBeAdded(CurrentHero[1]) > (HeroList[CurrentHero[1]][2] + xpGained))
         {
             HeroList[CurrentHero[1]][2] += xpGained;
             levelUp(CurrentHero[1]);
@@ -421,14 +420,14 @@ public static class CharectorStats
         }
         else
         {
-            HeroList[CurrentHero[1]][2] = canAddXP(CurrentHero[1]);
+            HeroList[CurrentHero[1]][2] = XPthatCanBeAdded(CurrentHero[1]);
             return HeroList[CurrentHero[1]].ToArray();
         }
     }
     public static bool HeroIsMaxLvl(int[] chosenHero)
     {    
-        int maxXp = findCurrentMax(chosenHero[0]);
-        if (chosenHero[2] == maxXp)
+        int maxLvl = findCurrentMaxLevel(chosenHero[0]);
+        if (chosenHero[2] == maxLvl)
         {
             return true;
         }
