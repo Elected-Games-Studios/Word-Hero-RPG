@@ -305,7 +305,7 @@ public static class CharectorStats
         List<int> Allhero = new List<int> {};
         for (int i = 0; i < HeroList.Count; i++)
         {
-            if(HeroList[i][2] < maxXp && i != chosenCharecter && HeroesToBeMelted.IndexOf(i) != -1)
+            if((HeroList[i][2] < maxXp) && (i != chosenCharecter) && (HeroesToBeMelted.IndexOf(i) != -1))
             {
                 Allhero.Add(i);
             }
