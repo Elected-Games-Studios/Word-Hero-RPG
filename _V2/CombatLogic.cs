@@ -8,10 +8,9 @@ public class CombatLogic : MonoBehaviour
 {
     //references to player, enemy, letter nodes
     private int pDmg, pHealth, pCrit, pAgi, pDef;
-
-    private int eDmg, eAgi, eHealth, eCrit;
-
+    private int eDmg, eAgi, eHealth, eDef;
     public static bool isPlayerAlive = true;
+    private int stagedGold, stagedShard1, stagedShard2 = 0;
 
     private List<string> words = CombatWordManager.Words;
     int wordsLeft = CombatWordManager.Words.Count;
@@ -25,17 +24,24 @@ public class CombatLogic : MonoBehaviour
     private Slider HPSlider;
     private Text HPText;
     private Slider slider;
+
+    //debug enemy stats
+    public List<Text> allStats;
     //end temporary^
 
     public event Action<int> onDamageEnemy, onDamagePlayer;
     public event Action onEnemyKilled, onLevelComplete, onPlayerKilled;
+    Coroutine CRRef;
 
     void Awake()
     {
-
+        //Temp Debug Game Master Values
+        GameMaster.Region = 1;
+        GameMaster.Level = 1;
+        GameMaster.Difficulty = 0;
+        //end Temp Debug
         bubbles = GetComponentsInChildren<Image>(true);
-        //testing only, initializes hero data and chosen character, returns stats to HeroList[0]
-        //CharectorStats.LoadManagerData("");
+        CharectorStats.LoadManagerData("");
         int[] heroStats = CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero());
         
         pDmg = heroStats[4];
@@ -43,11 +49,10 @@ public class CombatLogic : MonoBehaviour
         pCrit = heroStats[6];
         pAgi = heroStats[7];
         pDef = heroStats[8];
-        eDmg = 1; //TOCHANGE
-        eCrit = 200;
-        eAgi = 10;
-        //event subs
-        CombatWordManager.onMaxLengthFound += generateBubble;
+
+
+    //event subs
+    CombatWordManager.onMaxLengthFound += generateBubble;
         CombatWordManager.onCorrectWord += spelledWord;
         onDamageEnemy += enemyTakeDamage;
         onDamagePlayer += playerTakeDamage;
@@ -59,22 +64,18 @@ public class CombatLogic : MonoBehaviour
         CombatWordManager.StartLevel();
         InitializePlayer();
         InitializeEnemy();
-        StartCoroutine(CombatTimer());
-    }
-    private void Update()
-    {
-
-    }   
+        CRRef = StartCoroutine(CombatTimer());
+    } 
 
     IEnumerator CombatTimer()
     {
-        while (isPlayerAlive)//combat is happening, or something
+        while (isPlayerAlive)
         {
+            Debug.Log("Restarted Timer");
             float difference = (pAgi - eAgi);
             yield return new WaitForSeconds(5f + (difference/100));
-            onDamagePlayer?.Invoke(eDmg);
+            onDamagePlayer?.Invoke(eDmg);         
         }
-
     }
 
     public void generateBubble(int length) //called once to choose bubble of longest word size, don't need to re-render
@@ -87,7 +88,6 @@ public class CombatLogic : MonoBehaviour
     {
         currentBubble.SetActive(false);
     }
-
     public void populateBubble()
     {
         int length = CombatWordManager.longestWord.Length;
@@ -104,10 +104,17 @@ public class CombatLogic : MonoBehaviour
     }
    
 
-    private void InitializeEnemy()
+    private void InitializeEnemy()//must be called after WordBreak()
     {
-        eHealth = CombatWordManager.enemyHealth * 5;
-
+        //eHealth = CombatWordManager.enemyHealth * 5;
+        eHealth = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(100 * Math.Pow(2, GameMaster.Difficulty));
+        eDmg = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(10 * Math.Pow(5, GameMaster.Difficulty));
+        eAgi = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(10 * Math.Pow(2, GameMaster.Difficulty));//needs changed
+        eDef = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(10 * Math.Pow(2, GameMaster.Difficulty));//needs changed
+        allStats[0].text += eHealth;
+        allStats[1].text += eDmg;
+        allStats[2].text += eAgi;
+        allStats[3].text += eDef;
         //temp
         slider = GameObject.FindGameObjectWithTag("EnemyHP").GetComponent<Slider>();
         slider.maxValue = eHealth;
@@ -116,6 +123,12 @@ public class CombatLogic : MonoBehaviour
     }
     private void InitializePlayer()
     {
+        allStats[4].text += pHealth;
+        allStats[5].text += pDmg;
+        allStats[6].text += pAgi;
+        allStats[7].text += pCrit;
+        allStats[8].text += pDef;
+
         HPSlider = GameObject.FindGameObjectWithTag("PlayerHP").GetComponent<Slider>();
         HPText = HPSlider.GetComponentInChildren<Text>();
         HPSlider.maxValue = pHealth;
@@ -125,9 +138,19 @@ public class CombatLogic : MonoBehaviour
 
     //event methods
     void playerTakeDamage(int damage)
-    {
-        pHealth -= damage;
-        HPSlider.value -= damage;
+    {      
+        if(damage-pDef > 0)
+        {
+            //Debug.Log(damage + " damage mitigated by " + pDef + " player defense. Damage reduced to " + (damage - pDef));
+            pHealth -= (damage - pDef);
+            HPSlider.value -= (damage - pDef);
+        }
+        else if(damage - pDef <= 0)
+        {
+            Debug.Log(damage + " damage mitigated by " + pDef + " player defense. Damage reduced to 1");
+            pHealth -= 1;
+            HPSlider.value -= 1;
+        }
         HPText.text = HPSlider.value.ToString() + "/" + HPSlider.maxValue.ToString() + "  ";
         if(pHealth <= 0)
         {
@@ -137,9 +160,17 @@ public class CombatLogic : MonoBehaviour
 
     void enemyTakeDamage(int length)
     {
-        int totalDmg = pDmg * length * checkCrit();
-       // Debug.Log("total dmg" + totalDmg);
-        eHealth -= totalDmg;
+        int totalDmg = (pDmg * length * checkCrit()) - eDef; //Verify W/Dylan       
+        if (totalDmg >= 2)
+        {
+            Debug.Log("Total dmg dealt: " + totalDmg);
+            eHealth -= totalDmg;
+        }
+        else
+        {
+            Debug.Log("Too much eDef. Damage reduced to 1");
+            eHealth -= 1;
+        }
         if(eHealth <= 0)
         {
             onEnemyKilled?.Invoke();
@@ -155,12 +186,12 @@ public class CombatLogic : MonoBehaviour
         int roll = UnityEngine.Random.Range(0, 10000);
         if(pCrit >= roll)
         {
-           // Debug.Log("crit");
+           Debug.Log("Critical hit!");
             result = 2;
         }
         else
         {
-            //Debug.Log("not crit");
+            Debug.Log("Normal attack.");
             result = 1;
         }
         return result;
@@ -174,16 +205,32 @@ public class CombatLogic : MonoBehaviour
     void stageLoot()
     {
         Debug.Log("staging loot");
+        stagedGold += 100;
+        stagedShard1 += 1;
+        stagedShard2 += 2;
     }
     //onLevelComplete
     void levelFinished()
     {
-        Debug.Log("Victory! staged items being added to DB");
+        //add experience as well... dunno why im calling a method that returns an int []??
+        Debug.Log("Victory!" + stagedGold + " gold, " + stagedShard1 + " T1shards, " + stagedShard2 + " T2shards being added to DB");
+        InvManager.GoldAdd(stagedGold);
+        stagedGold = 0;
+        InvManager.T1ShardAdd(stagedShard1);
+        stagedShard1 = 0;
+        InvManager.T2ShardAdd(stagedShard2);
+        stagedShard2 = 0;
     }
 
     //onEnemyKilled
     void nextWord()
     {
+        foreach(Text stat in allStats)
+        {
+            stat.text = "";
+        }
+        StopCoroutine(CRRef);
+        CRRef = StartCoroutine(CombatTimer());
         wordsLeft--;
         //decide where to set a short timer to allow enemy entrance
         if (wordsLeft > 0)

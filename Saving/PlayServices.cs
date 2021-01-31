@@ -32,6 +32,7 @@ public class PlayServices : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("IsFirstTime"))
             PlayerPrefs.SetInt("IsFirstTime", 1);
+
         PlayGamesClientConfiguration.Builder builder = new PlayGamesClientConfiguration.Builder().EnableSavedGames();
         PlayGamesPlatform.InitializeInstance(builder.Build());
         PlayGamesPlatform.Activate();

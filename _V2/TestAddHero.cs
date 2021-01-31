@@ -16,5 +16,8 @@ public class TestAddHero : MonoBehaviour
             Debug.Log("Filler");
 
         }
+        GameMaster.CallSave();
+        
+
     }
 }

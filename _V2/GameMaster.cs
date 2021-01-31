@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 
 public class GameMaster : MonoBehaviour
 {
@@ -14,7 +14,11 @@ public class GameMaster : MonoBehaviour
         userIds[0] = (Social.Active.localUser.id);
     }
 
-    //Save stuff
+    public static void CallSave()
+    {
+        PlayServices.Instance.SaveData();
+    }
+
 
     //Set level data BE4ORE scene load/ on level select
 

@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 public class InvManager
 {
 	private static int[] Items = new int[6]; // 0. Gold, 1.T1 Shard, 2. T2 Shard, 3. HP Item, 4. Time Stop, 5. Word Refresh
-
-
 	//-------------------------End of Variables -----------------------------
-
+    //Gold Methods
 	public static int GoldReturn()
 	{
 		return Items[0];
@@ -25,7 +23,12 @@ public class InvManager
 	{
 		Items[0] -= amount;
 	}
-	public static int T1ShardAmount()
+    //T1 Shard Methods
+    public static void T1ShardAdd(int amount)
+    {
+        Items[1] += amount;
+    }
+    public static int T1ShardAmount()
     {
 		return Items[1];
     }
@@ -42,7 +45,12 @@ public class InvManager
 			CharectorStats.AddCharecter(1);
 		}
     }
-	public static int T2ShardAmount()
+    //T2 Shard Methods
+    public static void T2ShardAdd(int amount)
+    {
+        Items[2] += amount;
+    }
+    public static int T2ShardAmount()
 	{
 		return Items[2];
 	}
@@ -59,6 +67,7 @@ public class InvManager
 			CharectorStats.AddCharecter(2);
 		}
 	}
+    //Saving
 	public static string SaveManager()
     {
 		string sendStr = "";
