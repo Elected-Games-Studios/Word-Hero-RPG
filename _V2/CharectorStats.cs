@@ -162,17 +162,17 @@ public static class CharectorStats
             switch (tierNum)
             {
                 case 0:
-                    return XPT0((T0MaxLevel[difStar])-1);
+                    return XPT0[(T0MaxLevel[difStar])-1];
                 case 1:
-                    return XPT1((T1MaxLevel[difStar]) - 1);
+                    return XPT1[(T1MaxLevel[difStar]) - 1];
                 case 2:
-                    return XPT2((T2MaxLevel[difStar]) - 1);
+                    return XPT2[(T2MaxLevel[difStar]) - 1];
                 case 3:
-                    return XPT3((T3MaxLevel[difStar]) - 1);
+                    return XPT3[(T3MaxLevel[difStar]) - 1];
                 case 4:
-                    return XPT4((T4MaxLevel[difStar]) - 1);
+                    return XPT4[(T4MaxLevel[difStar]) - 1];
                 default:
-                    return XPT5((T5MaxLevel[difStar]) - 1);
+                    return XPT5[(T5MaxLevel[difStar]) - 1];
             }
         }
     public static int[] GetCharecterStats(int chosenCharecter)//Mine! JOE: Had to set to public, couldn't find origin point.
