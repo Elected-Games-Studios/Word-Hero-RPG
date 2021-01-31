@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Managers",
+    "\\Saving",
     "\\_V2",
     "\\_V2\\Unity Code"
   ],
-  "SelectedNode": "\\_V2\\Unity Code\\SoloCombat.cs",
+  "SelectedNode": "\\Saving\\PlayerStats.cs",
   "PreviewInSolutionExplorer": false
 }

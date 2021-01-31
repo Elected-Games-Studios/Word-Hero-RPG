@@ -298,21 +298,16 @@ public static class CharectorStats
                 return temp;
         }
     }
-    public static List<int[]> herosThatCanMelt(int chosenCharecter)//Must be run after each hero is placed in the melt chamber.  Returns same as heroes unlocked.
+    public static List<int> heroesThatCanMelt(int chosenCharecter, int currentXPAdded, List<int> HeroesToBeMelted)//Must be run after each hero is placed in the melt chamber.  Returns same as heroes unlocked.
     {
         //Can we modify to exclude from the returned list the chosen character?? i.e. you can't melt what you're using by accident. From Joe
         int maxXp = findCurrentMax(chosenCharecter);
-        List<int[]> Allhero = new List<int[]> { };
-        int[] tempHero = new int[4] { 0, 0, 0, 0};
+        List<int> Allhero = new int { };
         for (int i = 0; i < HeroList.Count; i++)
         {
-            if(HeroList[i][2] < maxXp)
+            if(HeroList[i][2] < maxXp && i != chosenCharecter && HeroesToBeMelted.Find(i) > -1)
             {
-                tempHero[0] = i;
-                tempHero[1] = HeroList[i][0];
-                tempHero[2] = HeroList[i][1];
-                tempHero[3] = HeroList[i][3];
-                Allhero.Add(tempHero);
+                Allhero.Add(i);
             }
         }
         return Allhero;
