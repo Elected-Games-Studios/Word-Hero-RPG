@@ -11,6 +11,7 @@ public static class CharectorStats
 {
     //needed to temporarily make HeroList public to actually access it for stats bc LoadManagerData doesnt have a return value.
     private static List<int[]> HeroList = new List<int[]> { };//Mine!
+    public static event Action leveledUp;//Joe's
     private static int[] HeroDefault = new int[10]
     { 0, 1, 0, 0, 0, 0, 0, 0, 0, 100 }; // 0-Idx 1-Lvl 2-XP 3-Stars 4-dmg 5-health 6-crit 7-agi 8-def 9-XPtoNextLevel     ###MINE!!!!!
     private static double[] DifArr = new double[5]
@@ -90,7 +91,7 @@ public static class CharectorStats
     {
         HeroList.Add(HeroDefault);
     }
-    private static int XPthatCanBeAdded(int chosenCharecter)//Mine!
+    private static int XpOfMaxLevel(int chosenCharecter)//Mine!
     {
             string tier = NamesAndtiers[(HeroList[chosenCharecter][0]),1];
             int tierNum;
@@ -115,10 +116,10 @@ public static class CharectorStats
                     tierNum = 5;
                     break;
         }
-            int difStar = tierstartStar[tierNum] - HeroList[chosenCharecter][3];
+            int difStar = HeroList[chosenCharecter][3] - tierstartStar[tierNum]; //Joe reversed these bc it seemed like any T2 or less with any stars would make this negative and break it...
             switch (tierNum)
             {
-                case 0:
+                case 0:        //9
                     return (XPT0[(T0MaxLevel[difStar] - 1)]);
                 case 1:
                     return (XPT1[(T1MaxLevel[difStar] - 1)]);
@@ -158,8 +159,8 @@ public static class CharectorStats
                     tierNum = 5;
                     break;
             }
-            int difStar = tierstartStar[tierNum] - HeroList[chosenCharecter][3];
-            switch (tierNum)
+            int difStar = HeroList[chosenCharecter][3] - tierstartStar[tierNum]; //Joe reversed these bc it seemed like any T2 or less with any stars would make this negative and break it...
+        switch (tierNum)
              {
                 case 0:
                     return (T0MaxLevel[difStar]);
@@ -401,6 +402,7 @@ public static class CharectorStats
         if (HeroList[chosenCharecter][1] < findCurrentMaxLevel(chosenCharecter))
         {
             HeroList[chosenCharecter][1]++;
+            leveledUp?.Invoke();
         }
     }
     public static int GetCurrentHero() => CurrentHero[1];
@@ -412,7 +414,7 @@ public static class CharectorStats
     public static int getTempHero() => CurrentHero[0];
     public static int[] EndofLevel(int xpGained)
     {
-        if (XPthatCanBeAdded(CurrentHero[1]) > (HeroList[CurrentHero[1]][2] + xpGained))
+        if (XPtoNextLvl(CurrentHero[1]) < (HeroList[CurrentHero[1]][2] + xpGained))
         {
             HeroList[CurrentHero[1]][2] += xpGained;
             levelUp(CurrentHero[1]);
@@ -420,7 +422,7 @@ public static class CharectorStats
         }
         else
         {
-            HeroList[CurrentHero[1]][2] = XPthatCanBeAdded(CurrentHero[1]);
+            HeroList[CurrentHero[1]][2] += xpGained;
             return HeroList[CurrentHero[1]].ToArray();
         }
     }

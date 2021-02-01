@@ -54,7 +54,7 @@ public class TouchInput : MonoBehaviour
             isSwiping = true;
         }
 
-        if (isSwiping)
+        if (isSwiping && CombatLogic.isGameplay)
         {
             checkLetterInteraction();
         }

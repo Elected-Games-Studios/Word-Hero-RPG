@@ -8,15 +8,24 @@ public class CombatLogic : MonoBehaviour
 {
     //references to player, enemy, letter nodes
     private int pDmg, pHealth, pCrit, pAgi, pDef;
-    private int eDmg, eAgi, eHealth, eDef;
-    public static bool isPlayerAlive = true;
-    private int stagedGold, stagedShard1, stagedShard2 = 0;
-
+    private int eDmg, eAgi, eHealth, eDef, initialEHealth;
+    private double lengthMultiplier;
+    public static bool isGameplay = true;
+    private int stagedXP, stagedGold, stagedShard1, stagedShard2 = 0;
+    private double[] lengthBonus = { .25, .5, 1, 2, 3, 5 };
     private List<string> words = CombatWordManager.Words;
     int wordsLeft = CombatWordManager.Words.Count;
+
+    //UI Stuff
     private int currentWordIndex;
     private Image[] bubbles;
     private GameObject currentBubble;
+    [SerializeField]
+    private GameObject vicDefPanel;
+    [SerializeField]
+    private Text vicDefText;
+    [SerializeField]
+    private GameObject levelUpText;
 
     //temporary
     [SerializeField]
@@ -36,9 +45,9 @@ public class CombatLogic : MonoBehaviour
     void Awake()
     {
         //Temp Debug Game Master Values
-        GameMaster.Region = 1;
-        GameMaster.Level = 1;
-        GameMaster.Difficulty = 0;
+       // GameMaster.Region = 0;
+        //GameMaster.Level = 1;
+       // GameMaster.Difficulty = 0;
         //end Temp Debug
         bubbles = GetComponentsInChildren<Image>(true);
         CharectorStats.LoadManagerData("");
@@ -49,15 +58,19 @@ public class CombatLogic : MonoBehaviour
         pCrit = heroStats[6];
         pAgi = heroStats[7];
         pDef = heroStats[8];
+        lengthMultiplier = 0;
+        stagedXP = 0;
+        stagedGold = 0;
+        stagedShard1 = 0;
+        stagedShard2 = 0;
 
-
-    //event subs
-    CombatWordManager.onMaxLengthFound += generateBubble;
+        //event subs
+        CombatWordManager.onMaxLengthFound += generateBubble;
         CombatWordManager.onCorrectWord += spelledWord;
+        CharectorStats.leveledUp += onLeveledUp;
         onDamageEnemy += enemyTakeDamage;
         onDamagePlayer += playerTakeDamage;
         onEnemyKilled += nextWord;
-        onEnemyKilled += stageLoot;
         onLevelComplete += levelFinished;
         onPlayerKilled += playerKilled;
 
@@ -69,7 +82,7 @@ public class CombatLogic : MonoBehaviour
 
     IEnumerator CombatTimer()
     {
-        while (isPlayerAlive)
+        while (isGameplay)
         {
             Debug.Log("Restarted Timer");
             float difference = (pAgi - eAgi);
@@ -108,9 +121,10 @@ public class CombatLogic : MonoBehaviour
     {
         //eHealth = CombatWordManager.enemyHealth * 5;
         eHealth = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(100 * Math.Pow(2, GameMaster.Difficulty));
+        initialEHealth = Convert.ToInt32(eHealth);
         eDmg = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(10 * Math.Pow(5, GameMaster.Difficulty));
         eAgi = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(10 * Math.Pow(2, GameMaster.Difficulty));//needs changed
-        eDef = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(10 * Math.Pow(2, GameMaster.Difficulty));//needs changed
+        eDef = 0;//needs changed
         allStats[0].text += eHealth;
         allStats[1].text += eDmg;
         allStats[2].text += eAgi;
@@ -147,7 +161,7 @@ public class CombatLogic : MonoBehaviour
         }
         else if(damage - pDef <= 0)
         {
-            Debug.Log(damage + " damage mitigated by " + pDef + " player defense. Damage reduced to 1");
+           // Debug.Log(damage + " damage mitigated by " + pDef + " player defense. Damage reduced to 1");
             pHealth -= 1;
             HPSlider.value -= 1;
         }
@@ -160,20 +174,24 @@ public class CombatLogic : MonoBehaviour
 
     void enemyTakeDamage(int length)
     {
-        int totalDmg = (pDmg * length * checkCrit()) - eDef; //Verify W/Dylan       
+        int totalDmg = (pDmg * length * checkCrit()) - eDef; //Verify W/Dylan    
+        lengthMultiplier += lengthBonus[length-3];
+        //Debug.Log("lengthmultiplier is " + lengthMultiplier);
         if (totalDmg >= 2)
         {
-            Debug.Log("Total dmg dealt: " + totalDmg);
+           // Debug.Log("Total dmg dealt: " + totalDmg);
             eHealth -= totalDmg;
         }
         else
         {
-            Debug.Log("Too much eDef. Damage reduced to 1");
+           // Debug.Log("Too much eDef. Damage reduced to 1");
             eHealth -= 1;
         }
         if(eHealth <= 0)
         {
+            stageXP();
             onEnemyKilled?.Invoke();
+
         }
         slider.value = eHealth;
         //temp
@@ -186,12 +204,12 @@ public class CombatLogic : MonoBehaviour
         int roll = UnityEngine.Random.Range(0, 10000);
         if(pCrit >= roll)
         {
-           Debug.Log("Critical hit!");
+          // Debug.Log("Critical hit!");
             result = 2;
         }
         else
         {
-            Debug.Log("Normal attack.");
+           // Debug.Log("Normal attack.");
             result = 1;
         }
         return result;
@@ -204,27 +222,48 @@ public class CombatLogic : MonoBehaviour
 
     void stageLoot()
     {
-        Debug.Log("staging loot");
+        //Debug.Log("staging loot");
         stagedGold += 100;
         stagedShard1 += 1;
         stagedShard2 += 2;
+    }
+    void stageXP()
+    {
+
+        int xpToAdd = Convert.ToInt32(initialEHealth * (1 + lengthMultiplier));
+        //Debug.Log("lengthmultiplier is " + lengthMultiplier);
+       // Debug.Log("staged " + initialEHealth + " * " + (1 + lengthMultiplier) + " xp");
+        //Debug.Log("totalstaged = " + xpToAdd);
+        stagedXP += xpToAdd;
+        lengthMultiplier = 0;
     }
     //onLevelComplete
     void levelFinished()
     {
         //add experience as well... dunno why im calling a method that returns an int []??
-        Debug.Log("Victory!" + stagedGold + " gold, " + stagedShard1 + " T1shards, " + stagedShard2 + " T2shards being added to DB");
+        vicDefPanel.SetActive(true);
+        int[] updatedHero = CharectorStats.EndofLevel(stagedXP);
+        //Debug.Log("Victory!" + stagedGold + " gold, " + stagedShard1 + " T1shards, " + stagedShard2 + " T2shards being added to DB");
         InvManager.GoldAdd(stagedGold);
         stagedGold = 0;
         InvManager.T1ShardAdd(stagedShard1);
         stagedShard1 = 0;
         InvManager.T2ShardAdd(stagedShard2);
         stagedShard2 = 0;
+        
+    }
+    void onLeveledUp()
+    {
+        levelUpText.SetActive(true);
+        //string temp = levelUpText.GetComponent<Text>();
+        //regex to replace number?
+
     }
 
     //onEnemyKilled
     void nextWord()
     {
+        stageLoot();
         foreach(Text stat in allStats)
         {
             stat.text = "";
@@ -253,11 +292,13 @@ public class CombatLogic : MonoBehaviour
     //onPlayerKilled
     void playerKilled()
     {
-        Debug.Log("gameover sequence");
-        isPlayerAlive = false;
+       // Debug.Log("gameover sequence");
+        
         removeBubble();
         CombatWordManager.resetString();
-        CombatWordManager.GameOverTrigger();
+        CombatWordManager.GameOverTrigger();//maybe don't need this line if nothing in that script needs to happen here
+        vicDefPanel.SetActive(true);
+        vicDefText.text = "Defeated!";
     }
 
     private void OnDisable()
@@ -267,8 +308,9 @@ public class CombatLogic : MonoBehaviour
         onDamageEnemy -= enemyTakeDamage;
         onDamagePlayer -= playerTakeDamage;
         onEnemyKilled -= nextWord;
-        onEnemyKilled -= stageLoot;
         onPlayerKilled -= playerKilled;
+        onLevelComplete -= levelFinished;
+        CharectorStats.leveledUp -= onLeveledUp;
     }
 
 }

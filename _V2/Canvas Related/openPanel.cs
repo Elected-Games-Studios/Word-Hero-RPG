@@ -5,7 +5,7 @@ using UnityEngine;
 public class openPanel : MonoBehaviour
 {
     [SerializeField]
-    private List<GameObject> Panels;
+    private List<GameObject> Panels; //Panels will be populated differently depending on what the script is on. Can be further optimized.
     private GameObject chosenPanel;
 
    public void OpenPanel()
@@ -24,4 +24,28 @@ public class openPanel : MonoBehaviour
             chosenPanel.gameObject.SetActive(true);
         }
     }
+    public void OpenLevelStartPanel()
+    {
+        chosenPanel = Panels[2]; 
+        if (chosenPanel != null)
+        {
+            chosenPanel.gameObject.SetActive(true);
+        }
+    }
+    public void OpenVictoryDefeat()
+    {
+        chosenPanel = Panels[0];
+        if (chosenPanel != null)
+        {
+            chosenPanel.gameObject.SetActive(true);
+        }
+    }
+    public void CloseAnyPanel()
+    {
+        if (chosenPanel != null)
+        {
+            chosenPanel.gameObject.SetActive(false);
+        }
+    }
+
 }
