@@ -27,8 +27,10 @@ public class MeltHeroGridManager : MonoBehaviour
     }
     public void InitializeMeltGrid()
     {
+        int[] tempStats;
         MeltableHeros.Clear();
         MeltableHeros = CharectorStats.heroesThatCanMelt(CharectorStats.getTempHero(), xpToBeAdded, SelectedToMelt);
+        
         if (buttons.Count > 0)
         {
             foreach (GameObject button in buttons)
@@ -39,11 +41,13 @@ public class MeltHeroGridManager : MonoBehaviour
         }
         for (int i = 0; i < MeltableHeros.Count; i++)
         {
+            tempStats = CharectorStats.UnlockedCharector(MeltableHeros[i]);
+
             GameObject button = Instantiate(buttonTemplate) as GameObject;
             buttons.Add(button);
             button.SetActive(true);
 
-            button.GetComponent<EnhanceListButton>().SetText(CharectorStats.HeroName(MeltableHeros[i]));
+            button.GetComponent<EnhanceListButton>().SetText(CharectorStats.HeroName(tempStats[1]));
             button.GetComponent<EnhanceListButton>().SetIndex(i);
             button.transform.SetParent(buttonTemplate.transform.parent, false);
 

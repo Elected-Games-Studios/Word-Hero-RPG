@@ -18,10 +18,13 @@ public class TileListButtonControl : MonoBehaviour
     public void GenButtons()
     {
         AllHeros.Clear();
+        
         for(int i=0;i< CharectorStats.numOfHeroes(); i++)
         {
             AllHeros.Add(CharectorStats.UnlockedCharector(i));
+            Debug.Log(AllHeros[i][1]);
         }
+
         if(buttons.Count > 0)
         {
 
