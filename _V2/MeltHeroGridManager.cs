@@ -49,15 +49,7 @@ public class MeltHeroGridManager : MonoBehaviour
 
         }
     }
-    public void RefreshMeltableHeros() { //probalby delete this..
-        MeltableHeros.Clear();
-        MeltableHeros = CharectorStats.heroesThatCanMelt(CharectorStats.getTempHero(), xpToBeAdded, SelectedToMelt);
-        for (int i = 0; i < buttons.Count; i++)
-        {
-           
-
-        }
-    }
+  
     public void MeltableButtonClicked(int buttonIdx, bool clicked)
     {
         if (clicked == false)

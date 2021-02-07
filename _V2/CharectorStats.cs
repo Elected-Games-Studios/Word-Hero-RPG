@@ -301,7 +301,7 @@ public static class CharectorStats
     }
     public static List<int> heroesThatCanMelt(int chosenCharecter, int currentXPAdded, List<int> HeroesToBeMelted)//Must be run after each hero is placed in the melt chamber.  Returns same as heroes unlocked.
     {
-        int maxXp = findCurrentMaxLevel(chosenCharecter);
+        int maxXp = XpOfMaxLevel(chosenCharecter);
         List<int> Allhero = new List<int> {};
         for (int i = 0; i < HeroList.Count; i++)
         {

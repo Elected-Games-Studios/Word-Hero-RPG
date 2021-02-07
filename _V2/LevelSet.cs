@@ -4,7 +4,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class LevelSet : MonoBehaviour
 {
-    public int desiredLevel;
+    public int desiredLevel; //Unity Editor Input them as 1-25 for ease of use, but back end uses index at 0, so this becomes -1
     LevelManager levelMan;
     Button menuButton;
 
@@ -17,6 +17,6 @@ public class LevelSet : MonoBehaviour
 
     void OnButtonClicked()
     {
-        levelMan.SetLevel(desiredLevel);
+        levelMan.SetLevel(desiredLevel - 1);
     }
 }

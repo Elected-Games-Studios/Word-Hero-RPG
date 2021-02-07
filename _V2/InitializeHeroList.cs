@@ -9,7 +9,10 @@ public class InitializeHeroList : MonoBehaviour
     {
         
         CharectorStats.LoadManagerData("");
-        
+        //Temp Debug Game Master Values
+        GameMaster.Region = 0;
+        GameMaster.Level = 0;
+        GameMaster.Difficulty = 0;
 
         SceneManager.LoadScene(1);
     }

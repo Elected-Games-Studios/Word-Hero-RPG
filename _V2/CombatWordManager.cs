@@ -28,8 +28,9 @@ public static class CombatWordManager
     public static void StartLevel() //called on awake for 
     {
         WordsIndex = new List<int>();
-        WordsIndex = WordDatav2.GetDataLevel(GameMaster.Region, GameMaster.Level, GameMaster.Difficulty);
-        //WordsIndex = WordDatav2.GetDataLevel(0,0,0);
+        //WordsIndex = WordDatav2.GetDataLevel(GameMaster.Region, GameMaster.Level, GameMaster.Difficulty);
+        
+        WordsIndex = WordDatav2.GetDataLevel(0,0,0);
         GetActualWords();
         wordBreak(0);
         InitializeLetters();
@@ -70,6 +71,7 @@ public static class CombatWordManager
 
     private static void GetActualWords()
     {
+
         int tempcount = WordsIndex.Count();
         tempcount = tempcount / 2;
         for (int x = 0; x < tempcount; x++)
@@ -85,7 +87,7 @@ public static class CombatWordManager
 		string[] tempArrString = Words[currentword].Split(',');
 		currentUsableWords = tempArrString.ToList();
         string [] frontNums = currentUsableWords[0].Split('/');
-        enemyHealth = Convert.ToInt32(frontNums[0]);
+        //enemyHealth = Convert.ToInt32(frontNums[0]);
 		currentUsableWords.RemoveAt(0); 
     }
 	private static bool checkAdd()

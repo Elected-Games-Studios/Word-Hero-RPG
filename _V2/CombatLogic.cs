@@ -14,7 +14,7 @@ public class CombatLogic : MonoBehaviour
     private int stagedXP, stagedGold, stagedShard1, stagedShard2 = 0;
     private double[] lengthBonus = { .25, .5, 1, 2, 3, 5 };
     private List<string> words = CombatWordManager.Words;
-    int wordsLeft = CombatWordManager.Words.Count;
+    int wordsLeft;
 
     //UI Stuff
     private int currentWordIndex;
@@ -46,11 +46,11 @@ public class CombatLogic : MonoBehaviour
     {
         //Temp Debug Game Master Values
        // GameMaster.Region = 0;
-        //GameMaster.Level = 1;
+        //GameMaster.Level = 0;
        // GameMaster.Difficulty = 0;
         //end Temp Debug
         bubbles = GetComponentsInChildren<Image>(true);
-        CharectorStats.LoadManagerData("");
+        //CharectorStats.LoadManagerData("");
         int[] heroStats = CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero());
         
         pDmg = heroStats[4];
@@ -75,6 +75,8 @@ public class CombatLogic : MonoBehaviour
         onPlayerKilled += playerKilled;
 
         CombatWordManager.StartLevel();
+        wordsLeft = CombatWordManager.Words.Count;
+        Debug.Log(wordsLeft + " words left");
         InitializePlayer();
         InitializeEnemy();
         CRRef = StartCoroutine(CombatTimer());
@@ -272,6 +274,7 @@ public class CombatLogic : MonoBehaviour
         CRRef = StartCoroutine(CombatTimer());
         wordsLeft--;
         //decide where to set a short timer to allow enemy entrance
+        Debug.Log(wordsLeft + " words left");
         if (wordsLeft > 0)
         {
             currentWordIndex++;
