@@ -312,11 +312,12 @@ public static class CharectorStats
         }
         return Allhero;
     }
-    public static void meltHero(List<int> CharectersMelt,int TargetCharecter)//Send a List of heroes to be melted down must do herosThatCanMelt First to Verify xp is not more than hero can take. Send the ListID in LIST FORM.
+    public static void meltHero(List<int> CharectersMelt,int TargetCharecter, int xpToBeAdded)//Send a List of heroes to be melted down must do herosThatCanMelt First to Verify xp is not more than hero can take. Send the ListID in LIST FORM.
     {
         for(int x = 0; x < CharectersMelt.Count; x++)
         {
-            HeroList[TargetCharecter][2] += HeroList[CharectersMelt[x]][2];
+            HeroList[TargetCharecter][2] += xpToBeAdded;
+            
             RemoveHero(CharectersMelt[x]);
         }
     }
@@ -426,6 +427,13 @@ public static class CharectorStats
             return HeroList[CurrentHero[1]].ToArray();
         }
     }
+
+    //test method added by Joe to add exp to new creation
+    public static void testAddExp(int hero, int xp)
+    {
+        HeroList[hero][2] += xp;
+    }
+
     public static bool HeroIsMaxLvl(int[] chosenHero)
     {    
         int maxLvl = findCurrentMaxLevel(chosenHero[0]);
@@ -442,11 +450,12 @@ public static class CharectorStats
     }
     public static int[] UnlockedCharector(int i) //This returns a list of All heroes with their values (ListID, HeroID, Level, StarCount)
     {
-        int[] tempHero = new int[4] { 0, 0, 0, 0} ;
+        int[] tempHero = new int[5] { 0, 0, 0, 0, 0} ;
         tempHero[0] = i; //idx for sorting list becomes whatever index they are in herolist
         tempHero[1] = HeroList[i][0];//tmphero 1 is herolist 0--Number aka actual hero type
         tempHero[2] = HeroList[i][1];//level
         tempHero[3] = HeroList[i][3];//number of stars
+        tempHero[4] = HeroList[i][2];//Joe needed XP for MeltChamber
         return tempHero;
     }
     public static int numOfHeroes() => HeroList.Count();

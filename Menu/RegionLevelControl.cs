@@ -28,7 +28,7 @@ public class RegionLevelControl : MonoBehaviour
         {
             openLevels.transform.GetChild(i).gameObject.SetActive(false);
             closedLevels.transform.GetChild(i).gameObject.SetActive(false);
-        } //Clear all buttons
+        } //Clear all gridButtons
  
         if (stats.regionProgress > region)                           //if you have the next region unlocked, open all levels
         {

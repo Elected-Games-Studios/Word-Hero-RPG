@@ -13,7 +13,7 @@ public class InitializeHeroList : MonoBehaviour
         GameMaster.Region = 0;
         GameMaster.Level = 0;
         GameMaster.Difficulty = 0;
-
+        
         SceneManager.LoadScene(1);
     }
 
