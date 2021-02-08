@@ -45,7 +45,7 @@ public class MeltHeroGridManager : MonoBehaviour
         int[] tempStats;       
         MeltableList.Clear();
         SelectedToMeltList.Clear();
-        MeltableList = CharectorStats.heroesThatCanMelt(CharectorStats.getTempHero(), xpToBeAdded, SelectedToMeltList);
+        MeltableList = CharectorStats.heroesThatCanMelt(CharectorStats.getTempHero(), xpToBeAdded, SelectedToMeltList); 
         
         if (GridButtonGameObjs.Count > 0)
         {
@@ -64,6 +64,7 @@ public class MeltHeroGridManager : MonoBehaviour
             button.SetActive(true);
 
             button.GetComponent<EnhanceListButton>().SetText(CharectorStats.HeroName(tempStats[1]));
+            button.GetComponent<EnhanceListButton>().SetHeroNum(tempStats[0]);
             button.GetComponent<EnhanceListButton>().SetIndex(i);
             button.transform.SetParent(buttonTemplate.transform.parent, false);
 
@@ -78,7 +79,7 @@ public class MeltHeroGridManager : MonoBehaviour
         ClearSelectedGameObjs();
         for (int i=0; i < SelectedToMeltList.Count; i++)
         {
-            tempStats = CharectorStats.UnlockedCharector(MeltableList[SelectedToMeltList[i]]);
+            tempStats = CharectorStats.UnlockedCharector(SelectedToMeltList[i]);
             tempxp = tempStats[4];
             GameObject button = Instantiate(selectedBtnTemplate) as GameObject;
             MeltingButtonGameObjs.Add(button);
@@ -86,6 +87,7 @@ public class MeltHeroGridManager : MonoBehaviour
 
             button.GetComponent<SelectedToMeltBtn>().SetText(CharectorStats.HeroName(tempStats[1]));
             button.GetComponent<SelectedToMeltBtn>().SetIndex(i);
+            button.GetComponent<SelectedToMeltBtn>().SetHeroNum(tempStats[0]);
             button.transform.SetParent(selectedBtnTemplate.transform.parent, false);
         }
         xpToBeAdded += tempxp;
@@ -110,12 +112,12 @@ public class MeltHeroGridManager : MonoBehaviour
         }
     }
   
-    public bool MeltableButtonClicked(int buttonIdx, bool clicked)
+    public bool MeltableButtonClicked(int buttonIdx, bool clicked, int BPIndex)
     {
         //Debug.Log("btnidx: " + buttonIdx + ", clicked: " + clicked);
         if (clicked == false)
         {    
-            SelectedToMeltList.Add(buttonIdx);
+            SelectedToMeltList.Add(BPIndex);
             TransferToSelected();
             xpslide.UpdateSlider(xpToBeAdded);
             clicked = true;
@@ -124,10 +126,19 @@ public class MeltHeroGridManager : MonoBehaviour
         else
         {
             clicked = false;
-            int[] tempStats = CharectorStats.UnlockedCharector(MeltableList[SelectedToMeltList[buttonIdx]]);
+            int[] tempStats = CharectorStats.UnlockedCharector(BPIndex);
             xpToBeAdded -= tempStats[4];
             xpToAddText.text = (xpToBeAdded.ToString());
-            GridButtonGameObjs[SelectedToMeltList[buttonIdx]].GetComponent<EnhanceListButton>().clicked = false;
+            GameObject temp = new GameObject();
+            for (int i = 0; i < GridButtonGameObjs.Count; i++)
+            {
+                if(GridButtonGameObjs[i].GetComponent<EnhanceListButton>().heroNum == BPIndex)
+                {
+                    temp = GridButtonGameObjs[i];
+                    break;
+                }
+            }
+            temp.GetComponent<EnhanceListButton>().clicked = false;
             SelectedToMeltList.RemoveAt(buttonIdx);
             RemoveFromSelectedRow(buttonIdx);        
             xpslide.UpdateSlider(xpToBeAdded);            
@@ -138,7 +149,7 @@ public class MeltHeroGridManager : MonoBehaviour
 
     public void MeltHeros()
     {
-        CharectorStats.meltHero(SelectedToMeltList, CharectorStats.getTempHero(), xpToBeAdded);
+        CharectorStats.meltHero(SelectedToMeltList, xpToBeAdded);
         OnEnable();
     }
 }

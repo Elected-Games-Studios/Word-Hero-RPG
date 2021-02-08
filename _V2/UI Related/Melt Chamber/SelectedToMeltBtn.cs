@@ -10,6 +10,7 @@ public class SelectedToMeltBtn : MonoBehaviour
     [SerializeField]
     private MeltHeroGridManager btnControl;
     private int thisButtonIndex;
+    public int heroNum;
     private string myTextString;
     public bool clicked;
     private Button btn;
@@ -24,6 +25,10 @@ public class SelectedToMeltBtn : MonoBehaviour
         btn = GetComponent<Button>();
         btn.onClick.AddListener(OnClick);
     }
+    public void SetHeroNum(int num)
+    {
+        heroNum = num;
+    }
 
     public void SetText(string textString) //change to image tile later
     {
@@ -33,6 +38,6 @@ public class SelectedToMeltBtn : MonoBehaviour
 
     public void OnClick()
     {
-       clicked = btnControl.MeltableButtonClicked(thisButtonIndex, clicked);
+       clicked = btnControl.MeltableButtonClicked(thisButtonIndex, clicked, heroNum);
     }
 }

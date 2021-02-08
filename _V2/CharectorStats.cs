@@ -312,12 +312,13 @@ public static class CharectorStats
         }
         return Allhero;
     }
-    public static void meltHero(List<int> CharectersMelt,int TargetCharecter, int xpToBeAdded)//Send a List of heroes to be melted down must do herosThatCanMelt First to Verify xp is not more than hero can take. Send the ListID in LIST FORM.
+    public static void meltHero(List<int> CharectersMelt, int xpToBeAdded)//Send a List of heroes to be melted down must do herosThatCanMelt First to Verify xp is not more than hero can take. Send the ListID in LIST FORM.
     {
+
         for(int x = 0; x < CharectersMelt.Count; x++)
         {
-            HeroList[TargetCharecter][2] += xpToBeAdded;
-            
+            HeroList[getTempHero()][2] += xpToBeAdded;
+            UnityEngine.Debug.Log("Removing backpack idx " + CharectersMelt[x]);
             RemoveHero(CharectersMelt[x]);
         }
     }
@@ -448,11 +449,11 @@ public static class CharectorStats
         CurrentHero[1] = chosenCharecter;
         return HeroList[chosenCharecter].ToArray();
     }
-    public static int[] UnlockedCharector(int i) //This returns a list of All heroes with their values (ListID, HeroID, Level, StarCount)
+    public static int[] UnlockedCharector(int i) // This returns a list of All heroes with their values (ListID, HeroID, Level, StarCount)
     {
         int[] tempHero = new int[5] { 0, 0, 0, 0, 0} ;
         tempHero[0] = i; //idx for sorting list becomes whatever index they are in herolist
-        tempHero[1] = HeroList[i][0];//tmphero 1 is herolist 0--Number aka actual hero type
+        tempHero[1] = HeroList[i][0];//tmphero 1 is herolist 0--Number aka actual backpack idx
         tempHero[2] = HeroList[i][1];//level
         tempHero[3] = HeroList[i][3];//number of stars
         tempHero[4] = HeroList[i][2];//Joe needed XP for MeltChamber

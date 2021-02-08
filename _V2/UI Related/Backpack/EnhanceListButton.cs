@@ -10,6 +10,7 @@ public class EnhanceListButton : MonoBehaviour
     [SerializeField]
     private MeltHeroGridManager btnControl;
     private int thisButtonIndex;
+    public int heroNum;
     private string myTextString;
     public bool clicked = false;
     private Button btn;
@@ -19,6 +20,10 @@ public class EnhanceListButton : MonoBehaviour
         thisButtonIndex = num;
         btn = GetComponent<Button>();
         btn.onClick.AddListener(OnClick);
+    }
+    public void SetHeroNum(int num)
+    {
+        heroNum = num;
     }
 
     public void SetText(string textString) //change to image tile later
@@ -31,7 +36,7 @@ public class EnhanceListButton : MonoBehaviour
     {
         if (!clicked)
         {
-            btnControl.MeltableButtonClicked(thisButtonIndex, clicked);
+            btnControl.MeltableButtonClicked(thisButtonIndex, clicked, heroNum);
             clicked = !clicked;
         }
 
