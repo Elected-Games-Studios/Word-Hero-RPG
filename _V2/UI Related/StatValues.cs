@@ -18,6 +18,7 @@ public class StatValues : MonoBehaviour
         objects[4].GetComponent<Text>().text = heroStats[6].ToString();//crit
         objects[5].GetComponent<Text>().text = heroStats[8].ToString();//def
         objects[6].GetComponent<Text>().text = heroStats[9].ToString();//xptonext
+        objects[7].GetComponent<Text>().text = heroStats[1].ToString();//level
     }
 }
 // 0-Idx 1-Lvl 2-XP 3-Stars 4-dmg 5-health 6-crit 7-agi 8-def 9-XPtoNextLevel 

@@ -13,7 +13,7 @@ public static class CharectorStats
     private static List<int[]> HeroList = new List<int[]> { };//Mine!
     public static event Action leveledUp;//Joe's
     private static int[] HeroDefault = new int[10]
-    { 0, 1, 0, 0, 0, 0, 0, 0, 0, 100 }; // 0-Idx 1-Lvl 2-XP 3-Stars 4-dmg 5-health 6-crit 7-agi 8-def 9-XPtoNextLevel     ###MINE!!!!!
+    { 0, 1, 0, 0, 0, 0, 0, 0, 0, 100 }; // 0-index in names and tiers 1-Lvl 2-XP 3-Stars 4-dmg 5-health 6-crit 7-agi 8-def 9-XPtoNextLevel     ###MINE!!!!!
     private static double[] DifArr = new double[5]
         {15,12,10,8,6};//Mine!
     private static int[,] HeroDif = new int[49, 5]
@@ -187,7 +187,7 @@ public static class CharectorStats
         tempStats[0] = heroNumber;
         tempStats[1] = heroLvl;
         tempStats[2] = HeroList[chosenCharecter][2];
-        tempStats[2] = HeroList[chosenCharecter][3];
+        tempStats[3] = HeroList[chosenCharecter][3];//Stars need updated as well before this is called
 
         switch (tier)
             //this is off by -1 Level -- Dylan and Joe <3  x = c * (a2-a1)/(b2-b1) + a1
@@ -275,27 +275,62 @@ public static class CharectorStats
             case "T0":
                 if(HeroList[chosenCharecter][1] == 1)
                 {
-                    temp = new int[2] { 0, XPT0[(HeroList[chosenCharecter][1])] - 1 };
+                    temp = new int[2] { 0, XPT0[(HeroList[chosenCharecter][1]) - 1]  };
                 }
                 else
                 {
-                    temp = new int[2] { XPT0[(HeroList[chosenCharecter][1])] - 1, XPT0[(HeroList[chosenCharecter][1])] };
+                    temp = new int[2] { XPT0[(HeroList[chosenCharecter][1]) - 1], XPT0[(HeroList[chosenCharecter][1])] };
                 }
                 return temp;
             case "T1":
-                temp = new int[2] { XPT1[(HeroList[chosenCharecter][1])] - 1, XPT1[(HeroList[chosenCharecter][1])] };
+                if (HeroList[chosenCharecter][1] == 1)
+                {
+                    temp = new int[2] { 0, XPT1[(HeroList[chosenCharecter][1]) - 1] };
+                }
+                else
+                {
+                    temp = new int[2] { XPT1[(HeroList[chosenCharecter][1]) - 1], XPT1[(HeroList[chosenCharecter][1])] };
+                }                   
                 return temp;
             case "T2":
-                temp = new int[2] { XPT2[(HeroList[chosenCharecter][1])] - 1, XPT2[(HeroList[chosenCharecter][1])] };
+                if (HeroList[chosenCharecter][1] == 1)
+                {
+                    temp = new int[2] { 0, XPT2[(HeroList[chosenCharecter][1]) - 1] };
+                }
+                else
+                {
+                    temp = new int[2] { XPT2[(HeroList[chosenCharecter][1]) - 1], XPT2[(HeroList[chosenCharecter][1])] };
+                }                   
                 return temp;
             case "T3":
-                temp = new int[2] { XPT3[(HeroList[chosenCharecter][1])] - 1, XPT3[(HeroList[chosenCharecter][1])] };
+                if (HeroList[chosenCharecter][1] == 1)
+                {
+                    temp = new int[2] { 0, XPT3[(HeroList[chosenCharecter][1]) - 1] };
+                }
+                else
+                {
+                    temp = new int[2] { XPT3[(HeroList[chosenCharecter][1]) - 1], XPT3[(HeroList[chosenCharecter][1])] };
+                }                    
                 return temp;
             case "T4":
-                temp = new int[2] { XPT4[(HeroList[chosenCharecter][1])] - 1, XPT4[(HeroList[chosenCharecter][1])] };
+                if (HeroList[chosenCharecter][1] == 1)
+                {
+                    temp = new int[2] { 0, XPT4[(HeroList[chosenCharecter][1]) - 1] };
+                }
+                else
+                {
+                    temp = new int[2] { XPT4[(HeroList[chosenCharecter][1]) - 1], XPT4[(HeroList[chosenCharecter][1])] };
+                }                  
                 return temp;
             default:
-                temp = new int[2] { XPT5[(HeroList[chosenCharecter][1])] - 1, XPT5[(HeroList[chosenCharecter][1])] };
+                if (HeroList[chosenCharecter][1] == 1)
+                {
+                    temp = new int[2] { 0, XPT5[(HeroList[chosenCharecter][1]) - 1] };
+                }
+                else
+                {
+                    temp = new int[2] { XPT5[(HeroList[chosenCharecter][1]) - 1], XPT5[(HeroList[chosenCharecter][1])] };
+                }
                 return temp;
         }
     }
@@ -404,9 +439,63 @@ public static class CharectorStats
         if (HeroList[chosenCharecter][1] < findCurrentMaxLevel(chosenCharecter))
         {
             HeroList[chosenCharecter][1]++;
+            HeroList[chosenCharecter] = GetCharecterStats(chosenCharecter);
             leveledUp?.Invoke();
         }
     }
+    //level manipulation method for melt chamber, takes input of any amount of total xp and finds where that falls in the XPTn lists.
+    public static int [] MeltSetBounds(int chosenCharecter, int level)
+    {
+        string tier = NamesAndtiers[chosenCharecter, 1];
+        switch (tier)
+        {
+            case "T0":
+                if (level == 1)
+                {
+                    return new int[2] { 0, XPT0[level - 1] };
+                }
+                else return new int[2] { XPT0[level - 2], XPT0[level -1 ] };
+                
+            case "T1":
+                if (level == 1)
+                {
+                    return new int[2] { 0, XPT1[level - 1] };
+                }
+                else return new int[2] { XPT1[level - 2], XPT1[level -1] };
+                
+            case "T2":
+                if (level == 1)
+                {
+                    return new int[2] { 0, XPT2[level - 1] };
+                }
+                else return new int[2] { XPT2[level - 2], XPT2[level-1] };
+                
+            case "T3":
+                if (level == 1)
+                {
+                    return new int[2] { 0, XPT3[level - 1] };
+                }
+                else return new int[2] { XPT3[level - 2], XPT3[level-1] };
+               
+            case "T4":
+                if (level == 1)
+                {
+                    return new int[2] { 0, XPT4[level - 1] };
+                }
+                else return new int[2] { XPT4[level - 2], XPT4[level-1] };
+                
+            default:
+                if (level == 1)
+                {
+                    return new int[2] { 0, XPT5[level - 1] };
+                }
+                else return new int[2] { XPT5[level - 2], XPT5[level-1] };
+                
+        }
+
+    }
+
+
     public static int GetCurrentHero() => CurrentHero[1];
     public static int [] setTempHero(int Hero)
     {

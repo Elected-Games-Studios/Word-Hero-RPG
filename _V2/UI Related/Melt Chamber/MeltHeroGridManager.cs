@@ -12,8 +12,7 @@ public class MeltHeroGridManager : MonoBehaviour
     private GameObject selectedBtnTemplate;
     [SerializeField]
     private MelterXPBar xpslide;
-    [SerializeField]
-    private Text xpToAddText;
+
     private List<GameObject> GridButtonGameObjs;
     private List<GameObject> MeltingButtonGameObjs;
     private List<int> MeltableList;
@@ -32,10 +31,12 @@ public class MeltHeroGridManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        xpToBeAdded = 0;
+        xpslide.CloneHero();
         xpslide.UpdateSlider(0);
+        xpslide.SetCurrentAndBoundText();
+        xpToBeAdded = 0;        
         InitializeMeltGrid();
-        xpslide.SetText();
+        xpslide.SetHeroNameText();
         //need to remove selectedButtons if refreshing panel
         ClearSelectedGameObjs();
     }
@@ -91,7 +92,6 @@ public class MeltHeroGridManager : MonoBehaviour
             button.transform.SetParent(selectedBtnTemplate.transform.parent, false);
         }
         xpToBeAdded += tempxp;
-        xpToAddText.text = (xpToBeAdded.ToString());
 
     }
     public void RemoveFromSelectedRow(int idx)
@@ -119,7 +119,9 @@ public class MeltHeroGridManager : MonoBehaviour
         {    
             SelectedToMeltList.Add(BPIndex);
             TransferToSelected();
-            xpslide.UpdateSlider(xpToBeAdded);
+            int[] tempStats = CharectorStats.UnlockedCharector(BPIndex);
+            xpslide.UpdateSlider(tempStats[4]);
+            xpslide.SetCurrentAndBoundText();
             clicked = true;
             return clicked;
         }
@@ -128,7 +130,6 @@ public class MeltHeroGridManager : MonoBehaviour
             clicked = false;
             int[] tempStats = CharectorStats.UnlockedCharector(BPIndex);
             xpToBeAdded -= tempStats[4];
-            xpToAddText.text = (xpToBeAdded.ToString());
             GameObject temp = new GameObject();
             for (int i = 0; i < GridButtonGameObjs.Count; i++)
             {
@@ -141,7 +142,8 @@ public class MeltHeroGridManager : MonoBehaviour
             temp.GetComponent<EnhanceListButton>().clicked = false;
             SelectedToMeltList.RemoveAt(buttonIdx);
             RemoveFromSelectedRow(buttonIdx);        
-            xpslide.UpdateSlider(xpToBeAdded);            
+            xpslide.UpdateSlider(-tempStats[4]);
+            xpslide.SetCurrentAndBoundText();
             return clicked;
         }
 
