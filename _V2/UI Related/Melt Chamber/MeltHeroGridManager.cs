@@ -18,6 +18,7 @@ public class MeltHeroGridManager : MonoBehaviour
     private List<int> MeltableList;
     private List<int> SelectedToMeltList;
     private int xpToBeAdded;
+    private int lvlToPass = 0;
 
     private void Awake()
     {
@@ -76,6 +77,7 @@ public class MeltHeroGridManager : MonoBehaviour
         
         int[] tempStats;
         int tempxp = 0;
+       
         //Insert function to gray out tile on grid
         ClearSelectedGameObjs();
         for (int i=0; i < SelectedToMeltList.Count; i++)
@@ -91,7 +93,10 @@ public class MeltHeroGridManager : MonoBehaviour
             button.GetComponent<SelectedToMeltBtn>().SetHeroNum(tempStats[0]);
             button.transform.SetParent(selectedBtnTemplate.transform.parent, false);
         }
+
         xpToBeAdded += tempxp;
+        
+
 
     }
     public void RemoveFromSelectedRow(int idx)
@@ -114,7 +119,6 @@ public class MeltHeroGridManager : MonoBehaviour
   
     public bool MeltableButtonClicked(int buttonIdx, bool clicked, int BPIndex)
     {
-        //Debug.Log("btnidx: " + buttonIdx + ", clicked: " + clicked);
         if (clicked == false)
         {    
             SelectedToMeltList.Add(BPIndex);

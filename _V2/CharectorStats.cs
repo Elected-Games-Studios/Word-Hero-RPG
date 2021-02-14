@@ -91,7 +91,7 @@ public static class CharectorStats
     {
         HeroList.Add(HeroDefault);
     }
-    private static int XpOfMaxLevel(int chosenCharecter)//Mine!
+    public static int XpOfMaxLevel(int chosenCharecter)//Mine!
     {
             string tier = NamesAndtiers[(HeroList[chosenCharecter][0]),1];
             int tierNum;
@@ -134,7 +134,7 @@ public static class CharectorStats
             }
 
     }
-    private static int findCurrentMaxLevel(int chosenCharecter)//Mine!
+    public static int findCurrentMaxLevel(int chosenCharecter)//Mine!
         {
             string tier = NamesAndtiers[HeroList[chosenCharecter][0],1];
             int tierNum;
@@ -347,12 +347,13 @@ public static class CharectorStats
         }
         return Allhero;
     }
+    public static void updateHero(int chosen, int xp, int level) { HeroList[chosen][1] = level; HeroList[chosen][2] = xp; }
     public static void meltHero(List<int> CharectersMelt, int xpToBeAdded)//Send a List of heroes to be melted down must do herosThatCanMelt First to Verify xp is not more than hero can take. Send the ListID in LIST FORM.
     {
-
         for(int x = 0; x < CharectersMelt.Count; x++)
         {
             HeroList[getTempHero()][2] += xpToBeAdded;
+            
             UnityEngine.Debug.Log("Removing backpack idx " + CharectersMelt[x]);
             RemoveHero(CharectersMelt[x]);
         }
@@ -450,45 +451,27 @@ public static class CharectorStats
         switch (tier)
         {
             case "T0":
-                if (level == 1)
-                {
-                    return new int[2] { 0, XPT0[level - 1] };
-                }
+                if (level == 1) return new int[2] { 0, XPT0[level - 1] };
                 else return new int[2] { XPT0[level - 2], XPT0[level -1 ] };
                 
             case "T1":
-                if (level == 1)
-                {
-                    return new int[2] { 0, XPT1[level - 1] };
-                }
+                if (level == 1) return new int[2] { 0, XPT1[level - 1] };
                 else return new int[2] { XPT1[level - 2], XPT1[level -1] };
                 
             case "T2":
-                if (level == 1)
-                {
-                    return new int[2] { 0, XPT2[level - 1] };
-                }
+                if (level == 1) return new int[2] { 0, XPT2[level - 1] };
                 else return new int[2] { XPT2[level - 2], XPT2[level-1] };
                 
             case "T3":
-                if (level == 1)
-                {
-                    return new int[2] { 0, XPT3[level - 1] };
-                }
+                if (level == 1) return new int[2] { 0, XPT3[level - 1] };
                 else return new int[2] { XPT3[level - 2], XPT3[level-1] };
                
             case "T4":
-                if (level == 1)
-                {
-                    return new int[2] { 0, XPT4[level - 1] };
-                }
+                if (level == 1) return new int[2] { 0, XPT4[level - 1] };
                 else return new int[2] { XPT4[level - 2], XPT4[level-1] };
                 
             default:
-                if (level == 1)
-                {
-                    return new int[2] { 0, XPT5[level - 1] };
-                }
+                if (level == 1) return new int[2] { 0, XPT5[level - 1] };
                 else return new int[2] { XPT5[level - 2], XPT5[level-1] };
                 
         }
