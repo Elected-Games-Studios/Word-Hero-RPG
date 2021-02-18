@@ -15,10 +15,18 @@ public class SelectedToMeltBtn : MonoBehaviour
     public bool clicked;
     private Button btn;
 
+    public int ThisButtonIndex { get; }
+
     private void OnEnable()
     {
         clicked = true;
     }
+    public void LowerIndex()
+    {
+        thisButtonIndex-=1;
+        Debug.Log("Lowered to " + thisButtonIndex);
+    }
+
     public void SetIndex(int num)
     {
         thisButtonIndex = num;

@@ -15,12 +15,15 @@ public class EnhanceListButton : MonoBehaviour
     public bool clicked = false;
     private Button btn;
 
+    
+
     public void SetIndex(int num)
     {
         thisButtonIndex = num;
         btn = GetComponent<Button>();
         btn.onClick.AddListener(OnClick);
     }
+
     public void SetHeroNum(int num)
     {
         heroNum = num;
@@ -42,4 +45,5 @@ public class EnhanceListButton : MonoBehaviour
 
         
     }
+
 }

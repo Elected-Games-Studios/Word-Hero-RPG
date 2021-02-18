@@ -13,6 +13,8 @@ public class MelterXPBar : MonoBehaviour
     private Text UBText;
     [SerializeField]
     private Text currentLvlText;
+    [SerializeField]
+    private GameObject xpBar;
     private int[] bounds;
     private int current = 0;
     private int[] heroCloneToPass = new int[10];
@@ -40,15 +42,17 @@ public class MelterXPBar : MonoBehaviour
         
         if(heroCloneToPass[1] < heroLevelCap && (accumHeroXp + xpToBeAdded < CharectorStats.XpOfMaxLevel(CharectorStats.getTempHero())))
         {
-            AddSubtractXP();
-           
+            xpBar.SetActive(true);
+            AddSubtractXP();          
         }
         else if(heroCloneToPass[1] < heroLevelCap && (accumHeroXp + xpToBeAdded >= CharectorStats.XpOfMaxLevel(CharectorStats.getTempHero())))
         {
-            //graphic and text to max level and exp
+            xpBar.SetActive(false);
+            currentLvlText.text = CharectorStats.findCurrentMaxLevel(CharectorStats.getTempHero()).ToString();
         }
         else if(heroCloneToPass[1] >= heroLevelCap && xpToBeAdded < 0)
         {
+            xpBar.SetActive(true);
             AddSubtractXP();
         }
         
@@ -82,7 +86,7 @@ public class MelterXPBar : MonoBehaviour
         }
 
         currentLvlText.text = "Level: " + heroCloneToPass[1];
-        var slider = gameObject.GetComponent<Slider>();
+        var slider = gameObject.GetComponentInChildren<Slider>();
         //current -= bounds[0];
         bounds[1] -= bounds[0];
         bounds[0] = 0;

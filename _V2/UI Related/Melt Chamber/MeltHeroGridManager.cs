@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 public class MeltHeroGridManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class MeltHeroGridManager : MonoBehaviour
     [SerializeField]
     private MelterXPBar xpslide;
 
+    public event Action lowerEnhBtnIndexes;
     private List<GameObject> GridButtonGameObjs;
     private List<GameObject> MeltingButtonGameObjs;
     private List<int> MeltableList;
@@ -23,8 +25,8 @@ public class MeltHeroGridManager : MonoBehaviour
     private void Awake()
     {
         //ints used to generate buttons
-        SelectedToMeltList = new List<int>() { 250 };
         MeltableList = new List<int>() { };
+        SelectedToMeltList = new List<int>() { 250 };
 
         //actual button lists
         GridButtonGameObjs = new List<GameObject>() { };
@@ -101,8 +103,19 @@ public class MeltHeroGridManager : MonoBehaviour
     }
     public void RemoveFromSelectedRow(int idx)
     {
-        MeltingButtonGameObjs[idx].SetActive(false);
+        Destroy(MeltingButtonGameObjs[idx]);
         MeltingButtonGameObjs.RemoveAt(idx);
+        
+        
+        foreach(GameObject button in MeltingButtonGameObjs)
+        {
+            
+            if(button.GetComponent<SelectedToMeltBtn>().ThisButtonIndex > idx)
+            {
+                Debug.Log("calling LowerIndex");
+                button.GetComponent<SelectedToMeltBtn>().LowerIndex();
+            } 
+        }
     }
 
     void ClearSelectedGameObjs()
@@ -144,8 +157,11 @@ public class MeltHeroGridManager : MonoBehaviour
                 }
             }
             temp.GetComponent<EnhanceListButton>().clicked = false;
+
             SelectedToMeltList.RemoveAt(buttonIdx);
-            RemoveFromSelectedRow(buttonIdx);        
+            RemoveFromSelectedRow(buttonIdx);
+            
+            
             xpslide.UpdateSlider(-tempStats[4]);
             xpslide.SetCurrentAndBoundText();
             return clicked;

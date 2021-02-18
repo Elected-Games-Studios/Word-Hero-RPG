@@ -16,8 +16,8 @@ public static class CharectorStats
     { 0, 1, 0, 0, 0, 0, 0, 0, 0, 100 }; // 0-index in names and tiers 1-Lvl 2-XP 3-Stars 4-dmg 5-health 6-crit 7-agi 8-def 9-XPtoNextLevel     ###MINE!!!!!
     private static double[] DifArr = new double[5]
         {15,12,10,8,6};//Mine!
-    private static int[,] HeroDif = new int[49, 5]
-    {{2,2,2,2,2},{2,1,3,2,2},{1,2,2,2,3},{2,3,2,1,2},{1,3,2,2,3},{3,1,2,2,2},{2,2,3,2,1},{2,3,2,1,2},{2,1,3,1,3},{2,1,3,3,1},{1,3,1,2,3},{3,1,1,3,2},{2,3,1,1,3},{3,2,1,3,1},{1,3,2,1,3},{2,3,1,1,3},{2,1,3,3,1},{3,1,3,1,2},{3,1,2,1,3},{0,3,2,1,4},{0,2,4,3,1},{2,1,4,3,0},{1,2,4,3,0},{2,1,3,1,2},{0,1,2,3,4},{2,1,3,2,1},{1,1,2,3,2},{1,2,2,1,3},{1,3,2,0,4},{2,2,1,1,3},{3,0,2,1,4},{0,4,1,2,3},{1,3,0,2,4},{1,3,2,0,4},{2,2,1,1,3},{1,2,2,3,1},{2,3,1,1,2},{3,2,1,1,2},{1,2,3,1,2},{1,2,2,3,1},{0,3,4,2,1},{2,1,4,3,0},{1,2,2,1,3},{0,4,1,2,3},{2,1,2,3,1},{1,3,1,0,4},{1,0,2,3,4},{2,3,4,0,1},{0,3,1,2,4}};//Mine!
+    private static int[,] HeroDif = new int[72, 5]
+    {{2,2,2,2,2},{2,1,3,2,2},{1,2,2,2,3},{2,3,2,1,2},{1,3,2,2,3},{3,1,2,2,2},{2,2,3,2,1},{2,3,2,1,2},{2,1,3,1,3},{2,1,3,3,1},{1,3,1,2,3},{3,1,1,3,2},{2,3,1,1,3},{3,2,1,3,1},{1,3,2,1,3},{2,3,1,1,3},{2,1,3,3,1},{3,1,3,1,2},{3,1,2,1,3},{0,3,2,1,4},{0,2,4,3,1},{2,1,4,3,0},{1,2,4,3,0},{2,1,3,1,2},{0,1,2,3,4},{2,1,3,2,1},{1,1,2,3,2},{1,2,2,1,3},{1,3,2,0,4},{2,2,1,1,3},{3,0,2,1,4},{0,4,1,2,3},{1,3,0,2,4},{1,3,2,0,4},{2,2,1,1,3},{1,2,2,3,1},{2,3,1,1,2},{3,2,1,1,2},{1,2,3,1,2},{1,2,2,3,1},{0,3,4,2,1},{2,1,4,3,0},{1,2,2,1,3},{0,4,1,2,3},{2,1,2,3,1},{1,3,1,0,4},{1,0,2,3,4},{2,3,4,0,1},{0,3,1,2,4},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2},{2,2,2,2,2}};//Mine!
     private static List<int> XPT0 = new List<int>
     { 100, 300, 600, 1000, 1500, 2100, 2800, 3600, 4500 };//Mine!
     private static List<int> XPT1 = new List<int>
@@ -136,6 +136,7 @@ public static class CharectorStats
     }
     public static int findCurrentMaxLevel(int chosenCharecter)//Mine!
         {
+            UnityEngine.Debug.Log("FCM: " + chosenCharecter);
             string tier = NamesAndtiers[HeroList[chosenCharecter][0],1];
             int tierNum;
             switch (tier)
@@ -187,7 +188,7 @@ public static class CharectorStats
         tempStats[0] = heroNumber;
         tempStats[1] = heroLvl;
         tempStats[2] = HeroList[chosenCharecter][2];
-        tempStats[3] = HeroList[chosenCharecter][3];//Stars need updated as well before this is called
+        tempStats[3] = HeroList[chosenCharecter][3];//Star values assigned in AddHero
 
         switch (tier)
             //this is off by -1 Level -- Dylan and Joe <3  x = c * (a2-a1)/(b2-b1) + a1
@@ -241,6 +242,7 @@ public static class CharectorStats
     }
     private static void RemoveHero(int chosenCharecter)
     {
+        UnityEngine.Debug.Log("removing " + chosenCharecter);
         HeroList.RemoveAt(chosenCharecter);
     }
     private static int XPtoNextLvl(int chosenCharecter) 
@@ -350,11 +352,12 @@ public static class CharectorStats
     public static void updateHero(int chosen, int xp, int level) { HeroList[chosen][1] = level; HeroList[chosen][2] = xp; }
     public static void meltHero(List<int> CharectersMelt, int xpToBeAdded)//Send a List of heroes to be melted down must do herosThatCanMelt First to Verify xp is not more than hero can take. Send the ListID in LIST FORM.
     {
+        CharectersMelt.Sort();
+        CharectersMelt.Reverse();
         for(int x = 0; x < CharectersMelt.Count; x++)
         {
             HeroList[getTempHero()][2] += xpToBeAdded;
             
-            UnityEngine.Debug.Log("Removing backpack idx " + CharectersMelt[x]);
             RemoveHero(CharectersMelt[x]);
         }
     }
@@ -548,21 +551,26 @@ public static class CharectorStats
                 }
                 else
                 {
+                    //{ 0, 0, 0, 1, 2, 3 };//Mine!
                     switch (tempInt)
                     {
                         case int n when (n < 40):
                             TempHero[0] = tiersByHero[0][rand.Next(0, tiersByHero[0].Count())];
+                            TempHero[3] = 0;
                             ShardCounter[0]++;
                             break;
                         case int n when (n < 80):
                             TempHero[0] = tiersByHero[1][rand.Next(0, tiersByHero[1].Count())];
+                            TempHero[3] = 0;
                             ShardCounter[0]++;
                             break;
                         case int n when (n < 95):                            
                             TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
+                            TempHero[3] = 0;
                             break;
                         default:
                             TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
+                            TempHero[3] = 1;
                             break;
 
                     }
@@ -573,6 +581,7 @@ public static class CharectorStats
                 if (ShardCounter[1] == 9)
                 {
                     TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
+                    TempHero[3] = 1;
                     ShardCounter[1] = 0;
                 }
                 else
@@ -581,13 +590,16 @@ public static class CharectorStats
                     {
                         case int n when (n < 8975):
                             TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
+                            TempHero[3] = 0;
                             ShardCounter[1]++;
                             break;
                         case int n when (n < 9975):
                             TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
+                            TempHero[3] = 1;
                             break;
                         default:
                             TempHero[0] = tiersByHero[4][rand.Next(0, tiersByHero[4].Count())];
+                            TempHero[3] = 2;
                             break;
                     }
                 }
