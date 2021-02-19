@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,11 +16,15 @@ public class MelterXPBar : MonoBehaviour
     private Text currentLvlText;
     [SerializeField]
     private GameObject xpBar;
+    public event Action tempMax;
+    public event Action tempMaxReduced;
     private int[] bounds;
     private int current = 0;
     private int[] heroCloneToPass = new int[10];
     private int heroLevelCap;
     private int accumHeroXp;
+
+   
     public void SetHeroNameText()
     {
         int[] nameTemp = CharectorStats.setTempHero(CharectorStats.getTempHero());
@@ -43,17 +48,20 @@ public class MelterXPBar : MonoBehaviour
         if(heroCloneToPass[1] < heroLevelCap && (accumHeroXp + xpToBeAdded < CharectorStats.XpOfMaxLevel(CharectorStats.getTempHero())))
         {
             xpBar.SetActive(true);
-            AddSubtractXP();          
+            AddSubtractXP();
+            tempMaxReduced?.Invoke();
         }
         else if(heroCloneToPass[1] < heroLevelCap && (accumHeroXp + xpToBeAdded >= CharectorStats.XpOfMaxLevel(CharectorStats.getTempHero())))
         {
             xpBar.SetActive(false);
             currentLvlText.text = CharectorStats.findCurrentMaxLevel(CharectorStats.getTempHero()).ToString();
+            tempMax?.Invoke();
         }
         else if(heroCloneToPass[1] >= heroLevelCap && xpToBeAdded < 0)
         {
             xpBar.SetActive(true);
             AddSubtractXP();
+            tempMaxReduced?.Invoke();
         }
         
     }
@@ -93,4 +101,6 @@ public class MelterXPBar : MonoBehaviour
         slider.maxValue = bounds[1];
         slider.value = current;
     }
+
+   
 }

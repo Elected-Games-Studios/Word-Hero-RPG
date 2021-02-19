@@ -26,6 +26,11 @@ public class CombatLogic : MonoBehaviour
     private Text vicDefText;
     [SerializeField]
     private GameObject levelUpText;
+    private Animator characterAnimator;
+    [SerializeField]
+    private GameObject characterHolder;
+    [SerializeField]
+    private List<GameObject> allCharacters;
 
     //temporary
     [SerializeField]
@@ -44,6 +49,15 @@ public class CombatLogic : MonoBehaviour
 
     void Awake()
     {
+        for (int i = 0; i < allCharacters.Count; i++)
+        {
+            if(i != CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero())[0])
+            {
+                allCharacters[i].SetActive(false);
+            }
+        }
+        characterAnimator = characterHolder.GetComponentInChildren<Animator>();
+        characterAnimator.SetBool("inCombat", true);
         //Temp Debug Game Master Values
        // GameMaster.Region = 0;
         //GameMaster.Level = 0;
@@ -63,7 +77,7 @@ public class CombatLogic : MonoBehaviour
         stagedGold = 0;
         stagedShard1 = 0;
         stagedShard2 = 0;
-
+ 
         //event subs
         CombatWordManager.onMaxLengthFound += generateBubble;
         CombatWordManager.onCorrectWord += spelledWord;
@@ -154,7 +168,9 @@ public class CombatLogic : MonoBehaviour
 
     //event methods
     void playerTakeDamage(int damage)
-    {      
+    {
+
+
         if(damage-pDef > 0)
         {
             //Debug.Log(damage + " damage mitigated by " + pDef + " player defense. Damage reduced to " + (damage - pDef));
@@ -170,7 +186,13 @@ public class CombatLogic : MonoBehaviour
         HPText.text = HPSlider.value.ToString() + "/" + HPSlider.maxValue.ToString() + "  ";
         if(pHealth <= 0)
         {
+            isGameplay = false;
+            characterAnimator.SetTrigger("isDead");
             onPlayerKilled?.Invoke();
+        }
+        if (isGameplay)
+        {
+            characterAnimator.SetTrigger("gotHit");
         }
     }
 
@@ -219,6 +241,7 @@ public class CombatLogic : MonoBehaviour
 
     void spelledWord(int length)
     {
+        characterAnimator.SetTrigger(length + "letter");
         onDamageEnemy?.Invoke(length);
     }
 
@@ -242,6 +265,7 @@ public class CombatLogic : MonoBehaviour
     //onLevelComplete
     void levelFinished()
     {
+        characterAnimator.SetBool("celebrate", true);
         //add experience as well... dunno why im calling a method that returns an int []??
         vicDefPanel.SetActive(true);
         int[] updatedHero = CharectorStats.EndofLevel(stagedXP);

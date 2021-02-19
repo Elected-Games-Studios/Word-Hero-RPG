@@ -9,13 +9,13 @@ public class SelectedToMeltBtn : MonoBehaviour
     private Text myText;
     [SerializeField]
     private MeltHeroGridManager btnControl;
-    private int thisButtonIndex;
+    public int thisButtonIndex;
     public int heroNum;
     private string myTextString;
     public bool clicked;
     private Button btn;
 
-    public int ThisButtonIndex { get; }
+   
 
     private void OnEnable()
     {
