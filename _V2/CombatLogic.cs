@@ -26,7 +26,9 @@ public class CombatLogic : MonoBehaviour
     private Text vicDefText;
     [SerializeField]
     private GameObject levelUpText;
+    private GameObject SelectedHero;
     private Animator characterAnimator;
+    private GameObject heroParticles;
     [SerializeField]
     private GameObject characterHolder;
     [SerializeField]
@@ -54,9 +56,16 @@ public class CombatLogic : MonoBehaviour
             if(i != CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero())[0])
             {
                 allCharacters[i].SetActive(false);
+                
+            }
+            else
+            {
+                SelectedHero = allCharacters[i];
             }
         }
         characterAnimator = characterHolder.GetComponentInChildren<Animator>();
+        
+        heroParticles = SelectedHero.transform.Find("HeroAttackParticles").gameObject;
         characterAnimator.SetBool("inCombat", true);
         //Temp Debug Game Master Values
        // GameMaster.Region = 0;
@@ -198,6 +207,7 @@ public class CombatLogic : MonoBehaviour
 
     void enemyTakeDamage(int length)
     {
+        heroParticles.transform.GetChild(length - 3).gameObject.SetActive(true);
         int totalDmg = (pDmg * length * checkCrit()) - eDef; //Verify W/Dylan    
         lengthMultiplier += lengthBonus[length-3];
         //Debug.Log("lengthmultiplier is " + lengthMultiplier);
