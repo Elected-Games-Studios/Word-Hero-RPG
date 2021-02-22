@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SelectHero : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject CharactersObject;
     Button selectBtn;
     private void Start()
     {
@@ -14,5 +16,7 @@ public class SelectHero : MonoBehaviour
     void SetHero()
     {
         CharectorStats.SetCurrentHero(CharectorStats.getTempHero());
+        Debug.Log("Hero is now: " + CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero())[0] + CharectorStats.HeroName(CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero())[0]));
+        
     }
 }

@@ -70,7 +70,7 @@ public static class CharectorStats
     { 75, 100, 150, 250 };//Mine!
     private static string[,] NamesAndtiers = new string[72, 2]
     { {"Folk","T0"},{"Fighter","T1"},{"Ranger","T1"},{"Rogue","T1"},{"Mage","T1"},{"Cleric","T1"},{"Barbarian","T1"},{"Monk","T1"},{"Hunter","T2"},{"Soldier","T2"},{"Wizard","T2"},{"Acolyte","T2"},{"Thief","T2"},{"Gambler","T2"},{"Archer","T2"},{"Duelist","T2"},{"Berserker","T2"},{"Bard","T2"},{"Trapper","T2"},{"Blade Master","T3"},{"War Mage","T3"},{"Knight","T3"},{"Lancer","T3"},{"Druid","T3"},{"Sorcerer","T3"},{"Priest","T3"},{"Warlock","T3"},{"Arcane Trickster","T3"},{"Assassin","T3"},{"Tactician","T3"},{"Sage (Bard+)","T3"},{"Spell Sniper","T3"},{"Grand Marksman","T3"},{"Dervish","T3"},{"Hightened Monk","T3"},{"Commander","T3"},{"Magician","T3"},{"Jester","T3"},{"Falconer","T3"},{"Tinkerer","T3"},{"Hex Blade","T4"},{"Paladin","T4"},{"Weapon Master","T4"},{"Spellblade","T4"},{"Death Knight","T4"},{"Shadow","T4"},{"Juggernaut","T4"},{"Dragoon","T4"},{"Archmage","T4"},{"Eldrich Knight","T4"},{"Elementalist","T4"},{"Archdruid","T4"},{"Invoker","T4"},{"Shadowmancer","T4"},{"Avatar","T4"},{"Avenger","T4"},{"Blue Mage","T4"},{"Technomancer","T4"},{"Beast Master","T4"},{"Vampire Hunter","T4"},{"Arcane Arrow","T4"},{"Slayer/Executioner","T4"},{"Horizon Walker","T4"},{"Holy Ranger","T4"},{"Lycanthrope","T4"},{"Pirate Lord","T4"},{"Bombardier","T4"},{"Spirit Guardian","T4"},{"Aspect of Gaia","T5"},{"Dragonmaster","T5"},{"Avatar of Vengeance","T5"},{"Chronomancer","T5"} };//Mine!
-    private static int[] CurrentHero = new int[2] {0,0};//Mine! Joe edited to default at 0
+    private static int[] CurrentHero = new int[2] {0,0};//Mine! Backpack Index
     public static int[] ShardCounter = new int[2] 
     { 0, 0 };
     private static List<int> T1bh = new List<int> 
@@ -354,12 +354,13 @@ public static class CharectorStats
     {
         CharectersMelt.Sort();
         CharectersMelt.Reverse();
+        UnityEngine.Debug.Log("temphero xp was: " + HeroList[getTempHero()][2]);
         for(int x = 0; x < CharectersMelt.Count; x++)
-        {
-            HeroList[getTempHero()][2] += xpToBeAdded;
-            
+        {                     
             RemoveHero(CharectersMelt[x]);
         }
+        HeroList[getTempHero()][2] += xpToBeAdded;
+        UnityEngine.Debug.Log("temphero xp is: " + HeroList[getTempHero()][2]);
     }
     public static bool buyHeroUpgradeCheck(int chosenCharecter)//call this to set upgrade button to on
     {
@@ -483,7 +484,7 @@ public static class CharectorStats
 
 
     public static int GetCurrentHero() => CurrentHero[1];
-    public static int [] setTempHero(int Hero)
+    public static int [] setTempHero(int Hero)//settemp(gettemp)[0] to get namesandtiers index
     {
         CurrentHero[0] = Hero;
         return HeroList[Hero].ToArray();
@@ -519,7 +520,7 @@ public static class CharectorStats
         }
         else return false;
     }
-    public static int[] SetCurrentHero(int chosenCharecter)
+    public static int[] SetCurrentHero(int chosenCharecter)//setcurrent(getcurrent)[0] to get namesandtiers index
     {
         CurrentHero[1] = chosenCharecter;
         return HeroList[chosenCharecter].ToArray();

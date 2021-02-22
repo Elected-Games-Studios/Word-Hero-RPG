@@ -15,7 +15,6 @@ public class EnhanceListButton : MonoBehaviour
     public bool clicked = false;
     private Button btn;
 
-    
 
     public void SetIndex(int num)
     {
@@ -41,9 +40,8 @@ public class EnhanceListButton : MonoBehaviour
         {
             btnControl.MeltableButtonClicked(thisButtonIndex, clicked, heroNum);
             clicked = !clicked;
-        }
-
-        
+        }       
     }
+
 
 }

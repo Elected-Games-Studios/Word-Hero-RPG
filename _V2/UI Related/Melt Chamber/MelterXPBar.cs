@@ -16,6 +16,8 @@ public class MelterXPBar : MonoBehaviour
     private Text currentLvlText;
     [SerializeField]
     private GameObject xpBar;
+    [SerializeField]
+    private MeltHeroGridManager gridMan;
     public event Action tempMax;
     public event Action tempMaxReduced;
     private int[] bounds;
@@ -24,7 +26,10 @@ public class MelterXPBar : MonoBehaviour
     private int heroLevelCap;
     private int accumHeroXp;
 
-   
+   public void reduceTempMax()//needed to call from external
+    {
+        tempMaxReduced?.Invoke();
+    }
     public void SetHeroNameText()
     {
         int[] nameTemp = CharectorStats.setTempHero(CharectorStats.getTempHero());
@@ -34,14 +39,20 @@ public class MelterXPBar : MonoBehaviour
     {
         heroCloneToPass = CharectorStats.setTempHero(CharectorStats.getTempHero());
         accumHeroXp = heroCloneToPass[2];
-        bounds = GetBounds();
+        if (!gridMan.isMaxed)
+        {
+            bounds = GetBounds();
+        }
         current = accumHeroXp - bounds[0];
         heroLevelCap = CharectorStats.findCurrentMaxLevel(CharectorStats.getTempHero());
     }
     public void UpdateSlider(int xpToBeAdded)
     {
-
-        bounds = GetBounds();
+        
+        if (!gridMan.isMaxed)
+        {
+            bounds = GetBounds();
+        }       
         accumHeroXp += xpToBeAdded;
         current += xpToBeAdded;
         
@@ -71,9 +82,9 @@ public class MelterXPBar : MonoBehaviour
         UBText.text = "/" + bounds[1].ToString();
     }
     private int [] GetBounds()
-    {
-         var temp = CharectorStats.MeltSetBounds(heroCloneToPass[0], heroCloneToPass[1]);
-        return temp;
+    {              
+            var temp = CharectorStats.MeltSetBounds(heroCloneToPass[0], heroCloneToPass[1]);
+            return temp;              
     }
     private void AddSubtractXP()
     {
@@ -81,7 +92,10 @@ public class MelterXPBar : MonoBehaviour
         {
             Debug.Log("LevelDown: " + heroCloneToPass[1]);
             heroCloneToPass[1] -= 1;
-            bounds = GetBounds();
+            if (!gridMan.isMaxed)
+            {
+                bounds = GetBounds();
+            }
             current += (bounds[1] - bounds[0]);
         }
 
@@ -90,7 +104,10 @@ public class MelterXPBar : MonoBehaviour
             Debug.Log("LevelUp: " + heroCloneToPass[1]);
             heroCloneToPass[1]++;
             current -= (bounds[1] - bounds[0]);
-            bounds = GetBounds();
+            if (!gridMan.isMaxed)
+            {
+                bounds = GetBounds();
+            }
         }
 
         currentLvlText.text = "Level: " + heroCloneToPass[1];

@@ -20,6 +20,8 @@ public enum CanvasType
 
 public class CanvasDisplayManager : MonoBehaviour
 {
+    [SerializeField]
+    private MenuCharactersObjectSwitch charaSwitch;
     public static event Action Rise, Revert, GoAway, ComeBack, GenerateHeroTiles;
 
     public static CanvasDisplayManager instance;
@@ -57,10 +59,12 @@ public class CanvasDisplayManager : MonoBehaviour
             switch (desiredCanvas.canvasType)
             {
                 case CanvasType.HeroSelected:
+                    charaSwitch.SetToTemp();
                     ComeBack?.Invoke();
                     Rise?.Invoke();
                     break;
                 case CanvasType.MainMenu:
+                    charaSwitch.SetToCurrent();
                     Revert?.Invoke();
                     break;
                 case CanvasType.HeroHome:

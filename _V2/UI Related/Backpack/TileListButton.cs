@@ -15,11 +15,11 @@ public class TileListButton : MonoBehaviour
     [SerializeField]
     private StatValues statValues;
     
-    private void Start()
+    /*private void Start()
     {
         btn = GetComponent<Button>();
         btn.onClick.AddListener(SetTemp);
-    }
+    }*/
     public void SetIndex(int num)
     {
         thisButtonIndex = num;

@@ -21,10 +21,12 @@ public class MeltHeroGridManager : MonoBehaviour
     private List<int> SelectedToMeltList;
     private int xpToBeAdded;
     private int lvlToPass = 0;
+    private int indexJustClicked;
     private List<int> nulledButtons = new List<int> { };
-
+    public bool isMaxed { get; private set; }
     private void Awake()
     {
+        isMaxed = false;
         //ints used to generate buttons
         MeltableList = new List<int>() { };
         SelectedToMeltList = new List<int>() { };
@@ -40,16 +42,20 @@ public class MeltHeroGridManager : MonoBehaviour
         xpslide.CloneHero();
         xpslide.UpdateSlider(0);
         xpslide.SetCurrentAndBoundText();
-        xpToBeAdded = 0;        
+        xpToBeAdded = 0;
         InitializeMeltGrid();
         xpslide.SetHeroNameText();
         //need to remove selectedButtons if refreshing panel
         ClearSelectedGameObjs();
     }
 
+    
     void tempMaxHit()
     {
-        for(int i = 0; i < GridButtonGameObjs.Count; i++)
+        isMaxed = true;
+        Debug.Log("indexjustClicked: " + indexJustClicked);
+        GridButtonGameObjs[indexJustClicked].GetComponent<EnhanceListButton>().clicked = true;
+        for (int i = 0; i < GridButtonGameObjs.Count; i++)
         {
             if (!GridButtonGameObjs[i].GetComponent<EnhanceListButton>().clicked)
             {
@@ -57,9 +63,12 @@ public class MeltHeroGridManager : MonoBehaviour
                 GridButtonGameObjs[i].GetComponent<EnhanceListButton>().clicked = true;
             }
         }
+        Debug.Log("bool: " + GridButtonGameObjs[indexJustClicked].GetComponent<EnhanceListButton>().clicked);
+        
     }
     void tempMaxReduced()
     {
+        isMaxed = false;
         for (int i = 0; i < nulledButtons.Count; i++)
         {
             GridButtonGameObjs[nulledButtons[i]].GetComponent<EnhanceListButton>().clicked = false;
@@ -84,11 +93,9 @@ public class MeltHeroGridManager : MonoBehaviour
         for (int i = 0; i < MeltableList.Count; i++)
         {
             tempStats = CharectorStats.UnlockedCharector(MeltableList[i]);
-
             GameObject button = Instantiate(buttonTemplate) as GameObject;
             GridButtonGameObjs.Add(button);
             button.SetActive(true);
-
             button.GetComponent<EnhanceListButton>().SetText(CharectorStats.HeroName(tempStats[1]));
             button.GetComponent<EnhanceListButton>().SetHeroNum(tempStats[0]);
             button.GetComponent<EnhanceListButton>().SetIndex(i);
@@ -97,11 +104,9 @@ public class MeltHeroGridManager : MonoBehaviour
         }
     }
     public void TransferToSelected()
-    {
-        
+    {        
         int[] tempStats;
-        int tempxp = 0;
-       
+        int tempxp = 0;      
         //Insert function to gray out tile on grid
         ClearSelectedGameObjs();
         for (int i=0; i < SelectedToMeltList.Count; i++)
@@ -117,16 +122,13 @@ public class MeltHeroGridManager : MonoBehaviour
             button.GetComponent<SelectedToMeltBtn>().SetHeroNum(tempStats[0]);
             button.transform.SetParent(selectedBtnTemplate.transform.parent, false);
         }
-
-        xpToBeAdded += tempxp;
-        
+        xpToBeAdded += tempxp;        
     }
     public void RemoveFromSelectedRow(int idx)
     {
         Destroy(MeltingButtonGameObjs[idx]);
         MeltingButtonGameObjs.RemoveAt(idx);
-        
-        
+              
         foreach(GameObject button in MeltingButtonGameObjs)
         {           
             if(button.GetComponent<SelectedToMeltBtn>().thisButtonIndex > idx)
@@ -150,8 +152,11 @@ public class MeltHeroGridManager : MonoBehaviour
   
     public bool MeltableButtonClicked(int buttonIdx, bool clicked, int BPIndex)
     {
+        indexJustClicked = buttonIdx;
+        
         if (clicked == false)
-        {    
+        {
+            
             SelectedToMeltList.Add(BPIndex);
             TransferToSelected();
             int[] tempStats = CharectorStats.UnlockedCharector(BPIndex);
@@ -175,7 +180,6 @@ public class MeltHeroGridManager : MonoBehaviour
                 }
             }
             temp.GetComponent<EnhanceListButton>().clicked = false;
-
             SelectedToMeltList.RemoveAt(buttonIdx);
             RemoveFromSelectedRow(buttonIdx);                       
             xpslide.UpdateSlider(-tempStats[4]);
@@ -186,7 +190,14 @@ public class MeltHeroGridManager : MonoBehaviour
 
     public void MeltHeros()
     {
+        Debug.Log("xptobeadded: " + xpToBeAdded);
         CharectorStats.meltHero(SelectedToMeltList, xpToBeAdded);
+        int tempHero = CharectorStats.getTempHero();
+        if (isMaxed)
+        {
+            CharectorStats.updateHero(tempHero, CharectorStats.XpOfMaxLevel(tempHero), CharectorStats.findCurrentMaxLevel(tempHero));
+            xpslide.reduceTempMax();
+        }
         OnEnable();
     }
 
