@@ -1,9 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TestAddHero : MonoBehaviour
 {
+    public Text goldText;
+    private void OnEnable()
+    {
+        goldText.text = InvManager.GoldReturn().ToString();
+    }
     public void TestAddHeroClicked()
     {
         CharectorStats.ShardCounter[1] = 9;
@@ -13,7 +19,15 @@ public class TestAddHero : MonoBehaviour
             var character = CharectorStats.UnlockedCharector(i);
             CharectorStats.testAddExp(i, 7);
         }
-        GameMaster.CallSave();
+
+
+
+        InvManager.GoldAdd(30);
+
+
+
+
+        //GameMaster.CallSave();
         
 
     }

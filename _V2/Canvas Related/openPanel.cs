@@ -10,8 +10,8 @@ public class openPanel : MonoBehaviour
 
    public void OpenPanel()
     {
-        int[] temp = CharectorStats.setTempHero(CharectorStats.getTempHero());
-        if (CharectorStats.HeroIsMaxLvl(temp))
+        int tempHero = CharectorStats.getTempHero();
+        if (CharectorStats.HeroIsMaxLvl(tempHero))
         {
             chosenPanel = Panels[1]; //1 is tier up panel
         }

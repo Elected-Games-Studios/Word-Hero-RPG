@@ -24,7 +24,6 @@ public class SelectedToMeltBtn : MonoBehaviour
     public void LowerIndex()
     {
         thisButtonIndex-=1;
-        Debug.Log("Lowered to " + thisButtonIndex);
     }
 
     public void SetIndex(int num)

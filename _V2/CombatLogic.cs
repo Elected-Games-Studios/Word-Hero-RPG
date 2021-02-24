@@ -27,12 +27,18 @@ public class CombatLogic : MonoBehaviour
     [SerializeField]
     private GameObject levelUpText;
     private GameObject SelectedHero;
+    private GameObject SelectedEnemy;
     private Animator characterAnimator;
+    private Animator enemyAnimator;
     private GameObject heroParticles;
     [SerializeField]
     private GameObject characterHolder;
     [SerializeField]
+    private GameObject enemyHolder;
+    [SerializeField]
     private List<GameObject> allCharacters;
+    [SerializeField]
+    private List<GameObject> allEnemies;
 
     //temporary
     [SerializeField]
@@ -64,7 +70,8 @@ public class CombatLogic : MonoBehaviour
             }
         }
         characterAnimator = characterHolder.GetComponentInChildren<Animator>();
-        
+        enemyAnimator = enemyHolder.GetComponentInChildren<Animator>();
+
         heroParticles = SelectedHero.transform.Find("HeroAttackParticles").gameObject;
         characterAnimator.SetBool("inCombat", true);
         //Temp Debug Game Master Values
@@ -144,6 +151,7 @@ public class CombatLogic : MonoBehaviour
 
     private void InitializeEnemy()//must be called after WordBreak()
     {
+        getNewEnemy();
         //eHealth = CombatWordManager.enemyHealth * 5;
         eHealth = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(100 * Math.Pow(2, GameMaster.Difficulty));
         initialEHealth = Convert.ToInt32(eHealth);
@@ -159,6 +167,22 @@ public class CombatLogic : MonoBehaviour
         slider.maxValue = eHealth;
         slider.value = eHealth;
         //^ end temp
+    }
+    private void getNewEnemy()
+    {
+        int random = UnityEngine.Random.Range(0, allEnemies.Count);
+        for (int i = 0; i < allEnemies.Count; i++)
+        {
+            if (i != random)
+            {
+                allEnemies[i].SetActive(false);
+
+            }
+            else
+            {
+                SelectedEnemy = allCharacters[i];
+            }
+        }
     }
     private void InitializePlayer()
     {
@@ -178,17 +202,15 @@ public class CombatLogic : MonoBehaviour
     //event methods
     void playerTakeDamage(int damage)
     {
+        enemyAnimator.SetTrigger("attack");
 
-
-        if(damage-pDef > 0)
+        if (damage-pDef > 0)
         {
-            //Debug.Log(damage + " damage mitigated by " + pDef + " player defense. Damage reduced to " + (damage - pDef));
             pHealth -= (damage - pDef);
             HPSlider.value -= (damage - pDef);
         }
         else if(damage - pDef <= 0)
         {
-           // Debug.Log(damage + " damage mitigated by " + pDef + " player defense. Damage reduced to 1");
             pHealth -= 1;
             HPSlider.value -= 1;
         }
@@ -207,25 +229,24 @@ public class CombatLogic : MonoBehaviour
 
     void enemyTakeDamage(int length)
     {
+        enemyAnimator.SetTrigger("gotHit");
         heroParticles.transform.GetChild(length - 3).gameObject.SetActive(true);
-        int totalDmg = (pDmg * length * checkCrit()) - eDef; //Verify W/Dylan    
+        int totalDmg = (pDmg * length * checkCrit()) - eDef;  
         lengthMultiplier += lengthBonus[length-3];
-        //Debug.Log("lengthmultiplier is " + lengthMultiplier);
         if (totalDmg >= 2)
         {
-           // Debug.Log("Total dmg dealt: " + totalDmg);
             eHealth -= totalDmg;
         }
         else
         {
-           // Debug.Log("Too much eDef. Damage reduced to 1");
             eHealth -= 1;
         }
         if(eHealth <= 0)
         {
+            enemyAnimator.SetTrigger("isDead");
             stageXP();
             onEnemyKilled?.Invoke();
-
+            
         }
         slider.value = eHealth;
         //temp
@@ -238,12 +259,10 @@ public class CombatLogic : MonoBehaviour
         int roll = UnityEngine.Random.Range(0, 10000);
         if(pCrit >= roll)
         {
-          // Debug.Log("Critical hit!");
             result = 2;
         }
         else
         {
-           // Debug.Log("Normal attack.");
             result = 1;
         }
         return result;
@@ -257,7 +276,6 @@ public class CombatLogic : MonoBehaviour
 
     void stageLoot()
     {
-        //Debug.Log("staging loot");
         stagedGold += 100;
         stagedShard1 += 1;
         stagedShard2 += 2;
@@ -266,9 +284,6 @@ public class CombatLogic : MonoBehaviour
     {
 
         int xpToAdd = Convert.ToInt32(initialEHealth * (1 + lengthMultiplier));
-        //Debug.Log("lengthmultiplier is " + lengthMultiplier);
-       // Debug.Log("staged " + initialEHealth + " * " + (1 + lengthMultiplier) + " xp");
-        //Debug.Log("totalstaged = " + xpToAdd);
         stagedXP += xpToAdd;
         lengthMultiplier = 0;
     }
@@ -279,7 +294,6 @@ public class CombatLogic : MonoBehaviour
         //add experience as well... dunno why im calling a method that returns an int []??
         vicDefPanel.SetActive(true);
         int[] updatedHero = CharectorStats.EndofLevel(stagedXP);
-        //Debug.Log("Victory!" + stagedGold + " gold, " + stagedShard1 + " T1shards, " + stagedShard2 + " T2shards being added to DB");
         InvManager.GoldAdd(stagedGold);
         stagedGold = 0;
         InvManager.T1ShardAdd(stagedShard1);
@@ -329,7 +343,6 @@ public class CombatLogic : MonoBehaviour
     //onPlayerKilled
     void playerKilled()
     {
-       // Debug.Log("gameover sequence");
         
         removeBubble();
         CombatWordManager.resetString();

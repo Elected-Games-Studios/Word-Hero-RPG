@@ -38,6 +38,7 @@ public class EnhanceListButton : MonoBehaviour
     {
         if (!clicked)
         {
+            
             btnControl.MeltableButtonClicked(thisButtonIndex, clicked, heroNum);
             clicked = !clicked;
         }       

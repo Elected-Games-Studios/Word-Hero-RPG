@@ -6,6 +6,6 @@ public class ParticleOnEnemy : MonoBehaviour
 {
     private void Awake()
     {
-        transform.position = GameObject.FindGameObjectWithTag("Enemy").transform.position+ new Vector3(0, 1, 0);
+        //transform.position = GameObject.FindGameObjectWithTag("Enemy").transform.position+ new Vector3(0, 1, 0);
     }
 }

@@ -39,7 +39,7 @@ public class MelterXPBar : MonoBehaviour
     {
         heroCloneToPass = CharectorStats.setTempHero(CharectorStats.getTempHero());
         accumHeroXp = heroCloneToPass[2];
-        if (!gridMan.isMaxed)
+        if (!gridMan.isMaxedActually)
         {
             bounds = GetBounds();
         }
@@ -48,33 +48,36 @@ public class MelterXPBar : MonoBehaviour
     }
     public void UpdateSlider(int xpToBeAdded)
     {
-        
-        if (!gridMan.isMaxed)
+        if (!gridMan.isMaxedActually)
         {
             bounds = GetBounds();
-        }       
-        accumHeroXp += xpToBeAdded;
+        }
+        
         current += xpToBeAdded;
-        
-        if(heroCloneToPass[1] < heroLevelCap && (accumHeroXp + xpToBeAdded < CharectorStats.XpOfMaxLevel(CharectorStats.getTempHero())))
+        if (!gridMan.isMaxedActually)
         {
-            xpBar.SetActive(true);
-            AddSubtractXP();
-            tempMaxReduced?.Invoke();
+            if (heroCloneToPass[1] < heroLevelCap && (accumHeroXp + xpToBeAdded < CharectorStats.XpOfMaxLevel(CharectorStats.getTempHero())))
+            {
+                xpBar.SetActive(true);
+                AddSubtractXP();
+                tempMaxReduced?.Invoke();
+            }
+            else if (heroCloneToPass[1] < heroLevelCap && (accumHeroXp + xpToBeAdded >= CharectorStats.XpOfMaxLevel(CharectorStats.getTempHero())))
+            {
+                xpBar.SetActive(false);
+                currentLvlText.text = CharectorStats.findCurrentMaxLevel(CharectorStats.getTempHero()).ToString();
+                tempMax?.Invoke();
+            }
+            else if (heroCloneToPass[1] >= heroLevelCap && xpToBeAdded < 0)
+            {
+                xpBar.SetActive(true);
+                AddSubtractXP();
+                tempMaxReduced?.Invoke();
+            }
         }
-        else if(heroCloneToPass[1] < heroLevelCap && (accumHeroXp + xpToBeAdded >= CharectorStats.XpOfMaxLevel(CharectorStats.getTempHero())))
-        {
-            xpBar.SetActive(false);
-            currentLvlText.text = CharectorStats.findCurrentMaxLevel(CharectorStats.getTempHero()).ToString();
-            tempMax?.Invoke();
-        }
-        else if(heroCloneToPass[1] >= heroLevelCap && xpToBeAdded < 0)
-        {
-            xpBar.SetActive(true);
-            AddSubtractXP();
-            tempMaxReduced?.Invoke();
-        }
-        
+        accumHeroXp += xpToBeAdded;
+
+
     }
     public void SetCurrentAndBoundText()
     {
@@ -82,17 +85,18 @@ public class MelterXPBar : MonoBehaviour
         UBText.text = "/" + bounds[1].ToString();
     }
     private int [] GetBounds()
-    {              
+    {
+
             var temp = CharectorStats.MeltSetBounds(heroCloneToPass[0], heroCloneToPass[1]);
-            return temp;              
+            return temp;
+          
     }
     private void AddSubtractXP()
     {
         while (current < 0)
         {
-            Debug.Log("LevelDown: " + heroCloneToPass[1]);
             heroCloneToPass[1] -= 1;
-            if (!gridMan.isMaxed)
+            if (!gridMan.isMaxedActually)
             {
                 bounds = GetBounds();
             }
@@ -101,10 +105,9 @@ public class MelterXPBar : MonoBehaviour
 
         while (current >= (bounds[1] - bounds[0]))
         {
-            Debug.Log("LevelUp: " + heroCloneToPass[1]);
             heroCloneToPass[1]++;
             current -= (bounds[1] - bounds[0]);
-            if (!gridMan.isMaxed)
+            if (!gridMan.isMaxedActually)
             {
                 bounds = GetBounds();
             }
