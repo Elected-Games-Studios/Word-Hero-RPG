@@ -57,7 +57,7 @@ public class CombatLogic : MonoBehaviour
     private Text toSpell;
     private Slider HPSlider;
     private Text HPText;
-    private Slider slider;
+    private Slider eHealthSlider;
 
     //timer
     private float timerMax;
@@ -184,7 +184,7 @@ public class CombatLogic : MonoBehaviour
     private void InitializeEnemy()//must be called after WordBreak()
     {
         getNewEnemy();
-        //eHealth = CombatWordManager.enemyHealth * 5;
+        
         eHealth = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(100 * Math.Pow(2, GameMaster.Difficulty));
         initialEHealth = Convert.ToInt32(eHealth);
         eDmg = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(10 * Math.Pow(5, GameMaster.Difficulty));
@@ -195,9 +195,9 @@ public class CombatLogic : MonoBehaviour
         allStats[2].text += eAgi;
         allStats[3].text += eDef;
         //temp
-        slider = GameObject.FindGameObjectWithTag("EnemyHP").GetComponent<Slider>();
-        slider.maxValue = eHealth;
-        slider.value = eHealth;
+        eHealthSlider = GameObject.FindGameObjectWithTag("EnemyHP").GetComponent<Slider>();
+        eHealthSlider.maxValue = eHealth;
+        eHealthSlider.value = eHealth;
         //^ end temp
     }
     private void getNewEnemy()
@@ -281,7 +281,7 @@ public class CombatLogic : MonoBehaviour
             onEnemyKilled?.Invoke();
             
         }
-        slider.value = eHealth;
+        eHealthSlider.value = eHealth;
         //temp
         toSpell.text = string.Join(" ", CombatWordManager.currentUsableWords);
     }

@@ -69,8 +69,8 @@ public class PlayServices : MonoBehaviour
 
 	private void MoveToNextScene()
 	{
-        Debug.Log("Main Menu Loaded");
-        SceneManager.LoadScene(1);
+       // Debug.Log("Main Menu Loaded");
+        //SceneManager.LoadScene(1);
 	}
 
     #region Saved Games
