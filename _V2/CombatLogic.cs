@@ -11,12 +11,19 @@ public class CombatLogic : MonoBehaviour
     private int eDmg, eAgi, eHealth, eDef, initialEHealth;
     private double lengthMultiplier;
     public static bool isGameplay = true;
-    private int stagedXP, stagedGold, stagedShard1, stagedShard2 = 0;
+    
+    public int stagedXP{ get; private set; }
+    public int stagedShard1 { get; private set; }
+    public int stagedShard2 { get; private set; }
+    public int stagedGold { get; private set; }
+
     private double[] lengthBonus = { .25, .5, 1, 2, 3, 5 };
     private List<string> words = CombatWordManager.Words;
     int wordsLeft;
 
     //UI Stuff
+    [SerializeField]
+    private LootPooler lootPooler;
     private int currentWordIndex;
     private Image[] bubbles;
     private GameObject currentBubble;
@@ -47,6 +54,11 @@ public class CombatLogic : MonoBehaviour
     private Text HPText;
     private Slider slider;
 
+    //timer
+    private float timerMax;
+    private float timer;
+    [SerializeField]
+    private Slider timeSlide;
     //debug enemy stats
     public List<Text> allStats;
     //end temporary^
@@ -57,6 +69,7 @@ public class CombatLogic : MonoBehaviour
 
     void Awake()
     {
+        
         for (int i = 0; i < allCharacters.Count; i++)
         {
             if(i != CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero())[0])
@@ -97,6 +110,7 @@ public class CombatLogic : MonoBehaviour
         //event subs
         CombatWordManager.onMaxLengthFound += generateBubble;
         CombatWordManager.onCorrectWord += spelledWord;
+        CombatWordManager.onIncorrectWord += wrongWord;
         CharectorStats.leveledUp += onLeveledUp;
         onDamageEnemy += enemyTakeDamage;
         onDamagePlayer += playerTakeDamage;
@@ -109,10 +123,19 @@ public class CombatLogic : MonoBehaviour
         Debug.Log(wordsLeft + " words left");
         InitializePlayer();
         InitializeEnemy();
-        CRRef = StartCoroutine(CombatTimer());
+        InitializeTimer();
+        //CRRef = StartCoroutine(CombatTimer());
     } 
 
-    IEnumerator CombatTimer()
+    private void InitializeTimer()
+    {
+        timerMax = 5 + (pAgi - eAgi) / 100;
+        timer = timerMax;
+        timeSlide.maxValue = timerMax;
+        timeSlide.value = timerMax;
+    }
+
+    /*IEnumerator CombatTimer()
     {
         while (isGameplay)
         {
@@ -121,8 +144,21 @@ public class CombatLogic : MonoBehaviour
             yield return new WaitForSeconds(5f + (difference/100));
             onDamagePlayer?.Invoke(eDmg);         
         }
-    }
+    }(*/
+    private void Update()
+    {
+        while (isGameplay)
+        {
+            timer -= (Time.deltaTime);
+            if(timer >= 0){timeSlide.value = timer; } else { timeSlide.value = 0; }
 
+        }
+        if(timer <= 0)
+        {
+            onDamagePlayer?.Invoke(eDmg);
+            InitializeTimer();
+        }
+    }
     public void generateBubble(int length) //called once to choose bubble of longest word size, don't need to re-render
     {      
         bubbles[length - 4].gameObject.SetActive(true);
@@ -230,7 +266,7 @@ public class CombatLogic : MonoBehaviour
     void enemyTakeDamage(int length)
     {
         enemyAnimator.SetTrigger("gotHit");
-        heroParticles.transform.GetChild(length - 3).gameObject.SetActive(true);
+        //heroParticles.transform.GetChild(length - 3).gameObject.SetActive(true);
         int totalDmg = (pDmg * length * checkCrit()) - eDef;  
         lengthMultiplier += lengthBonus[length-3];
         if (totalDmg >= 2)
@@ -243,6 +279,7 @@ public class CombatLogic : MonoBehaviour
         }
         if(eHealth <= 0)
         {
+            StartCoroutine("SpawnParticles");
             enemyAnimator.SetTrigger("isDead");
             stageXP();
             onEnemyKilled?.Invoke();
@@ -252,7 +289,14 @@ public class CombatLogic : MonoBehaviour
         //temp
         toSpell.text = string.Join(" ", CombatWordManager.currentUsableWords);
     }
-
+    private IEnumerator SpawnParticles()
+    {
+        for (int i = 0; i < 10; i++) //num of coins
+        {
+            lootPooler.SpawnFromPool("coin", enemyHolder.transform.position, enemyHolder.transform.rotation);
+            yield return new WaitForSeconds(.05f);
+        }
+    }
     int checkCrit()
     {
         int result;
@@ -270,13 +314,18 @@ public class CombatLogic : MonoBehaviour
 
     void spelledWord(int length)
     {
+        timer += length * 3 / 10;
         characterAnimator.SetTrigger(length + "letter");
         onDamageEnemy?.Invoke(length);
     }
 
+    void wrongWord()
+    {
+        timer -= 1f;
+    }
     void stageLoot()
     {
-        stagedGold += 100;
+        stagedGold += 10;
         stagedShard1 += 1;
         stagedShard2 += 2;
     }
@@ -313,13 +362,14 @@ public class CombatLogic : MonoBehaviour
     //onEnemyKilled
     void nextWord()
     {
+        timer = timerMax;
         stageLoot();
         foreach(Text stat in allStats)
         {
             stat.text = "";
         }
-        StopCoroutine(CRRef);
-        CRRef = StartCoroutine(CombatTimer());
+        //StopCoroutine(CRRef);
+       // CRRef = StartCoroutine(CombatTimer());
         wordsLeft--;
         //decide where to set a short timer to allow enemy entrance
         Debug.Log(wordsLeft + " words left");
@@ -354,6 +404,7 @@ public class CombatLogic : MonoBehaviour
     private void OnDisable()
     {
         //unsubs
+        CombatWordManager.onIncorrectWord -= wrongWord;
         CombatWordManager.onCorrectWord -= spelledWord;
         onDamageEnemy -= enemyTakeDamage;
         onDamagePlayer -= playerTakeDamage;

@@ -23,6 +23,7 @@ public static class CombatWordManager
     public static event Action onUpdateString;
     public static event Action<int> onCorrectWord;
     public static event Action playerKilledTrigger;
+    public static event Action onIncorrectWord;
     
 
     public static void StartLevel() //called on awake for 
@@ -110,6 +111,7 @@ public static class CombatWordManager
         else
         {
 			resetString();
+            onIncorrectWord?.Invoke();
 		}
 	}
 	public static void addToString(string c) 
