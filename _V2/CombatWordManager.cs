@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 public static class CombatWordManager
 {
-    public static List<int> WordsIndex;
+    public static List<int> WordsIndex = new List<int>();
     public static List<string> Words = new List<string> { };// List of string arrays of all words in the level
     public static List<string> currentUsableWords;//This is the string list, just Comma separated subwords of a single word
     public static List<string> wordsSpelled;//This is string array of completed subwords
@@ -28,10 +28,9 @@ public static class CombatWordManager
 
     public static void StartLevel() //called on awake for 
     {
-        WordsIndex = new List<int>();
-        //WordsIndex = WordDatav2.GetDataLevel(GameMaster.Region, GameMaster.Level, GameMaster.Difficulty);
-        
-        WordsIndex = WordDatav2.GetDataLevel(0,0,0);
+        WordsIndex = WordDatav2.GetDataLevel(GameMaster.Region, GameMaster.Level, GameMaster.Difficulty);
+        Words = new List<string> { };
+        //WordsIndex = WordDatav2.GetDataLevel(0,0,0);
         GetActualWords();
         wordBreak(0);
         InitializeLetters();

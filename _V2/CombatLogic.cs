@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class CombatLogic : MonoBehaviour
 {
+    //for simplicity
+    int region = GameMaster.Region;
+    int level = GameMaster.Level;
+    int difficulty = GameMaster.Difficulty;
+
     //references to player, enemy, letter nodes
     private int pDmg, pHealth, pCrit, pAgi, pDef;
     private int eDmg, eAgi, eHealth, eDef, initialEHealth;
@@ -340,7 +345,7 @@ public class CombatLogic : MonoBehaviour
         stagedShard1 = 0;
         InvManager.T2ShardAdd(stagedShard2);
         stagedShard2 = 0;
-        
+        WordDatav2.endOfLevelStats(region, difficulty, level, 10, 3);
     }
     void onLeveledUp()
     {
