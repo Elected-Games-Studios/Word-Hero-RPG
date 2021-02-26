@@ -108,7 +108,7 @@ public class PlayServices : MonoBehaviour
         }
         else
         {
-            PlayerStats.Instance.LoadPlayer();
+            //PlayerStats.Instance.LoadPlayer();
             //feedback.text = ("Load Data = Local Load");
         }
     }
