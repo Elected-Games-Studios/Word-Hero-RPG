@@ -65,7 +65,7 @@ public class CombatLogic : MonoBehaviour
 
     public event Action<int> onDamageEnemy, onDamagePlayer;
     public event Action onEnemyKilled, onLevelComplete, onPlayerKilled;
-    Coroutine CRRef;
+   // Coroutine CRRef;
 
     void Awake()
     {
@@ -123,7 +123,7 @@ public class CombatLogic : MonoBehaviour
         Debug.Log(wordsLeft + " words left");
         InitializePlayer();
         InitializeEnemy();
-        InitializeTimer();
+       InitializeTimer();
         //CRRef = StartCoroutine(CombatTimer());
     } 
 
@@ -135,19 +135,10 @@ public class CombatLogic : MonoBehaviour
         timeSlide.value = timerMax;
     }
 
-    /*IEnumerator CombatTimer()
-    {
-        while (isGameplay)
-        {
-            Debug.Log("Restarted Timer");
-            float difference = (pAgi - eAgi);
-            yield return new WaitForSeconds(5f + (difference/100));
-            onDamagePlayer?.Invoke(eDmg);         
-        }
-    }(*/
+  
     private void Update()
     {
-        while (isGameplay)
+        if(isGameplay)
         {
             timer -= (Time.deltaTime);
             if(timer >= 0){timeSlide.value = timer; } else { timeSlide.value = 0; }
@@ -266,7 +257,7 @@ public class CombatLogic : MonoBehaviour
     void enemyTakeDamage(int length)
     {
         enemyAnimator.SetTrigger("gotHit");
-        //heroParticles.transform.GetChild(length - 3).gameObject.SetActive(true);
+        heroParticles.transform.GetChild(length - 3).gameObject.SetActive(true);
         int totalDmg = (pDmg * length * checkCrit()) - eDef;  
         lengthMultiplier += lengthBonus[length-3];
         if (totalDmg >= 2)
