@@ -87,6 +87,7 @@ public class CombatLogic : MonoBehaviour
                 SelectedHero = allCharacters[i];
             }
         }
+        SelectedEnemy = allEnemies[0];
         characterAnimator = characterHolder.GetComponentInChildren<Animator>();
         enemyAnimator = enemyHolder.GetComponentInChildren<Animator>();
 
@@ -185,10 +186,10 @@ public class CombatLogic : MonoBehaviour
     {
         getNewEnemy();
         
-        eHealth = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(100 * Math.Pow(2, GameMaster.Difficulty));
+        eHealth = (region * 25 + level) + Convert.ToInt32(100 * Math.Pow(2, difficulty));
         initialEHealth = Convert.ToInt32(eHealth);
-        eDmg = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(10 * Math.Pow(5, GameMaster.Difficulty));
-        eAgi = (GameMaster.Region * 25 + GameMaster.Level) + Convert.ToInt32(10 * Math.Pow(2, GameMaster.Difficulty));//needs changed
+        eDmg = (region * 25 + level) + Convert.ToInt32(10 * Math.Pow(5, difficulty));
+        eAgi = (region * 25 + level) + Convert.ToInt32(10 * Math.Pow(2, difficulty));//needs changed
         eDef = 0;//needs changed
         allStats[0].text += eHealth;
         allStats[1].text += eDmg;
@@ -202,20 +203,23 @@ public class CombatLogic : MonoBehaviour
     }
     private void getNewEnemy()
     {
+        
+        int prevIdx = allEnemies.IndexOf(SelectedEnemy);
+        SelectedEnemy.SetActive(false);
         int random = UnityEngine.Random.Range(0, allEnemies.Count);
+        while(random == prevIdx) { random = UnityEngine.Random.Range(0, allEnemies.Count); }
         for (int i = 0; i < allEnemies.Count; i++)
         {
-            if (i != random)
+            if (i != random && i != prevIdx)
             {
                 allEnemies[i].SetActive(false);
-
-            }
-            else
-            {
-                SelectedEnemy = allCharacters[i];
-            }
+            }        
+                SelectedEnemy = allEnemies[random];
+                SelectedEnemy.SetActive(true);
+          
         }
     }
+
     private void InitializePlayer()
     {
         allStats[4].text += pHealth;

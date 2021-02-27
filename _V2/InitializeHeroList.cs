@@ -7,9 +7,8 @@ public class InitializeHeroList : MonoBehaviour
 {
     void Start()
     {
-        
-        CharectorStats.LoadManagerData("");
-        WordDatav2.LoadManagerData("");
+
+        SaveManager.LoadSplit("##");
         //Temp Debug Game Master Values
         GameMaster.Region = 0;
         GameMaster.Level = 0;

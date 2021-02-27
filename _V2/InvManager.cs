@@ -54,7 +54,7 @@ public class InvManager
 	{
 		return Items[2];
 	}
-	public static int T2ShardNumCombo()
+	public static int T2ShardNumCombo()//kyyle this doesnt work
 	{
 		int count = 0;
 		while ((Items[2] - (count * 50)) > 0) count++;
@@ -83,11 +83,15 @@ public class InvManager
 		if (input == "")
 		{
             Items =new int[6] { 0, 0, 0, 0, 0, 0};
-		}
-		for (int x = 0; x < 6; x++)
-		{
-			Items[x] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
-			input.Remove(0, input.IndexOf(','));
-		}
+        }
+        else
+        {
+            for (int x = 0; x < 6; x++)
+            {
+                Items[x] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
+                input.Remove(0, input.IndexOf(','));
+            }
+        }
+	
 	}
 }

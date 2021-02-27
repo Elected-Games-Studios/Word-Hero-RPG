@@ -668,7 +668,7 @@ public static class CharectorStats
                 tempInt = rand.Next(0, 100);
                 if (ShardCounter[0] == 9)
                 {
-                    TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
+                    TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];//should randomly pick between T3 and T4
                     ShardCounter[0] = 0;
                 }
                 else
@@ -689,10 +689,12 @@ public static class CharectorStats
                         case int n when (n < 95):                            
                             TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
                             TempHero[3] = 0;
+                            ShardCounter[0] = 0;
                             break;
                         default:
                             TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
                             TempHero[3] = 1;
+                            ShardCounter[0] = 0;
                             break;
 
                     }
@@ -702,7 +704,7 @@ public static class CharectorStats
                 tempInt = rand.Next(0, 10000);
                 if (ShardCounter[1] == 9)
                 {
-                    TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
+                    TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];//should also be chance of getting T5
                     TempHero[3] = 1;
                     ShardCounter[1] = 0;
                 }
@@ -718,10 +720,12 @@ public static class CharectorStats
                         case int n when (n < 9975):
                             TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
                             TempHero[3] = 1;
+                            ShardCounter[1] = 0;
                             break;
                         default:
                             TempHero[0] = tiersByHero[4][rand.Next(0, tiersByHero[4].Count())];
                             TempHero[3] = 2;
+                            ShardCounter[1] = 0;
                             break;
                     }
                 }
