@@ -163,7 +163,7 @@ public static class CharectorStats
         switch (tierNum)
         {
             case 0:
-                for (int i = XPT0.Count - 1; i >= 0; i--)
+                for (int i = XPT0.Count - 1; i >= -1; i--)
                 {
                     if (i >= 0)
                     {
@@ -176,7 +176,7 @@ public static class CharectorStats
                 }
                 break;
             case 1:
-                for (int i = XPT1.Count - 1; i >= 0; i--)
+                for (int i = XPT1.Count - 1; i >= -1; i--)
                 {
                     if (i >= 0)
                     {
@@ -189,7 +189,7 @@ public static class CharectorStats
                 }
                 break;
             case 2:
-                for (int i = XPT2.Count - 1; i >= 0; i--)
+                for (int i = XPT2.Count - 1; i >= -1; i--)
                 {
                     if (i >= 0)
                     {
@@ -202,7 +202,7 @@ public static class CharectorStats
                 }
                 break;
             case 3:
-                for (int i = XPT3.Count - 1; i >= 0; i--)
+                for (int i = XPT3.Count - 1; i >= -1; i--)
                 {
                     if (i >= 0)
                     {
@@ -215,7 +215,7 @@ public static class CharectorStats
                 }
                 break;
             case 4:
-                for (int i = XPT4.Count - 1; i >= 0; i--)
+                for (int i = XPT4.Count - 1; i >= -1; i--)
                 {
                     if (i >= 0)
                     {
@@ -228,7 +228,7 @@ public static class CharectorStats
                 }
                 break;
             default:
-                for (int i = XPT5.Count - 1; i >= 0; i--)
+                for (int i = XPT5.Count - 1; i >= -1; i--)
                 {
                     if (i >= 0)
                     {
@@ -610,20 +610,17 @@ public static class CharectorStats
         return HeroList[Hero].ToArray();
     }
     public static int getTempHero() => CurrentHero[0];
-    public static int[] EndofLevel(int xpGained)  //NEEDS REWRITTEN IN CASE OF MULTIPLE LEVELS
-    {
-        
-        if (XPtoNextLvl(CurrentHero[1]) < (HeroList[CurrentHero[1]][2] + xpGained))
-        {
+    public static int[] GainXPFromKill(int xpGained)  
+    {      
             HeroList[CurrentHero[1]][2] += xpGained;
+            int currentLevel = HeroList[CurrentHero[1]][1];
+            int shouldBe = XPCausesThisLevel(CurrentHero[1], HeroList[CurrentHero[1]][2]);
+        while (currentLevel < shouldBe)
+        {
             levelUp(CurrentHero[1]);
-            return HeroList[CurrentHero[1]].ToArray();
+            currentLevel = HeroList[CurrentHero[1]][1];
         }
-        else
-        {
-            HeroList[CurrentHero[1]][2] += xpGained;
             return HeroList[CurrentHero[1]].ToArray();
-        }
     }
 
     //test method added by Joe to add exp to new creation
