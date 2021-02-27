@@ -128,12 +128,17 @@ public class CombatLogic : MonoBehaviour
         onLevelComplete += levelFinished;
         onPlayerKilled += playerKilled;
 
+        InitializePlayer();
+        InitializeEnemy();
+        InitializeTimer();
+
+        //StartCoroutine("enemyWalk");
+
+
         CombatWordManager.StartLevel();
         wordsLeft = CombatWordManager.Words.Count;
         Debug.Log(wordsLeft + " words left");
-        InitializePlayer();
-        InitializeEnemy();
-       InitializeTimer();
+
         //CRRef = StartCoroutine(CombatTimer());
     }
     
