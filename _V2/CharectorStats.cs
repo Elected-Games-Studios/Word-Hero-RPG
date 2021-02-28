@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 public static class CharectorStats
 {
+    #region Variables
     //needed to temporarily make HeroList public to actually access it for stats bc LoadManagerData doesnt have a return value.
     private static List<int[]> HeroList = new List<int[]> { };//Mine!
     public static event Action leveledUp;//Joe's
@@ -86,6 +87,8 @@ public static class CharectorStats
     private static List<List<int>> tiersByHero = new List<List<int>> {T1bh,T2bh,T3bh,T4bh,T5bh};
 
     //-------------------------End of Variables -----------------------------
+
+    #endregion
 
     private static void NewGame()//Mine!
     {
@@ -734,6 +737,9 @@ public static class CharectorStats
         HeroList.Add(TempHero);
         HeroList[HeroList.Count()-1] = GetCharecterStats(HeroList.Count() - 1);
     }
+
+    #region Save
+
     public static string SaveManagerData()//Save Engine Do Not Call
     {
         string sendSave = "";
@@ -775,4 +781,7 @@ public static class CharectorStats
             }
         }
     }
+
+    #endregion
+
 }
