@@ -1,1 +1,0 @@
-23/0/0/0/1/3/2,ask,sac,jacks,cask,jack,sack|17/0/0/0/2/1/1,pie,equip,quip,pique|16/0/0/0/1/2/1,sew,skews,sews,skew|16/0/0/0/1/2/1,sim,mimes,mime,semi|19/0/0/0/1/2/2,ice,vie,voice,cove,vice|

@@ -15,7 +15,7 @@ public class PlayServices : MonoBehaviour
     bool isSaving;
     bool isCloudDataLoaded = false;
     bool bGoogleCheck;
-    PlayerStats stats;
+    //PlayerStats stats;
 
     private void Awake()
     {
@@ -38,7 +38,7 @@ public class PlayServices : MonoBehaviour
         PlayGamesPlatform.Activate();
 
         SignIn();
-        GetComponent<AdManager>().Indestructable();
+        //GetComponent<AdManager>().Indestructable();
     }
 
     string GameDataToString() => SaveManager.SaveParse();
@@ -79,7 +79,7 @@ public class PlayServices : MonoBehaviour
     {
         if (!isCloudDataLoaded)
         {
-            PlayerStats.Instance.SavePlayer();
+            //PlayerStats.Instance.SavePlayer();
             //feedback.text = ("Save Game Cloud Data is not Loaded");
         }
         if (Social.localUser.authenticated)
@@ -91,7 +91,7 @@ public class PlayServices : MonoBehaviour
         }
         else
         {
-            PlayerStats.Instance.SavePlayer();
+            //PlayerStats.Instance.SavePlayer();
             //Invoke("MoveToNextScene", 3f);
             //feedback.text = ("Offline. Saving game locally");
         }
@@ -133,11 +133,11 @@ public class PlayServices : MonoBehaviour
         {
             if (!isSaving)
             {
-                PlayerStats.Instance.LoadPlayer();
+                //PlayerStats.Instance.LoadPlayer();
             }
             else
             {
-                PlayerStats.Instance.SavePlayer();
+                //PlayerStats.Instance.SavePlayer();
             }
         }
     }

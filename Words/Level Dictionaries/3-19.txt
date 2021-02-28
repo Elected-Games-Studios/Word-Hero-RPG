@@ -1,1 +1,0 @@
-56/0/0/0/1/9/5,pet,pew,set,sew,wet,swept,pest,pets,pews,spew,step,stew,wept,west,wets|31/0/0/0/1/5/2,pod,rod,droop,door,drop,odor,poor,prod|39/0/0/0/1/4/6,don,nod,pod,sod,son,sop,ponds,dons,nods,pods,pond|33/0/0/0/1/4/4,eel,lee,see,she,heels,eels,else,heel,lees|25/0/0/0/1/2/4,ado,oar,rad,rod,ardor,road,roar|
