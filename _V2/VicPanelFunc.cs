@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class VicPanelFunc : MonoBehaviour
 {
     public float yinput;
+
     private void OnEnable()
     {
         yinput = 2000f;
@@ -18,6 +19,8 @@ public class VicPanelFunc : MonoBehaviour
     {
         GameMaster.Level++;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+        this.gameObject.SetActive(false);
         CombatLogic.isGameplay = true;
     }
     public void RestartCurrentLevel()

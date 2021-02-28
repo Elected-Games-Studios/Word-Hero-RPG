@@ -28,6 +28,8 @@ public class CombatLogic : MonoBehaviour
 
     //UI Stuff
     [SerializeField]
+    private BackgroundTweener bgTween;
+    [SerializeField]
     private LootPooler lootPooler;
     private int currentWordIndex;
     private Image[] bubbles;
@@ -51,13 +53,15 @@ public class CombatLogic : MonoBehaviour
     private List<GameObject> allCharacters;
     [SerializeField]
     private List<GameObject> allEnemies;
-
+    [SerializeField]
+    private Text xpText;
     //temporary
     [SerializeField]
     private Text toSpell;
     private Slider HPSlider;
     private Text HPText;
     private Slider eHealthSlider;
+    int[] updatedHero;
 
     //timer
     private float timerMax;
@@ -74,7 +78,7 @@ public class CombatLogic : MonoBehaviour
 
     void Awake()
     {
-        
+        bgTween.changeBackground(level);
         for (int i = 0; i < allCharacters.Count; i++)
         {
             if(i != CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero())[0])
@@ -101,14 +105,14 @@ public class CombatLogic : MonoBehaviour
         bubbles = GetComponentsInChildren<Image>(true);
         //CharectorStats.LoadManagerData("");
         int[] heroStats = CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero());
-        
+        SetXPText();
         pDmg = heroStats[4];
         pHealth = heroStats[5];
         pCrit = heroStats[6];
         pAgi = heroStats[7];
         pDef = heroStats[8];
         lengthMultiplier = 0;
-        stagedXP = 0;
+        
         stagedGold = 0;
         stagedShard1 = 0;
         stagedShard2 = 0;
@@ -124,15 +128,20 @@ public class CombatLogic : MonoBehaviour
         onLevelComplete += levelFinished;
         onPlayerKilled += playerKilled;
 
+        InitializePlayer();
+        InitializeEnemy();
+        InitializeTimer();
+
+        //StartCoroutine("enemyWalk");
+
+
         CombatWordManager.StartLevel();
         wordsLeft = CombatWordManager.Words.Count;
         Debug.Log(wordsLeft + " words left");
-        InitializePlayer();
-        InitializeEnemy();
-       InitializeTimer();
-        //CRRef = StartCoroutine(CombatTimer());
-    } 
 
+        //CRRef = StartCoroutine(CombatTimer());
+    }
+    
     private void InitializeTimer()
     {
         timerMax = 5 + (pAgi - eAgi) / 100;
@@ -140,7 +149,18 @@ public class CombatLogic : MonoBehaviour
         timeSlide.maxValue = timerMax;
         timeSlide.value = timerMax;
     }
-
+    private void SetXPText()
+    {
+        if (updatedHero != null)
+        {
+            xpText.text = updatedHero[2].ToString();
+        }
+        else
+        {
+            xpText.text = "";
+        }
+      
+    }
   
     private void Update()
     {
@@ -213,11 +233,10 @@ public class CombatLogic : MonoBehaviour
             if (i != random && i != prevIdx)
             {
                 allEnemies[i].SetActive(false);
-            }        
-                SelectedEnemy = allEnemies[random];
-                SelectedEnemy.SetActive(true);
-          
+            }                               
         }
+        SelectedEnemy = allEnemies[random];
+        SelectedEnemy.SetActive(true);
     }
 
     private void InitializePlayer()
@@ -281,7 +300,7 @@ public class CombatLogic : MonoBehaviour
         {
             StartCoroutine("SpawnParticles");
             enemyAnimator.SetTrigger("isDead");
-            stageXP();
+            gainXP();
             onEnemyKilled?.Invoke();
             
         }
@@ -329,11 +348,12 @@ public class CombatLogic : MonoBehaviour
         stagedShard1 += 1;
         stagedShard2 += 2;
     }
-    void stageXP()
+    void gainXP()
     {
-
         int xpToAdd = Convert.ToInt32(initialEHealth * (1 + lengthMultiplier));
-        stagedXP += xpToAdd;
+        //stagedXP += xpToAdd;
+        updatedHero = CharectorStats.GainXPFromKill(xpToAdd);
+        SetXPText();
         lengthMultiplier = 0;
     }
     //onLevelComplete
@@ -342,7 +362,7 @@ public class CombatLogic : MonoBehaviour
         characterAnimator.SetBool("celebrate", true);
         //add experience as well... dunno why im calling a method that returns an int []??
         vicDefPanel.SetActive(true);
-        int[] updatedHero = CharectorStats.EndofLevel(stagedXP);
+        
         InvManager.GoldAdd(stagedGold);
         stagedGold = 0;
         InvManager.T1ShardAdd(stagedShard1);
