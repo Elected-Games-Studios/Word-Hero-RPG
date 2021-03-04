@@ -26,7 +26,7 @@ public class TestAddHero : MonoBehaviour
 
 
 
-
+        SaveManager.SaveParse();
         //GameMaster.CallSave();
         
 

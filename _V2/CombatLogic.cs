@@ -78,6 +78,9 @@ public class CombatLogic : MonoBehaviour
 
     void Awake()
     {
+        //SaveManager.LoadSplit("##");
+        //test endless
+       // GameMaster.Region = 50;
         bgTween.changeBackground(level);
         for (int i = 0; i < allCharacters.Count; i++)
         {
@@ -151,7 +154,7 @@ public class CombatLogic : MonoBehaviour
     }
     private void SetXPText()
     {
-        if (updatedHero != null)
+        if (updatedHero.Length != 0 )
         {
             xpText.text = updatedHero[2].ToString();
         }
