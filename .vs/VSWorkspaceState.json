@@ -1,11 +1,13 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Managers",
     "\\Saving",
     "\\_V2",
+    "\\_V2\\Canvas Related",
+    "\\_V2\\UI Related",
+    "\\_V2\\UI Related\\Melt Chamber",
     "\\_V2\\Unity Code"
   ],
-  "SelectedNode": "\\Saving\\PlayerStats.cs",
+  "SelectedNode": "\\_V2\\UI Related\\Melt Chamber\\SelectedToMeltBtn.cs",
   "PreviewInSolutionExplorer": false
 }
