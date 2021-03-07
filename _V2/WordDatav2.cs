@@ -155,7 +155,7 @@ public static class WordDatav2
                 {
                     case 5:
                         checkVal = DifMods[difficulty] + region * 10 - Convert.ToInt32(rand.Next(0, 9));
-                        while (FiveLetter.FiveLetter.fiveList.Contains(checkVal) == false) { checkVal = DifMods[difficulty] + region * 10 - rand.Next(0, 9); }
+                        while (FiveLetter.fiveList.Contains(checkVal) == false) { checkVal = DifMods[difficulty] + region * 10 - rand.Next(0, 9); }
                         reValue.Add(dicNum);
                         numRand = FiveLetter.fiveArray[FiveLetter.fiveList.FindIndex(t => t == checkVal), 0];
                         tempVal = Convert.ToInt32(rand.Next(0, numRand)) + Convert.ToInt32(FiveLetter.fiveArray[Convert.ToInt32(FiveLetter.fiveList.FindIndex(t => t == checkVal)), 1]);
