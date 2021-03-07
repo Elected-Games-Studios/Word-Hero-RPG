@@ -167,7 +167,7 @@ public static class WordDatav2
                         while (SixLetter.sixList.Contains(checkVal) == false) { checkVal = DifMods[difficulty] + region * 10 - rand.Next(0, 9); }
                         reValue.Add(dicNum);
                         numRand = SixLetter.sixArray[SixLetter.sixList.FindIndex(t => t == checkVal), 0];
-                        tempVal = Convert.ToInt32(rand.Next(0, numRand)) + Convert.ToInt32(SixLetter.SixArray[Convert.ToInt32(SixLetter.sixList.FindIndex(t => t == checkVal)), 1]);
+                        tempVal = Convert.ToInt32(rand.Next(0, numRand)) + Convert.ToInt32(SixLetter.sixArray[Convert.ToInt32(SixLetter.sixList.FindIndex(t => t == checkVal)), 1]);
                         reValue.Add(tempVal);
                     UnityEngine.Debug.Log(dicNum + " letter word generated");
                     break;
@@ -176,7 +176,7 @@ public static class WordDatav2
                         while (SevenLetter.sevenList.Contains(checkVal) == false) { checkVal = DifMods[difficulty] + region * 10 - rand.Next(0, 9); }
                         reValue.Add(dicNum);
                         numRand = SevenLetter.sevenArray[SevenLetter.sevenList.FindIndex(t => t == checkVal), 0];
-                        tempVal = Convert.ToInt32(rand.Next(0, numRand)) + Convert.ToInt32(SevenLetter.sevenArray[Convert.ToInt32(SevenLetter.SevenList.FindIndex(t => t == checkVal)), 1]);
+                        tempVal = Convert.ToInt32(rand.Next(0, numRand)) + Convert.ToInt32(SevenLetter.sevenArray[Convert.ToInt32(SevenLetter.sevenList.FindIndex(t => t == checkVal)), 1]);
                         reValue.Add(tempVal);
                     UnityEngine.Debug.Log(dicNum + " letter word generated");
                     break;
