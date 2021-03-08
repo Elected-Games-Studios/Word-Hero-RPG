@@ -113,7 +113,6 @@ public static class WordDatav2
             }
         }
     }
-
     public static List<int> GetDataLevel(int region, int level, int difficulty /*all data starts at 0 for these ints*/)
         {
             List<int> reValue = new List<int> { };
@@ -193,26 +192,26 @@ public static class WordDatav2
             }
             return reValue;
         }
-    public static string GetWords(int book, int word)
-        {
-            string temp = "";
-            switch (book)
-            {
-                case 5:
-                    temp = Convert.ToString(FiveLetter.fiveLetter[word]);
-                    break;
-            case 6:
-                    temp = Convert.ToString(SixLetter.sixLetter[word]);
-                    break;
-            case 7:
-                    temp = Convert.ToString(SevenLetter.sevenLetter[word]);
-                    break;
-            default:
-                    temp = Convert.ToString(EightLetter.eightLetter[word]);
-                    break;
-            }
-            return temp;
-        }
+    //public static string GetWords(int book, int word)
+    //    {
+    //        string temp = "";
+    //        switch (book)
+    //        {
+    //            case 5:
+    //                temp = Convert.ToString(FiveLetter.fiveLetter[word]);
+    //                break;
+    //        case 6:
+    //                temp = Convert.ToString(SixLetter.sixLetter[word]);
+    //                break;
+    //        case 7:
+    //                temp = Convert.ToString(SevenLetter.sevenLetter[word]);
+    //                break;
+    //        default:
+    //                temp = Convert.ToString(EightLetter.eightLetter[word]);
+    //                break;
+    //        }
+    //        return temp;
+    //    }
     public static void DataToSave(int score, int starCount, int region, int level, int dificulty)
         {
             int tempReg = region * 2;

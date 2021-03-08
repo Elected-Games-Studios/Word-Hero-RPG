@@ -358,6 +358,10 @@ public static class CharectorStats
     }
     private static int XPtoNextLvl(int chosenCharecter) 
     {
+        if (HeroIsMaxLvl(chosenCharecter))
+        {
+            return 0;
+        }
         string tier = NamesAndtiers[HeroList[chosenCharecter][0],1];
         switch (tier)
         {
