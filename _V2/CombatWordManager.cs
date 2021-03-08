@@ -42,7 +42,7 @@ public static class CombatWordManager
 	{
 		List<string> tempList = currentUsableWords;    
         int i = 0;
-        while(tempList[i].Count() != 5)//<<needs to be changed to global dictionary value
+        while(tempList[i].Count() != WordsIndex[0])//<< global dictionary value
         {
             i++;
         }
@@ -76,7 +76,7 @@ public static class CombatWordManager
         tempcount = tempcount / 2;
         for (int x = 0; x < tempcount; x++)
         {
-            Words.Add(Convert.ToString(WordDatav2.GetWords(WordsIndex[0], WordsIndex[1 + x * 2])));
+            Words.Add(Convert.ToString(GameMaster.instance.GetWord(WordsIndex[0], WordsIndex[1 + (x * 2)])));
         }
     }
 

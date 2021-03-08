@@ -154,7 +154,7 @@ public class CombatLogic : MonoBehaviour
     }
     private void SetXPText()
     {
-        if (updatedHero.Length != 0 )
+        if (updatedHero != null )
         {
             xpText.text = updatedHero[2].ToString();
         }
