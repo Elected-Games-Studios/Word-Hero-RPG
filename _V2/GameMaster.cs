@@ -36,11 +36,10 @@ public class GameMaster : MonoBehaviour
         for(int i = 0; i < index; i++)
         {
             temp = strDic.IndexOf('|', temp);
+            temp++;
         }
         
-        end = strDic.IndexOf('|', temp);
-        temp++;
-        end--;
+        end = strDic.IndexOf('|', temp) - temp;
         return (strDic.Substring(temp, end));
     }
     //Set level data BE4ORE scene load/ on level select
