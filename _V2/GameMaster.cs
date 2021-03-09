@@ -14,7 +14,8 @@ public class GameMaster : MonoBehaviour
     {
         Region = 0;
         Difficulty = 0;
-        userIds[0] = (Social.Active.localUser.id);
+        //Need to add check for if logged in.
+        //userIds[0] = (Social.Active.localUser.id);
         if(instance == null)
         {
             instance = this;
