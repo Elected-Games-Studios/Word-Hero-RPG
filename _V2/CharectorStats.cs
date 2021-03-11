@@ -757,7 +757,7 @@ public static class CharectorStats
     }
     public static void LoadManagerData(string input)//Save Engine Do Not Call
     {
-        if (input == "")
+        if (input == " ")
         {
             NewGame();
             HeroList[0] = GetCharecterStats(0);

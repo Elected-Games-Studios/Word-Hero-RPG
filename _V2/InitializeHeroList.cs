@@ -8,12 +8,17 @@ public class InitializeHeroList : MonoBehaviour
     void Start()
     {
 
-        SaveManager.LoadSplit("##");
+        SaveManager.LoadSplit(" # # ");
         //Temp Debug Game Master Values
-        GameMaster.Region = 0;
-        GameMaster.Level = 0;
-        GameMaster.Difficulty = 0;
-        
+        //GameMaster.Region = 0;
+        //GameMaster.Level = 0;
+        //GameMaster.Difficulty = 0;
+
+        Invoke("NextScene", 2f);
+    }
+
+    private void NextScene()
+    {
         SceneManager.LoadScene(1);
     }
 

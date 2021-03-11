@@ -81,7 +81,7 @@ public static class WordDatav2
         }
     public static void LoadManagerData(string input)
     {
-        if (input == "")
+        if (input == " ")
         {
             MakeAllRegions();
         }

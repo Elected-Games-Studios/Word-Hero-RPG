@@ -49,15 +49,16 @@ public class PlayServices : MonoBehaviour
         Social.localUser.Authenticate((bool success) => 
         {
             //feedback.text = "Checking Authentication...";
-            LoadData(); 
+            //LoadData(); 
             if(success)
             {
-                    Debug.Log("Google Sign-In has succeeded");
+                Invoke("MoveToNextScene", 3f);
+                Debug.Log("Google Sign-In has succeeded");
                     //feedback.text = "Google Sign-In has succeeded";
             }
             else
             {
-                    Debug.Log("Google Sign-In Failed");
+                Debug.Log("Google Sign-In Failed");
                 Invoke("MoveToNextScene", 3f);
                     //feedback.text = "Google Sign-In Failed";
                     
@@ -69,9 +70,8 @@ public class PlayServices : MonoBehaviour
 
 	private void MoveToNextScene()
 	{
-       // Debug.Log("Main Menu Loaded");
-        //SceneManager.LoadScene(1);
-	}
+        SceneManager.LoadScene(1);
+    }
 
     #region Saved Games
 
@@ -211,20 +211,20 @@ public class PlayServices : MonoBehaviour
                     }
                     else
                     {
-                        WordDatav2.LoadManagerData("");
-                        CharectorStats.LoadManagerData("");
+                        WordDatav2.LoadManagerData(" ");
+                        CharectorStats.LoadManagerData(" ");
                     }
                 }
                 else
                 {
-                    WordDatav2.LoadManagerData("");
-                    CharectorStats.LoadManagerData("");
+                    WordDatav2.LoadManagerData(" ");
+                    CharectorStats.LoadManagerData(" ");
                 }
             }
             else
             {
-                WordDatav2.LoadManagerData("");
-                CharectorStats.LoadManagerData("");
+                WordDatav2.LoadManagerData(" ");
+                CharectorStats.LoadManagerData(" ");
             }
         }
     }

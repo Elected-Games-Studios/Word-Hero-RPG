@@ -7,12 +7,14 @@ public class GameMaster : MonoBehaviour
     public static int Region, Level, Difficulty;
     public static string[] userIds = new string[2];
     [SerializeField]
-    private List<TextAsset> dicList = new List<TextAsset>();
+    private List<TextAsset> dicList;
     public static GameMaster instance;
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         Region = 0;
+        Level = 0;
         Difficulty = 0;
         //Need to add check for if logged in.
         //userIds[0] = (Social.Active.localUser.id);

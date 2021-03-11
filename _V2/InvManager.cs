@@ -80,7 +80,7 @@ public class InvManager
 	}
 	public static void LoadManager(string input)
     {
-		if (input == "")
+		if (input == " ")
 		{
             Items =new int[6] { 0, 0, 0, 0, 0, 0};
         }
