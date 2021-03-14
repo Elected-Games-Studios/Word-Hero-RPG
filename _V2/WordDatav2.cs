@@ -55,7 +55,7 @@ public static class WordDatav2
             string sendSave = "";
             for (int x = 0; x < regionsSaves.Count; x++)
             {
-                for (int y = 0; y < 3; y++)
+                for (int y = 0; y < 2; y++)
                 {
                     for (int z = 0; z < 25; z++)
                     {
