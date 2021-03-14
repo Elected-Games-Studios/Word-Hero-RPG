@@ -364,8 +364,7 @@ public class CombatLogic : MonoBehaviour
     {
         characterAnimator.SetBool("celebrate", true);
         //add experience as well... dunno why im calling a method that returns an int []??
-        vicDefPanel.SetActive(true);
-        
+            
         InvManager.GoldAdd(stagedGold);
         stagedGold = 0;
         InvManager.T1ShardAdd(stagedShard1);
@@ -373,12 +372,12 @@ public class CombatLogic : MonoBehaviour
         InvManager.T2ShardAdd(stagedShard2);
         stagedShard2 = 0;
         WordDatav2.endOfLevelStats(region, difficulty, level, 10, 3);
+
+        vicDefPanel.SetActive(true);
     }
     void onLeveledUp()
     {
         levelUpText.SetActive(true);
-        //string temp = levelUpText.GetComponent<Text>();
-        //regex to replace number?
 
     }
 
@@ -391,11 +390,10 @@ public class CombatLogic : MonoBehaviour
         {
             stat.text = "";
         }
-        //StopCoroutine(CRRef);
-       // CRRef = StartCoroutine(CombatTimer());
+
         wordsLeft--;
-        //decide where to set a short timer to allow enemy entrance
-        Debug.Log(wordsLeft + " words left");
+
+
         if (wordsLeft > 0)
         {
             currentWordIndex++;

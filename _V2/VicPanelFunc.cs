@@ -7,11 +7,14 @@ using UnityEngine.UI;
 public class VicPanelFunc : MonoBehaviour
 {
     public float yinput;
+    private GameMaster gameMaster;
 
     private void OnEnable()
     {
         yinput = 2000f;
         CombatLogic.isGameplay = false;
+        gameMaster = GameObject.FindWithTag("GameMaster").GetComponent<GameMaster>();
+        gameMaster.CallLocalSave();
         transform.localPosition = new Vector3(0, yinput, 0);
         LeanTween.moveY(gameObject, 1f, 2f);
     }

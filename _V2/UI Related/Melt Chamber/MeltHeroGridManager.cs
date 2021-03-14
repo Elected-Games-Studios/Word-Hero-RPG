@@ -7,6 +7,8 @@ using System;
 
 public class MeltHeroGridManager : MonoBehaviour
 {
+    private GameMaster gameMaster;
+
     [SerializeField]
     private GameObject buttonTemplate;
     [SerializeField]
@@ -219,6 +221,8 @@ public class MeltHeroGridManager : MonoBehaviour
             xpslide.reduceTempMax();
             
         }
+        gameMaster = GameObject.FindWithTag("GameMaster").GetComponent<GameMaster>();
+        gameMaster.CallLocalSave();
         OnEnable();
     }
 
