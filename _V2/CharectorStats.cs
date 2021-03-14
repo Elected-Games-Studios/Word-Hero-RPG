@@ -782,8 +782,9 @@ public static class CharectorStats
                 HeroList[counter] = GetCharecterStats(counter);
                 counter++;
             }
+            CurrentHero[1] = Convert.ToInt32(input);
         }
-        CurrentHero[1] = Convert.ToInt32(input);
+     
     }
 
     #endregion
