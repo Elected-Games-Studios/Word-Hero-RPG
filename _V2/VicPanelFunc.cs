@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,14 +8,14 @@ using UnityEngine.UI;
 public class VicPanelFunc : MonoBehaviour
 {
     public float yinput;
-    private GameMaster gameMaster;
 
+    [SerializeField]
+    private CombatLogic combatLogic;
     private void OnEnable()
     {
         yinput = 2000f;
-        CombatLogic.isGameplay = false;
-        gameMaster = GameObject.FindWithTag("GameMaster").GetComponent<GameMaster>();
-        gameMaster.CallLocalSave();
+        combatLogic.isGameplay = false;
+        PlayServices.Instance.SaveData();
         transform.localPosition = new Vector3(0, yinput, 0);
         LeanTween.moveY(gameObject, 1f, 2f);
     }
@@ -24,17 +25,17 @@ public class VicPanelFunc : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         
         this.gameObject.SetActive(false);
-        CombatLogic.isGameplay = true;
+
     }
     public void RestartCurrentLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        CombatLogic.isGameplay = true;
+
     }
     public void OpenMenuScene()
     {
         SceneManager.LoadScene(1);
-        CombatLogic.isGameplay = true;
+
     }
 
 }

@@ -15,7 +15,7 @@ public class CombatLogic : MonoBehaviour
     private int pDmg, pHealth, pCrit, pAgi, pDef;
     private int eDmg, eAgi, eHealth, eDef, initialEHealth;
     private double lengthMultiplier;
-    public static bool isGameplay = true;
+    public bool isGameplay = true;
     
     public int stagedXP{ get; private set; }
     public int stagedShard1 { get; private set; }
@@ -134,7 +134,7 @@ public class CombatLogic : MonoBehaviour
         InitializePlayer();
         InitializeEnemy();
         InitializeTimer();
-
+        isGameplay = true;
         //StartCoroutine("enemyWalk");
 
 
@@ -275,7 +275,6 @@ public class CombatLogic : MonoBehaviour
         HPText.text = HPSlider.value.ToString() + "/" + HPSlider.maxValue.ToString() + "  ";
         if(pHealth <= 0)
         {
-            isGameplay = false;
             characterAnimator.SetTrigger("isDead");
             onPlayerKilled?.Invoke();
         }
@@ -363,7 +362,6 @@ public class CombatLogic : MonoBehaviour
     void levelFinished()
     {
         characterAnimator.SetBool("celebrate", true);
-        //add experience as well... dunno why im calling a method that returns an int []??
             
         InvManager.GoldAdd(stagedGold);
         stagedGold = 0;
