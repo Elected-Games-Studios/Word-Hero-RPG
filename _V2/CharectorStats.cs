@@ -754,6 +754,7 @@ public static class CharectorStats
             }
             sendSave += "|";
         }
+        sendSave += CurrentHero[1];
         return sendSave;
     }
     public static void LoadManagerData(string input)//Save Engine Do Not Call
@@ -782,6 +783,7 @@ public static class CharectorStats
                 counter++;
             }
         }
+        CurrentHero[1] = Convert.ToInt32(input);
     }
 
     #endregion
