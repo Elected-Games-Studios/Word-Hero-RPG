@@ -88,8 +88,8 @@ public class InvManager
         {
             for (int x = 0; x < 6; x++)
             {
-                Items[x] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
-                input.Remove(0, input.IndexOf(','));
+                Items[x] = Convert.ToInt32(input.Substring(0, (input.IndexOf(','))));
+                input = input.Remove(0, input.IndexOf(',') + 1);
             }
         }
 	

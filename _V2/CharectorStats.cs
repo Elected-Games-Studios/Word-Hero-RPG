@@ -772,12 +772,12 @@ public static class CharectorStats
                 HeroList.Add(HeroDefault);
                 while (input.IndexOf(',') < input.IndexOf('|'))
                 {
-                    HeroList[counter][counting] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
-                    input.Remove(0, (input.IndexOf(',') - 1));
+                    HeroList[counter][counting] = Convert.ToInt32(input.Substring(0, (input.IndexOf(','))));
+                    input = input.Remove(0, (input.IndexOf(',') + 1));
                     counting++;
                 }
                 counting = 0;
-                input.Remove(0, (input.IndexOf('|') - 1));
+                input = input.Remove(0, (input.IndexOf('|') + 1));
                 HeroList[counter] = GetCharecterStats(counter);
                 counter++;
             }
