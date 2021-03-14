@@ -97,18 +97,18 @@ public static class WordDatav2
                     {
                         if (y < 24)
                         {
-                            regionsSaves[counter][x, y] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
-                            input.Remove(0, (input.IndexOf(',') - 1));
+                            regionsSaves[counter][x, y] = Convert.ToInt32(input.Substring(0, (input.IndexOf(','))));
+                            input.Remove(0, (input.IndexOf(',')));
                         }
                         else
                         {
-                            regionsSaves[counter][x, y] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',') - 1)));
-                            input.Remove(0,(input.IndexOf(',')-1));
+                            regionsSaves[counter][x, y] = Convert.ToInt32(input.Substring(0, (input.IndexOf(','))));
+                            input.Remove(0,(input.IndexOf(',')));
                         }
                         
                     }
                 }
-                input.Remove(0, (input.IndexOf('|') - 1));
+                input.Remove(0, (input.IndexOf('|')));
                 counter++;
             }
         }
