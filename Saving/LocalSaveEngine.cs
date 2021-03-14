@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
-using System.Text;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public static class LocalSaveEngine
 {
-    public static void SavePlayer()//PlayerStats player)
+    public static void SavePlayer()
     {
+        BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/playerData.stats";
         FileStream stream = new FileStream(path, FileMode.Create);
-        byte[] dataToSave = Encoding.ASCII.GetBytes(SaveManager.SaveParse());
-        stream.Write(dataToSave);
+        formatter.Serialize(stream, SaveManager.SaveParse());
         stream.Close();
     }
 
@@ -19,8 +18,9 @@ public static class LocalSaveEngine
         string path = Application.persistentDataPath + "/playerData.stats";
         if (File.Exists(path))
         {
+            BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
-            byte[] data = Encoding.ASCII.GetString(stream);
+            string data = formatter.Deserialize(stream) as string;
             stream.Close();
             Debug.Log("Data Opened");
             SaveManager.LoadSplit(data);
