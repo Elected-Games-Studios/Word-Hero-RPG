@@ -248,8 +248,7 @@ public static class CharectorStats
     }
         public static int findCurrentMaxLevel(int chosenCharecter)//Mine! Takes Backpack Index
         {
-            
-            string tier = NamesAndtiers[HeroList[chosenCharecter][0],1];
+        string tier = NamesAndtiers[HeroList[chosenCharecter][0],1];
             int tierNum;
             switch (tier)
             {
@@ -272,7 +271,7 @@ public static class CharectorStats
                     tierNum = 5;
                     break;
             }
-            int difStar = HeroList[chosenCharecter][3] - tierstartStar[tierNum]; //Joe reversed these bc it seemed like any T2 or less with any stars would make this negative and break it...
+            int difStar = HeroList[chosenCharecter][3] - tierstartStar[tierNum];
         switch (tierNum)
              {
                 case 0:
@@ -674,6 +673,7 @@ public static class CharectorStats
                 {
                     TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];//should randomly pick between T3 and T4
                     ShardCounter[0] = 0;
+                    TempHero[3] = 1;
                 }
                 else
                 {
@@ -681,7 +681,7 @@ public static class CharectorStats
                     switch (tempInt)
                     {
                         case int n when (n < 40):
-                            TempHero[0] = tiersByHero[0][rand.Next(0, tiersByHero[0].Count())];
+                            TempHero[0] = tiersByHero[0][rand.Next(0, tiersByHero[0].Count())]; ///tiersbyhero[0] is actually tier 1 
                             TempHero[3] = 0;
                             ShardCounter[0]++;
                             break;
@@ -692,12 +692,12 @@ public static class CharectorStats
                             break;
                         case int n when (n < 95):                            
                             TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
-                            TempHero[3] = 0;
+                            TempHero[3] = 1;
                             ShardCounter[0] = 0;
                             break;
                         default:
                             TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
-                            TempHero[3] = 1;
+                            TempHero[3] = 2;
                             ShardCounter[0] = 0;
                             break;
 
@@ -709,7 +709,7 @@ public static class CharectorStats
                 if (ShardCounter[1] == 9)
                 {
                     TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];//should also be chance of getting T5
-                    TempHero[3] = 1;
+                    TempHero[3] = 2;
                     ShardCounter[1] = 0;
                 }
                 else
@@ -723,12 +723,12 @@ public static class CharectorStats
                             break;
                         case int n when (n < 9975):
                             TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
-                            TempHero[3] = 1;
+                            TempHero[3] = 2;
                             ShardCounter[1] = 0;
                             break;
                         default:
                             TempHero[0] = tiersByHero[4][rand.Next(0, tiersByHero[4].Count())];
-                            TempHero[3] = 2;
+                            TempHero[3] = 3;
                             ShardCounter[1] = 0;
                             break;
                     }
@@ -737,6 +737,7 @@ public static class CharectorStats
         }
         HeroList.Add(TempHero);
         HeroList[HeroList.Count()-1] = GetCharecterStats(HeroList.Count() - 1);
+
     }
 
     #region Save
