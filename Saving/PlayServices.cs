@@ -64,7 +64,7 @@ public class PlayServices : MonoBehaviour
                     
             }
         });
-        //LoadData();
+        LoadData();
 
     }
 
@@ -79,21 +79,20 @@ public class PlayServices : MonoBehaviour
     {
         if (!isCloudDataLoaded)
         {
-            //PlayerStats.Instance.SavePlayer();
-            //feedback.text = ("Save Game Cloud Data is not Loaded");
+            LocalSaveEngine.SaveData();
+            UnityEngine.Debug.Log = ("Save Game Cloud Data is not Loaded");
         }
         if (Social.localUser.authenticated)
         {
             isSaving = true;
             ((PlayGamesPlatform)Social.Active).SavedGame.OpenWithAutomaticConflictResolution(SAVE_NAME,
                 DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
-            //feedback.text = ("Saving game to cloud");
+            UnityEngine.Debug.Log = ("Saving game to cloud");
         }
         else
         {
-            //PlayerStats.Instance.SavePlayer();
-            //Invoke("MoveToNextScene", 3f);
-            //feedback.text = ("Offline. Saving game locally");
+            LocalSaveEngine.SaveData();
+            UnityEngine.Debug.Log = ("Offline. Saving game locally");
         }
     }
 
@@ -104,12 +103,12 @@ public class PlayServices : MonoBehaviour
             isSaving = false;
             ((PlayGamesPlatform)Social.Active).SavedGame.OpenWithAutomaticConflictResolution(SAVE_NAME,
                DataSource.ReadCacheOrNetwork, ConflictResolutionStrategy.UseLongestPlaytime, OnSavedGameOpened);
-            //feedback.text = ("Load Data = Cloud Load");
+            UnityEngine.Debug.Log = ("Load Data = Cloud Load");
         }
         else
         {
-            //PlayerStats.Instance.LoadPlayer();
-            //feedback.text = ("Load Data = Local Load");
+            LocalSaveEngine.LoadData();
+            UnityEngine.Debug.Log = ("Load Data = Local Load");
         }
     }
 
@@ -133,11 +132,11 @@ public class PlayServices : MonoBehaviour
         {
             if (!isSaving)
             {
-                //PlayerStats.Instance.LoadPlayer();
+                LocalSaveEngine.LoadData();
             }
             else
             {
-                //PlayerStats.Instance.SavePlayer();
+                LocalSaveEngine.SaveData();
             }
         }
     }
