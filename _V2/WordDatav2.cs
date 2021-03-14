@@ -102,7 +102,7 @@ public static class WordDatav2
                         }
                         else if(y==24 && x==2)
                         {
-                            regionsSaves[counter][x, y] = Convert.ToInt32(input.Substring(0, (input.IndexOf('|'))));
+                            regionsSaves[counter][x, y] = Convert.ToInt32(input.Substring(0, (input.IndexOf(','))));
                             input = input.Remove(0,(input.IndexOf('|')+1));
                         }
                         else
