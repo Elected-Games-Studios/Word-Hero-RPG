@@ -770,7 +770,7 @@ public static class CharectorStats
             while (input.IndexOf('|') > 0)
             {
                 HeroList.Add(HeroDefault);
-                while (input.IndexOf(',') < input.IndexOf('|'))
+                while (input.IndexOf(',') < input.IndexOf('|')&&counting<10)
                 {
                     HeroList[counter][counting] = Convert.ToInt32(input.Substring(0, (input.IndexOf(','))));
                     input = input.Remove(0, (input.IndexOf(',') + 1));
