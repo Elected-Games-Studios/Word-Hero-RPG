@@ -15,17 +15,19 @@ public class TouchInput : MonoBehaviour
     private bool touchedLetter = false;
     private List<Vector3> points = new List<Vector3>();
     private List<RaycastResult> results = new List<RaycastResult>();
-    public static event Action allTickedOff;
+    public static event Action AllTickedOff;
     private GameObject blankOne;
     private GameObject blankTwo;
     private List<GameObject> allHits = new List<GameObject>();
-  
+    [SerializeField]
+    private CombatLogic combatLogic;
     //lineRendering
     private LineRenderer lr;
 
     private void Awake()
     {
         CombatWordManager.playerKilledTrigger += DeleteLine;
+        
     }
     void Start()
     {
@@ -54,9 +56,10 @@ public class TouchInput : MonoBehaviour
             isSwiping = true;
         }
 
-        if (isSwiping && CombatLogic.isGameplay)
+        if (isSwiping && combatLogic.isGameplay)
         {
             checkLetterInteraction();
+
         }
 
         if (Input.GetButtonUp("Fire1"))
@@ -66,7 +69,7 @@ public class TouchInput : MonoBehaviour
             allHits.Add(blankOne);
             allHits.Add(blankTwo);
             lr.gameObject.SetActive(false);
-            allTickedOff?.Invoke();
+            AllTickedOff?.Invoke();
             isSwiping = false;
             if (touchedLetter)
             {
@@ -79,6 +82,7 @@ public class TouchInput : MonoBehaviour
 
     void checkLetterInteraction()
     {
+        Debug.Log("checking letter:" + combatLogic.isGameplay);
         foreach (RaycastResult result in results)
         {
 

@@ -4,21 +4,17 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
-using Debug = UnityEngine.Debug;
+
 
 public class LetterListener : MonoBehaviour
 {
     public bool ticked;
     [SerializeField]
-    private EventManagerv2 em; // inspector assignement can be mitigated through onEnable assignment
 
-    private void Awake()
-    {
-        
-    }
+
     void OnEnable()
     {
-        TouchInput.allTickedOff += untick;
+        TouchInput.AllTickedOff += Untick;
     }
 
     public void AddLetterToCurrent()
@@ -38,10 +34,10 @@ public class LetterListener : MonoBehaviour
 
     void OnDisable()
     {
-        TouchInput.allTickedOff -= untick;
+        TouchInput.AllTickedOff -= Untick;
     }
 
-    void untick()
+    void Untick()
     {
         ticked = false;
     }
