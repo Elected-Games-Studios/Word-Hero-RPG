@@ -55,7 +55,7 @@ public static class WordDatav2
             string sendSave = "";
             for (int x = 0; x < regionsSaves.Count; x++)
             {
-                for (int y = 0; y < 2; y++)
+                for (int y = 0; y < 3; y++)
                 {
                     for (int z = 0; z < 25; z++)
                     {
@@ -91,18 +91,18 @@ public static class WordDatav2
             int counter = 0;
             while (input.IndexOf('|') > 0)
             {
-                for (int x = 0; x < 2; x++)
+                for (int x = 0; x < 3; x++)
                 {
                     for (int y = 0; y < 25; y++)
                     {
                         if (y < 24)
                         {
-                            regionsSaves[counter][x, y] = Convert.ToInt32(input.Substring(0, (input.IndexOf(','))));
+                            regionsSaves[counter][x, y] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',')-1)));
                             input.Remove(0, (input.IndexOf(',')));
                         }
                         else
                         {
-                            regionsSaves[counter][x, y] = Convert.ToInt32(input.Substring(0, (input.IndexOf(','))));
+                            regionsSaves[counter][x, y] = Convert.ToInt32(input.Substring(0, (input.IndexOf(',')-1)));
                             input.Remove(0,(input.IndexOf(',')));
                         }
                         
