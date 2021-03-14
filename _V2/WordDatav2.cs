@@ -91,7 +91,7 @@ public static class WordDatav2
             int counter = 0;
             while (input.IndexOf('|') > 0)
             {
-                for (int x = 0; x < 3; x++)
+                for (int x = 0; x < 2; x++)
                 {
                     for (int y = 0; y < 25; y++)
                     {
