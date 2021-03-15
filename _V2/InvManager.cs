@@ -35,7 +35,7 @@ public class InvManager
 	public static int T1ShardNumCombo()
     {
 		int count = 0;
-		while ((Items[1] - (count * 50)) > 0) count++;
+		while ((Items[1] - ((count+1) * 50)) > 0) count++;
 		return count;
     }
 	public static void CombineT1(int NumOfCombo)
@@ -57,7 +57,7 @@ public class InvManager
 	public static int T2ShardNumCombo()//kyyle this doesnt work
 	{
 		int count = 0;
-		while ((Items[2] - (count * 50)) > 0) count++;
+		while ((Items[2] - ((count+1) * 50)) > 0) count++;
 		return count;
 	}
 	public static void CombineT2(int NumOfCombo)
