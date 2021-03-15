@@ -210,20 +210,17 @@ public class PlayServices : MonoBehaviour
                     }
                     else
                     {
-                        WordDatav2.LoadManagerData(" ");
-                        CharectorStats.LoadManagerData(" ");
+                        LocalSaveEngine.LoadPlayer();
                     }
                 }
                 else
                 {
-                    WordDatav2.LoadManagerData(" ");
-                    CharectorStats.LoadManagerData(" ");
+                    LocalSaveEngine.LoadPlayer();
                 }
             }
             else
             {
-                WordDatav2.LoadManagerData(" ");
-                CharectorStats.LoadManagerData(" ");
+                LocalSaveEngine.LoadPlayer();
             }
         }
     }
