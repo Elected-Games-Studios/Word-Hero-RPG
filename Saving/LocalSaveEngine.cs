@@ -28,6 +28,7 @@ public static class LocalSaveEngine
         else
         {
             Debug.LogError("Save file not found in " + path);
+            SaveManager.LoadSplit(" # # ");
         }
     }
 }
