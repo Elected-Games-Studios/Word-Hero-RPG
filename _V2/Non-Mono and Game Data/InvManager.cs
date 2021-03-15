@@ -54,7 +54,7 @@ public class InvManager
 	{
 		return Items[2];
 	}
-	public static int T2ShardNumCombo()
+	public static int T2ShardNumCombo()//validates 
 	{
 		int count = 0;
 		while ((Items[2] - ((count+1) * 50)) > 0) count++;
