@@ -23,7 +23,9 @@ public class TestAddHero : MonoBehaviour
 
 
         InvManager.GoldAdd(30);
-
+        InvManager.T1ShardAdd(10);
+        InvManager.T2ShardAdd(10);
+        Debug.Log("current Inv:" + InvManager.GoldReturn().ToString() + " gold, " + InvManager.T1ShardAmount().ToString() + " T1s, " + InvManager.T2ShardAmount().ToString() + " T2s");
 
 
         SaveManager.SaveParse();

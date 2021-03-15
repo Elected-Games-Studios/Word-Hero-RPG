@@ -54,7 +54,7 @@ public class InvManager
 	{
 		return Items[2];
 	}
-	public static int T2ShardNumCombo()//kyyle this doesnt work
+	public static int T2ShardNumCombo()
 	{
 		int count = 0;
 		while ((Items[2] - ((count+1) * 50)) > 0) count++;
