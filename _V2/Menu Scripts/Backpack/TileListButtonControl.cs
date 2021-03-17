@@ -9,10 +9,12 @@ public class TileListButtonControl : MonoBehaviour
     private TileListButton currentBtn;
     private List<GameObject> buttons;
     private List<int[]> AllHeros = new List<int[]> { };
-
+    [SerializeField]
+    private SummonPanel sp;
 
     private void Awake()
     {
+        sp.onHerosGenerated += GenButtons;
         buttons = new List<GameObject>();
     }
     public void GenButtons()
@@ -46,6 +48,10 @@ public class TileListButtonControl : MonoBehaviour
         }
     }
 
-   
+
+    private void OnDisable()
+    {
+        sp.onHerosGenerated -= GenButtons;
+    }
 
 }

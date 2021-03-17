@@ -138,7 +138,7 @@ public static class CharectorStats
 
     }
 
-    public static int XPCausesThisLevel(int chosenCharecter, int xpPassed)//Mine!
+    public static int XPCausesThisLevel(int chosenCharecter, int xpPassed)//Joe's
     {
         string tier = NamesAndtiers[(HeroList[chosenCharecter][0]), 1];
         int tierNum;
