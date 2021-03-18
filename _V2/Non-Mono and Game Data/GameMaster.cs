@@ -22,6 +22,8 @@ public class GameMaster : MonoBehaviour
         {
             instance = this;
         }
+
+    
     }
  
 

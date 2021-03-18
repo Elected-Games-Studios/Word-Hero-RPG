@@ -35,15 +35,17 @@ public class InvManager
 	public static int T1ShardNumCombo()
     {
 		int count = 0;
-		while ((Items[1] - ((count+1) * 50)) > 0) count++;
+		while ((Items[1] - ((count+1) * 50)) >= 0) count++;
 		return count;
     }
-	public static void CombineT1(int NumOfCombo)
+	public static void CombineT1(int NumOfGreen)
     {
-		for(int x = 0; x < NumOfCombo; x++)
+        Random rand = new Random(DateTime.Now.Millisecond);
+		for(int x = 0; x < NumOfGreen; x++)
         {
-			CharectorStats.AddCharecter(1);
+			CharectorStats.AddCharecter(1, rand);
 		}
+        Items[1] -= (NumOfGreen * 50);
     }
     //T2 Shard Methods
     public static void T2ShardAdd(int amount)
@@ -57,18 +59,21 @@ public class InvManager
 	public static int T2ShardNumCombo()//validates 
 	{
 		int count = 0;
-		while ((Items[2] - ((count+1) * 50)) > 0) count++;
+		while ((Items[2] - ((count+1) * 50)) >= 0) count++;
 		return count;
 	}
-	public static void CombineT2(int NumOfCombo)
+	public static void CombineT2(int NumOfPurple)
 	{
-		for (int x = 0; x < NumOfCombo; x++)
+        Random rand = new Random(DateTime.Now.Millisecond);
+        for (int x = 0; x < NumOfPurple; x++)
 		{
-			CharectorStats.AddCharecter(2);
+			CharectorStats.AddCharecter(2, rand);
 		}
-	}
+        Items[2] -= (NumOfPurple * 50);
+    }
+
     //Saving
-	public static string SaveManager()
+    public static string SaveManager()
     {
 		string sendStr = "";
 		for(int x = 0; x < Items.Count(); x++)
@@ -94,4 +99,6 @@ public class InvManager
         }
 	
 	}
+
+
 }

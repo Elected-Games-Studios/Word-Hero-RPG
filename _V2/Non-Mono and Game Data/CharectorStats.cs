@@ -617,16 +617,20 @@ public static class CharectorStats
     }
     public static int getTempHero() => CurrentHero[0];
     public static int[] GainXPFromKill(int xpGained)  
-    {      
+    {
+        if (!HeroIsMaxLvl(CurrentHero[1]))
+        {
             HeroList[CurrentHero[1]][2] += xpGained;
             int currentLevel = HeroList[CurrentHero[1]][1];
             int shouldBe = XPCausesThisLevel(CurrentHero[1], HeroList[CurrentHero[1]][2]);
-        while (currentLevel < shouldBe)
-        {
-            levelUp(CurrentHero[1]);
-            currentLevel = HeroList[CurrentHero[1]][1];
-        }
+            while (currentLevel < shouldBe)
+            {
+                levelUp(CurrentHero[1]);
+                currentLevel = HeroList[CurrentHero[1]][1];
+            }
             return HeroList[CurrentHero[1]].ToArray();
+        }
+           else return HeroList[CurrentHero[1]].ToArray();
     }
 
     //test method added by Joe to add exp to new creation
@@ -660,11 +664,11 @@ public static class CharectorStats
         return tempHero;
     }
     public static int numOfHeroes() => HeroList.Count();
-    public static void AddCharecter(int shardT)
+    public static void AddCharecter(int shardT, Random rand)
     {
         int tempInt;
         int[] TempHero = HeroDefault;
-        Random rand = new Random();
+        
         switch (shardT)
         {
             case 1:
@@ -677,26 +681,33 @@ public static class CharectorStats
                 }
                 else
                 {
+                    int localtemp;
                     //{ 0, 0, 0, 1, 2, 3 };//Mine!
                     switch (tempInt)
                     {
+                        
                         case int n when (n < 40):
-                            TempHero[0] = tiersByHero[0][rand.Next(0, tiersByHero[0].Count())]; ///tiersbyhero[0] is actually tier 1 
+                            localtemp = rand.Next(0, tiersByHero[0].Count());
+                            TempHero[0] = tiersByHero[0][localtemp];///tiersbyhero[0] is actually tier 1 
                             TempHero[3] = 0;
                             ShardCounter[0]++;
                             break;
                         case int n when (n < 80):
-                            TempHero[0] = tiersByHero[1][rand.Next(0, tiersByHero[1].Count())];
+                            localtemp = rand.Next(0, tiersByHero[1].Count());
+                            TempHero[0] = tiersByHero[1][localtemp];
+                            
                             TempHero[3] = 0;
                             ShardCounter[0]++;
                             break;
-                        case int n when (n < 95):                            
-                            TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
+                        case int n when (n < 95):
+                            localtemp = rand.Next(0, tiersByHero[2].Count());
+                            TempHero[0] = tiersByHero[2][localtemp];
                             TempHero[3] = 1;
                             ShardCounter[0] = 0;
                             break;
                         default:
-                            TempHero[0] = tiersByHero[3][rand.Next(0, tiersByHero[3].Count())];
+                            localtemp = rand.Next(0, tiersByHero[3].Count());
+                            TempHero[0] = tiersByHero[3][localtemp];
                             TempHero[3] = 2;
                             ShardCounter[0] = 0;
                             break;
@@ -718,7 +729,7 @@ public static class CharectorStats
                     {
                         case int n when (n < 8975):
                             TempHero[0] = tiersByHero[2][rand.Next(0, tiersByHero[2].Count())];
-                            TempHero[3] = 0;
+                            TempHero[3] = 1;
                             ShardCounter[1]++;
                             break;
                         case int n when (n < 9975):

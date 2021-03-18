@@ -16,6 +16,11 @@ public class SummonPanel : MonoBehaviour
     private int T2Available;
     public event Action onHerosGenerated;
 
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+
     private void OnEnable()
     {
         GetAvailability();
@@ -26,11 +31,17 @@ public class SummonPanel : MonoBehaviour
 
     void GetAvailability()
     {
-        T1Available = InvManager.T1ShardNumCombo();
-        if (T1Available > 10) { T1Available = 10; }
+        if(greenOrPurple == true)
+        {
+            T1Available = InvManager.T1ShardNumCombo();
+            if (T1Available > 10) { T1Available = 10; }
+        }
+        else
+        {
+            T2Available = InvManager.T2ShardNumCombo();
+            if (T2Available > 10) { T2Available = 10; }
+        }
 
-        T2Available = InvManager.T2ShardNumCombo();
-        if (T2Available > 10) { T2Available = 10; }
     }
 
     void SetNumbers()
@@ -50,7 +61,6 @@ public class SummonPanel : MonoBehaviour
 
     public void generateHeros()
     {
-        Debug.Log("generating " + slider.value + " heroes");
         gameObject.SetActive(false);
         confirmPanel.SetActive(false);
         if(greenOrPurple == true)
@@ -59,7 +69,7 @@ public class SummonPanel : MonoBehaviour
         }
         else
         {
-            InvManager.CombineT1((int)slider.value);
+            InvManager.CombineT2((int)slider.value);
         }
         onHerosGenerated?.Invoke();
         // addedPanel.SetActive(true);
@@ -67,16 +77,15 @@ public class SummonPanel : MonoBehaviour
 
     public void SetGreen()
     {
-        gameObject.SetActive(true);
         greenOrPurple = true;
+        gameObject.SetActive(true);      
         fill.color = Color.green;
-
     }
     public void SetPurple()
     {
-        gameObject.SetActive(true);
         greenOrPurple = false;
+        gameObject.SetActive(true);       
         fill.color = Color.magenta;
-
     }
+ 
 }

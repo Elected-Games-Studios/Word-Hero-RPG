@@ -22,7 +22,8 @@ public class CombatLogic : MonoBehaviour
     public int stagedShard2 { get; private set; }
     public int stagedGold { get; private set; }
 
-    private double[] lengthBonus = { .25, .5, 1, 2, 3, 5 };
+    private double[] lengthBonus = { .1, .25, .5, .75, 1.5, 3 };
+    private double[] diffBonus = { .8, 1, 1.2 };
     private List<string> words = CombatWordManager.Words;
     int wordsLeft;
 
@@ -392,7 +393,7 @@ public class CombatLogic : MonoBehaviour
     }
     void gainXP()
     {
-        int xpToAdd = Convert.ToInt32(initialEHealth * (1 + lengthMultiplier));
+        int xpToAdd = Convert.ToInt32(initialEHealth * (1 + lengthMultiplier) * diffBonus[difficulty]);
         //stagedXP += xpToAdd;
         updatedHero = CharectorStats.GainXPFromKill(xpToAdd);
         SetXPText();

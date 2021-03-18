@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,8 +15,12 @@ public class TileListButtonControl : MonoBehaviour
 
     private void Awake()
     {
-        sp.onHerosGenerated += GenButtons;
         buttons = new List<GameObject>();
+    }
+
+    private void OnEnable()
+    {
+        sp.onHerosGenerated += GenButtons;
     }
     public void GenButtons()
     {
@@ -47,7 +52,6 @@ public class TileListButtonControl : MonoBehaviour
 
         }
     }
-
 
     private void OnDisable()
     {

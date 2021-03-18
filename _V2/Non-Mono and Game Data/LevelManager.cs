@@ -24,5 +24,6 @@ public class LevelManager : MonoBehaviour
     public void SetDifficulty(int diff)
     {
         GameMaster.Difficulty = diff;
+        Debug.Log("Difficulty set to " + GameMaster.Difficulty);
     }
 }
