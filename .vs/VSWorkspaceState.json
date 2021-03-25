@@ -1,13 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Saving",
     "\\_V2",
-    "\\_V2\\Canvas Related",
-    "\\_V2\\UI Related",
-    "\\_V2\\UI Related\\Melt Chamber",
-    "\\_V2\\Unity Code"
+    "\\_V2\\Saving",
+    "\\_V2\\Server API"
   ],
-  "SelectedNode": "\\_V2\\InitializeHeroList.cs",
+  "SelectedNode": "\\_V2\\Saving\\SavedGamesScript.cs",
   "PreviewInSolutionExplorer": false
 }
