@@ -97,7 +97,8 @@ public class CombatLogic : MonoBehaviour
         enemyAnimator = enemyHolder.GetComponentInChildren<Animator>();
         heroParticles = SelectedHero.transform.Find("HeroAttackParticles").gameObject;
         characterAnimator.SetBool("inCombat", true);
-        bubbles = GetComponentsInChildren<Image>(true);
+        bubbles = GetComponentsInChildren<Image>();
+        foreach (Image bubble in bubbles) { bubble.gameObject.SetActive(false); }
 
         int[] heroStats = CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero());
         SetXPText();
@@ -176,7 +177,8 @@ public class CombatLogic : MonoBehaviour
 
     #region Bubbles
     public void generateBubble(int length) //called once to choose bubble of longest word size, don't need to re-render
-    {      
+    {
+
         bubbles[length - 4].gameObject.SetActive(true);
         populateBubble();
         CombatWordManager.onMaxLengthFound -= generateBubble;

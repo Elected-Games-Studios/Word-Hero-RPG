@@ -5,6 +5,7 @@ using System;
 public class GameMaster : MonoBehaviour
 {
     public static int Region, Level, Difficulty;
+    public static int BackpackSize = 250;
     public static string[] userIds = new string[2];
     [SerializeField]
     private List<TextAsset> dicList;
@@ -22,7 +23,6 @@ public class GameMaster : MonoBehaviour
         {
             instance = this;
         }
-
     
     }
  

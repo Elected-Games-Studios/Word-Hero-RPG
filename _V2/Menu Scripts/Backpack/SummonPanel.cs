@@ -16,6 +16,7 @@ public class SummonPanel : MonoBehaviour
     private int T2Available;
     public event Action onHerosGenerated;
 
+
     private void Awake()
     {
         gameObject.SetActive(false);
@@ -31,15 +32,19 @@ public class SummonPanel : MonoBehaviour
 
     void GetAvailability()
     {
-        if(greenOrPurple == true)
+        int heroSlotsLeft = GameMaster.BackpackSize - CharectorStats.numOfHeroes();
+
+        if (greenOrPurple == true)
         {
             T1Available = InvManager.T1ShardNumCombo();
             if (T1Available > 10) { T1Available = 10; }
+            if (T1Available > heroSlotsLeft) { T1Available = heroSlotsLeft; }
         }
         else
         {
             T2Available = InvManager.T2ShardNumCombo();
             if (T2Available > 10) { T2Available = 10; }
+            if (T2Available > heroSlotsLeft) { T2Available = heroSlotsLeft; }
         }
 
     }
@@ -63,13 +68,16 @@ public class SummonPanel : MonoBehaviour
     {
         gameObject.SetActive(false);
         confirmPanel.SetActive(false);
+        int heroesToMake = (int)slider.value;
+
+
         if(greenOrPurple == true)
         {
-            InvManager.CombineT1((int)slider.value);           
+            InvManager.CombineT1(heroesToMake);           
         }
         else
         {
-            InvManager.CombineT2((int)slider.value);
+            InvManager.CombineT2(heroesToMake);
         }
         onHerosGenerated?.Invoke();
         // addedPanel.SetActive(true);

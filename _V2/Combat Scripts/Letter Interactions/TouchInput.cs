@@ -82,10 +82,8 @@ public class TouchInput : MonoBehaviour
 
     void checkLetterInteraction()
     {
-        Debug.Log("checking letter:" + combatLogic.isGameplay);
         foreach (RaycastResult result in results)
         {
-
             lr.gameObject.SetActive(true);
             touchedLetter = true;
             if (result.gameObject.transform.position == allHits[allHits.Count - 2].transform.position && result.gameObject.GetComponent<LetterListener>().ticked == true)
