@@ -21,21 +21,25 @@ public class VicPanelFunc : MonoBehaviour
     }
     public void StartNextLevel()
     {
+        if(GameMaster.lastCompletedLevel == 24)
+        {
+            gameObject.SetActive(false);
+            SceneManager.LoadScene(1);
+            return;
+        }
         GameMaster.Level++;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        
-        this.gameObject.SetActive(false);
-
+        gameObject.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);      
     }
     public void RestartCurrentLevel()
     {
+        gameObject.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
     }
     public void OpenMenuScene()
     {
+        gameObject.SetActive(false);
         SceneManager.LoadScene(1);
-
     }
 
 }

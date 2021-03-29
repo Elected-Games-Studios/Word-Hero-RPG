@@ -352,7 +352,8 @@ public class CombatLogic : MonoBehaviour
 
     #region Activated by onLevelComplete
     void levelFinished()
-    {         
+    {
+        GameMaster.lastCompletedLevel = GameMaster.Level;
         InvManager.GoldAdd(stagedGold);
         stagedGold = 0;
         InvManager.T1ShardAdd(stagedShard1);
