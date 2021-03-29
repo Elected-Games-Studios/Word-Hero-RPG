@@ -20,7 +20,7 @@ public class ActionList : MonoBehaviour
 	private static string[] ClientEvents = new string[]
 		{"01","02","03","04","05","06"};
 	private static string[] ClientOverLoadEvents = new string[]
-		{"10","11","12",};
+		{"10","11","12"};
 	private static string[] ClientGeneralEvents = new string[]
 		{"81","82","83","84","85","86","87","88"};
 	private List<string> ServerString = new List<string> { };
@@ -50,9 +50,9 @@ public class ActionList : MonoBehaviour
 
 	#region Joe's Calls
 
-	public void initialConnection()
+	public void initialConnection(string _pName)
 	{
-		AddData(Convert.ToString(ClientGeneralEvents[0]) + "-");
+		AddData(Convert.ToString(ClientGeneralEvents[0]) + "-" + _pName + "-");
 		SendServerCheck = true;
 	}
 
