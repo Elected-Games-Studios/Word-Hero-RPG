@@ -42,8 +42,8 @@ public class MelterXPBar : MonoBehaviour
         if (!gridMan.isMaxedActually)
         {
             bounds = GetBounds();
+            current = accumHeroXp - bounds[0];
         }
-        current = accumHeroXp - bounds[0];
         heroLevelCap = CharectorStats.findCurrentMaxLevel(CharectorStats.getTempHero());
     }
     public void UpdateSlider(int xpToBeAdded)

@@ -25,7 +25,8 @@ public class CanvasDisplayManager : MonoBehaviour
     public static event Action Rise, Revert, GoAway, ComeBack, GenerateHeroTiles;
 
     public static CanvasDisplayManager instance;
-    List<CanvasController> canvasControllerList;
+    [SerializeField]
+    private List<CanvasController> canvasControllerList;
     CanvasController lastActiveCanvas;
     CanvasController desiredCanvas;
 
@@ -38,8 +39,8 @@ public class CanvasDisplayManager : MonoBehaviour
         instance = this;
         lastActiveCanvas = new CanvasController();
         desiredCanvas = new CanvasController();
-        canvasControllerList = GetComponentsInChildren<CanvasController>().ToList();
-        canvasControllerList.ForEach(x => x.gameObject.SetActive(false));
+        //canvasControllerList = GetComponentsInChildren<CanvasController>().ToList();
+       // canvasControllerList.ForEach(x => x.gameObject.SetActive(false));
         SwitchCanvas(CanvasType.MainMenu);
     }
 

@@ -23,10 +23,12 @@ public class AvailableLevels : MonoBehaviour
         while (tempRegion[0, GameMaster.Difficulty, levelCount] > 0)
         {
             levelCount++;
-            levelNodes[levelCount].SetActive(true);
-           
-            if (levelCount > 24)//region fully unlocked, maybe do something here?
-            if (levelCount == 25) break;
+            if (levelCount == 25)
+            {//region fully unlocked, maybe do something here?
+                break;
+            }
+            if (levelCount <= 24) { levelNodes[levelCount].SetActive(true); }
+            
         }
         
     }

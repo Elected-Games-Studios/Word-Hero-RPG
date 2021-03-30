@@ -56,6 +56,8 @@ public class CombatLogic : MonoBehaviour
     private List<GameObject> allEnemies;
     [SerializeField]
     private Text xpText;
+    [SerializeField]
+    private GameObject ContinueButton;
     //temporary
     [SerializeField]
     private Text toSpell;
@@ -129,6 +131,8 @@ public class CombatLogic : MonoBehaviour
         onLevelComplete += heroCelebrateAnim;
         onPlayerKilled += gameOverSequence;
         onPlayerKilled += removeBubble;
+        onLevelComplete += enableContinueButton;
+        onPlayerKilled += disableContinueButton;
         InitializePlayer();
         InitializeEnemy();
         InitializeTimer();
@@ -139,7 +143,7 @@ public class CombatLogic : MonoBehaviour
         Debug.Log(wordsLeft + " words left");
 
     }
-    
+
     private void InitializeTimer()
     {
         timerMax = 5 + (pAgi - eAgi) / 100;
@@ -387,6 +391,12 @@ public class CombatLogic : MonoBehaviour
             onLevelComplete?.Invoke();
         }      
     }
+
+    void enableContinueButton()
+    {
+        ContinueButton.GetComponent<Button>().interactable = true;
+    }
+
     void stageLoot()
     {
         stagedGold += 10;
@@ -406,11 +416,16 @@ public class CombatLogic : MonoBehaviour
 
     #region Activated by onPlayerKilled
     void gameOverSequence()
-    {      
-        CombatWordManager.resetString();
-        CombatWordManager.GameOverTrigger();//maybe don't need this line if nothing in that script needs to happen here
+    {
         vicDefPanel.SetActive(true);
         vicDefText.text = "Defeated!";
+        CombatWordManager.resetString();
+        CombatWordManager.GameOverTrigger();//maybe don't need this line if nothing in that script needs to happen here
+
+    }
+    void disableContinueButton()
+    {
+        ContinueButton.GetComponent<Button>().interactable = false;
     }
     #endregion
 
@@ -428,6 +443,8 @@ public class CombatLogic : MonoBehaviour
         onEnemyKilled -= enemyIsDeadAnim;
         onPlayerKilled -= gameOverSequence;
         onPlayerKilled -= removeBubble;
+        onLevelComplete -= enableContinueButton;
+        onPlayerKilled -= disableContinueButton;
         onLevelComplete -= levelFinished;
         onLevelComplete -= heroCelebrateAnim;
         CharectorStats.leveledUp -= onLeveledUp;

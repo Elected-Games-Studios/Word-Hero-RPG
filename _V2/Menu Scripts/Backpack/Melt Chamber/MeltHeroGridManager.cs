@@ -29,6 +29,7 @@ public class MeltHeroGridManager : MonoBehaviour
     private List<int> nulledButtons = new List<int> { };
     public bool isMaxedTemp { get; private set; }
     public bool isMaxedActually = false;
+    
     private void Awake()
     {
         isMaxedTemp = false;
@@ -54,10 +55,12 @@ public class MeltHeroGridManager : MonoBehaviour
         xpslide.tempMax += tempMaxHit;
         xpslide.tempMaxReduced += tempMaxReduced;
 
-
-        xpslide.CloneHero();
-        xpslide.UpdateSlider(0);
-        xpslide.SetCurrentAndBoundText();
+        if (!isMaxedActually)
+        {
+            xpslide.CloneHero();
+            xpslide.UpdateSlider(0);
+            xpslide.SetCurrentAndBoundText();
+        }
         xpToBeAdded = 0;
         InitializeMeltGrid();
         xpslide.SetHeroNameText();

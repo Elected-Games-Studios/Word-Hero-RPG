@@ -8,9 +8,10 @@ using UnityEngine.UI;
 public class VicPanelFunc : MonoBehaviour
 {
     public float yinput;
-
     [SerializeField]
     private CombatLogic combatLogic;
+
+
     private void OnEnable()
     {
         yinput = 2000f;
@@ -19,6 +20,7 @@ public class VicPanelFunc : MonoBehaviour
         transform.localPosition = new Vector3(0, yinput, 0);
         LeanTween.moveY(gameObject, 1f, 2f);
     }
+
     public void StartNextLevel()
     {
         if(GameMaster.lastCompletedLevel == 24)
@@ -41,5 +43,4 @@ public class VicPanelFunc : MonoBehaviour
         gameObject.SetActive(false);
         SceneManager.LoadScene(1);
     }
-
 }

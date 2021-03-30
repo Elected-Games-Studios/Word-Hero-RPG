@@ -11,29 +11,23 @@ public class WorldMapBehavior : MonoBehaviour
     [SerializeField]
     private GameObject worldMap;
 
-    private void Start()
+    private void OnEnable()
     {
         foreach (GameObject node in regionNodes)
         {
             node.SetActive(false);
         }
-    }
-    private void OnEnable()
-    {
-        Debug.Log("onenable running on worldmapbehavior");
         for (int i = 0; i < regionNodes.Count; i++)
         {
             if (GameMaster.completedRegionIntros[i] == true)
             {
-                Debug.Log("was true setting regionNodes" + i + " true");
                 regionNodes[i].SetActive(true);
             }
-            else break;
+            else { break; }
         }
         if(GameMaster.lastCompletedLevel == 24 && GameMaster.completedRegionIntros[GameMaster.Region + 1] == false){
             GameMaster.completedRegionIntros[GameMaster.Region + 1] = true;
             GameMaster.Region++;
-            Debug.Log("region set to " + GameMaster.Region);
             StartCoroutine(AnimateRegion(RegionIntroduction[GameMaster.Region]));
         }
     }

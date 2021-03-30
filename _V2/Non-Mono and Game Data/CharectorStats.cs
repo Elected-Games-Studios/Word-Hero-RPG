@@ -483,7 +483,7 @@ public static class CharectorStats
         }
         CurrentHero[0] -= currentHeroOffset;
 
-        UnityEngine.Debug.Log("xptobeadded: " + xpToBeAdded);
+        //UnityEngine.Debug.Log("xptobeadded: " + xpToBeAdded);
 
        
         //UnityEngine.Debug.Log("temphero xp is: " + HeroList[CurrentHero[0]][2] + "temphero level is " + HeroList[CurrentHero[0]][1]);

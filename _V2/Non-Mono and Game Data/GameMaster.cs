@@ -25,9 +25,8 @@ public class GameMaster : MonoBehaviour
         {
             instance = this;
         }
-    
     }
- 
+
 
     public void CallSave()
     {
