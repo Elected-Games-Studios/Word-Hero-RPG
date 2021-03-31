@@ -48,6 +48,14 @@ public class openPanel : MonoBehaviour
             chosenPanel.gameObject.SetActive(true);
         }
     }
+    public void OpenAscendSelection()
+    {
+        chosenPanel = Panels[0];
+        if (chosenPanel != null)
+        {
+            chosenPanel.gameObject.SetActive(true);
+        }
+    }
     public void CloseAnyPanel()
     {
         if (chosenPanel != null)

@@ -7,8 +7,6 @@ using System;
 
 public class MeltHeroGridManager : MonoBehaviour
 {
-
-
     [SerializeField]
     private GameObject buttonTemplate;
     [SerializeField]
@@ -17,7 +15,6 @@ public class MeltHeroGridManager : MonoBehaviour
     private MelterXPBar xpslide;
     [SerializeField]
     private GameObject meltButton;
-
     public event Action lowerEnhBtnIndexes;
     private List<GameObject> GridButtonGameObjs;
     private List<GameObject> MeltingButtonGameObjs;
@@ -32,12 +29,10 @@ public class MeltHeroGridManager : MonoBehaviour
     
     private void Awake()
     {
-        isMaxedTemp = false;
-       
-            //ints used to generate buttons
-            MeltableList = new List<int>() { };
+        isMaxedTemp = false;      
+        //ints used to generate buttons
+        MeltableList = new List<int>() { };
         SelectedToMeltList = new List<int>() { };
-
         //actual button lists
         GridButtonGameObjs = new List<GameObject>() { };
         MeltingButtonGameObjs = new List<GameObject>() { };
@@ -49,7 +44,6 @@ public class MeltHeroGridManager : MonoBehaviour
         if (CharectorStats.HeroIsMaxLvl(CharectorStats.getTempHero()))
         {
             isMaxedActually = true;
-            Debug.Log("ismaxedactuallyafter: " + isMaxedActually);
         }
         MeltPrestButtonDisplay();
         xpslide.tempMax += tempMaxHit;
@@ -71,11 +65,11 @@ public class MeltHeroGridManager : MonoBehaviour
     {
         if (isMaxedActually)
         {
-            meltButton.GetComponentInChildren<Text>().text = "Prestige!";
+            meltButton.GetComponentInChildren<Text>().text = "Ascend";
         }
         else
         {
-            meltButton.GetComponentInChildren<Text>().text = "Melt Heroes";
+            meltButton.GetComponentInChildren<Text>().text = "Melt XP";
         }
     }
     
@@ -142,7 +136,6 @@ public class MeltHeroGridManager : MonoBehaviour
             GameObject button = Instantiate(selectedBtnTemplate) as GameObject;
             MeltingButtonGameObjs.Add(button);
             button.SetActive(true);
-
             button.GetComponent<SelectedToMeltBtn>().SetText(CharectorStats.HeroName(tempStats[1]));
             button.GetComponent<SelectedToMeltBtn>().SetIndex(i);
             button.GetComponent<SelectedToMeltBtn>().SetHeroNum(tempStats[0]);
@@ -181,8 +174,7 @@ public class MeltHeroGridManager : MonoBehaviour
         indexJustClicked = buttonIdx;
         
         if (clicked == false)
-        {
-            
+        {           
             SelectedToMeltList.Add(BPIndex);
             TransferToSelected();
             int[] tempStats = CharectorStats.UnlockedCharector(BPIndex);
@@ -221,10 +213,8 @@ public class MeltHeroGridManager : MonoBehaviour
         if (isMaxedTemp)
         {
             CharectorStats.updateHero(tempHero, CharectorStats.XpOfMaxLevel(tempHero), CharectorStats.findCurrentMaxLevel(tempHero));           
-            xpslide.reduceTempMax();
-            
+            xpslide.reduceTempMax();            
         }
-
         PlayServices.Instance.SaveData();
         OnEnable();
     }

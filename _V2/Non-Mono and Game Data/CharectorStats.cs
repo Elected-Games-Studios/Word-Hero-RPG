@@ -565,6 +565,10 @@ public static class CharectorStats
     {
         return NamesAndtiers[chosenCharecter, 0];
     }
+    public static string HeroTier(int chosenCharecter)
+    {
+        return NamesAndtiers[chosenCharecter, 1];
+    }
     public static void levelUp(int chosenCharecter)//Backpack index
     {
         if (HeroList[chosenCharecter][1] < findCurrentMaxLevel(chosenCharecter))
@@ -653,14 +657,14 @@ public static class CharectorStats
         CurrentHero[1] = chosenCharecter;
         return HeroList[chosenCharecter].ToArray();
     }
-    public static int[] UnlockedCharector(int i) // This returns a list of All heroes with their values (ListID, HeroID, Level, StarCount)
+    public static int[] UnlockedCharector(int i)
     {
         int[] tempHero = new int[5] { 0, 0, 0, 0, 0} ;
         tempHero[0] = i; //idx for sorting list becomes whatever index they are in herolist
-        tempHero[1] = HeroList[i][0];//tmphero 1 is herolist 0--Number aka actual backpack idx
+        tempHero[1] = HeroList[i][0];//names and tiers number
         tempHero[2] = HeroList[i][1];//level
         tempHero[3] = HeroList[i][3];//number of stars
-        tempHero[4] = HeroList[i][2];//Joe needed XP for MeltChamber
+        tempHero[4] = HeroList[i][2];//XP
         return tempHero;
     }
     public static int numOfHeroes() => HeroList.Count();
