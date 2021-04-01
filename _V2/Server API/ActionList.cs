@@ -68,6 +68,12 @@ public class ActionList : MonoBehaviour
 		SendServerCheck = true;
 	}
 
+	public void joinGame()
+    {
+		AddData(Convert.ToString(ClientGeneralEvents[3]) + "-");
+		SendServerCheck = true;
+	}
+
 	public void sendAttack(int _damage, string _word)
 	{
 		AddData(Convert.ToString(ClientEvents[0]) + "-" + _word + ',' + Convert.ToString(_damage));

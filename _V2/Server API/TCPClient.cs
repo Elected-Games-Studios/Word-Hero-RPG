@@ -9,6 +9,7 @@ public class Client : MonoBehaviour
 {
     public static Client instance;
     public static int dataBufferSize = 4096;
+    public static bool disconnected = false;
 
     public string _packetData;
 
