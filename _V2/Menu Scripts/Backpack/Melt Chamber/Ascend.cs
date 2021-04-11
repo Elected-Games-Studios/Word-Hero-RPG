@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-struct HeroRequirements
+public struct HeroRequirements
 {
     public int amount { get; set; }
     public string tier { get; set; }
@@ -22,27 +22,36 @@ public class Ascend : MonoBehaviour
     private List<GameObject> Icons = new List<GameObject>();
     [SerializeField]
     private GameObject confirmPanel;
+    [SerializeField]
+    private GameObject selectSacrificePanel;
+    [SerializeField]
+    private AscendGrid ascendGrid;
+    private List<Sprite> spritesToDisplay = new List<Sprite>();
+    private bool heroesChosenSuccessfully;
 
     HeroRequirements heroRequirements;
-    private static int[] selectedHero;
+    private static int[] currentHeroArray;
+    private int[] indexesChosenToSacrifice = new int[] { }; //will be backpack indexes of heroes from AscendGrid Chosen
     private string selectedHeroTier;
 
     private void OnEnable()
     {
+        heroesChosenSuccessfully = false;
+        selectHeroesButton.GetComponent<Button>().onClick.AddListener(OnSelectClick);
         meltBackButton.GetComponent<Button>().interactable = false;
-        selectedHero = CharectorStats.setTempHero(CharectorStats.getTempHero());
-        selectedHeroTier = CharectorStats.HeroTier(selectedHero[0]);
+        currentHeroArray = CharectorStats.setTempHero(CharectorStats.getTempHero());
+        selectedHeroTier = CharectorStats.HeroTier(currentHeroArray[0]);
         determineRequirements();
         setIconsNeedFilled();
     }
 
     private void determineRequirements()
     {
-        heroRequirements.heroType = selectedHero[0];
+        heroRequirements.heroType = currentHeroArray[0];
         switch (selectedHeroTier)
         {
             case "T1":
-                if (selectedHero[3] == 1 && selectedHero[1] == 25)
+                if (currentHeroArray[3] == 1 && currentHeroArray[1] == 25)
                 {
                     //must choose 1 Tier1 hero with 1star
                     heroRequirements.amount = 1;
@@ -56,14 +65,14 @@ public class Ascend : MonoBehaviour
                 }
                 break;
             case "T2":
-                if (selectedHero[3] == 1 && selectedHero[1] == 25)
+                if (currentHeroArray[3] == 1 && currentHeroArray[1] == 25)
                 {
                     heroRequirements.amount = 2;
                     heroRequirements.tier = "T2";
                     heroRequirements.stars = 1;
                     heroRequirements.goldReq = 500;
                 }
-                else if (selectedHero[3] == 2 && selectedHero[1] == 50)
+                else if (currentHeroArray[3] == 2 && currentHeroArray[1] == 50)
                 {
                     heroRequirements.amount = 2;
                     heroRequirements.tier = "T2";
@@ -76,21 +85,21 @@ public class Ascend : MonoBehaviour
                 }
                     break;
             case "T3":
-                if (selectedHero[3] == 1 && selectedHero[1] == 25)
+                if (currentHeroArray[3] == 1 && currentHeroArray[1] == 25)
                 {
                     heroRequirements.amount = 1;
                     heroRequirements.tier = "T3";
                     heroRequirements.stars = 1;
                     heroRequirements.goldReq = 1000;
                 }
-                else if (selectedHero[3] == 2 && selectedHero[1] == 50)
+                else if (currentHeroArray[3] == 2 && currentHeroArray[1] == 50)
                 {
                     heroRequirements.amount = 3;
                     heroRequirements.tier = "T3";
                     heroRequirements.stars = 1;
                     heroRequirements.goldReq = 2500;
                 }
-                else if (selectedHero[3] == 3 && selectedHero[1] == 75)
+                else if (currentHeroArray[3] == 3 && currentHeroArray[1] == 75)
                 {
                     heroRequirements.amount = 3;
                     heroRequirements.tier = "T3";
@@ -99,21 +108,21 @@ public class Ascend : MonoBehaviour
                 }
                 break;
             case "T4":
-                if (selectedHero[3] == 2 && selectedHero[1] == 50)
+                if (currentHeroArray[3] == 2 && currentHeroArray[1] == 50)
                 {
                     heroRequirements.amount = 2;
                     heroRequirements.tier = "T4";
                     heroRequirements.stars = 2;
                     heroRequirements.goldReq = 5000;
                 }
-                else if (selectedHero[3] == 3 && selectedHero[1] == 75)
+                else if (currentHeroArray[3] == 3 && currentHeroArray[1] == 75)
                 {
                     heroRequirements.amount = 4;
                     heroRequirements.tier = "T4";
                     heroRequirements.stars = 2;
                     heroRequirements.goldReq = 10000;
                 }
-                else if (selectedHero[3] == 4 && selectedHero[1] == 100)
+                else if (currentHeroArray[3] == 4 && currentHeroArray[1] == 100)
                 {
                     heroRequirements.amount = 3;
                     heroRequirements.tier = "T4";
@@ -122,21 +131,21 @@ public class Ascend : MonoBehaviour
                 }
                 break;
             case "T5":
-                if (selectedHero[3] == 3 && selectedHero[1] == 75)
+                if (currentHeroArray[3] == 3 && currentHeroArray[1] == 75)
                 {
                     heroRequirements.amount = 1;
                     heroRequirements.tier = "T5";
                     heroRequirements.stars = 3;
                     heroRequirements.goldReq = 15000;
                 }
-                else if (selectedHero[3] == 4 && selectedHero[1] == 100)
+                else if (currentHeroArray[3] == 4 && currentHeroArray[1] == 100)
                 {
                     heroRequirements.amount = 2;
                     heroRequirements.tier = "T5";
                     heroRequirements.stars = 3;
                     heroRequirements.goldReq = 30000;
                 }
-                else if (selectedHero[3] == 5 && selectedHero[1] == 150)
+                else if (currentHeroArray[3] == 5 && currentHeroArray[1] == 150)
                 {
                     heroRequirements.amount = 2;
                     heroRequirements.tier = "T5";
@@ -166,12 +175,36 @@ public class Ascend : MonoBehaviour
             Icons[4].SetActive(true);
             selectHeroesButton.GetComponent<Button>().interactable = false;
         }
+        heroesChosenSuccessfully = true;
     }
 
-    public void ascendHero()
+    public void fillIconsWithChosen(List<int> heroesChosen)
     {
+        //set sprites to display based on heroesChosen
+        for (int i = 0; i < heroesChosen.Count; i++)
+        {
+            //spritesToDisplay[i] = heroesChosen.sprite??  <<Make this work
+        }
+        for (int i = 0; i < Icons.Count; i++)
+        {
+           // icon.GetComponent<Image>().sprite = spritesToDisplay[i];
+        };
+
+    }
+
+    private void OnSelectClick()
+    {
+        selectSacrificePanel.SetActive(true);
+        ascendGrid.setHeroRequirements(heroRequirements);
+        ascendGrid.GenButtons();
+    }
+
+    public void ascendHero() //MAKE UNCLICKABLE UNLESS HEORESCHOSENSUCCESSFUL = TRUE
+    {
+       
         CharectorStats.buyHeroUpgrade(CharectorStats.getTempHero());
         confirmPanel.SetActive(false);
+        gameObject.SetActive(false);
     }
 
     private void OnDisable()

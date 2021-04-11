@@ -463,6 +463,18 @@ public static class CharectorStats
         }
         return Allhero;
     }
+    public static List<int> heroesThatCanBeSacrificed(int heroIndexRequired, int starsRequired)
+    {
+        List<int> heroList = new List<int> { };
+        for (int i = 0; i < HeroList.Count; i++)
+        {
+            if(HeroList[i][0] == heroIndexRequired && HeroList[i][3] == starsRequired)
+            {
+                heroList.Add(i);
+            }
+        }
+        return heroList;
+    }
     public static void updateHero(int chosen, int xp, int level) { HeroList[chosen][1] = level; HeroList[chosen][2] = xp; HeroList[chosen] = GetCharecterStats(chosen); }
 
     public static void meltHero(List<int> CharectersMelt, int xpToBeAdded)//Send a List of heroes to be melted down must do herosThatCanMelt First to Verify xp is not more than hero can take. Send the ListID in LIST FORM.
@@ -660,7 +672,7 @@ public static class CharectorStats
     public static int[] UnlockedCharector(int i)
     {
         int[] tempHero = new int[5] { 0, 0, 0, 0, 0} ;
-        tempHero[0] = i; //idx for sorting list becomes whatever index they are in herolist
+        tempHero[0] = i; //backpack idx
         tempHero[1] = HeroList[i][0];//names and tiers number
         tempHero[2] = HeroList[i][1];//level
         tempHero[3] = HeroList[i][3];//number of stars
