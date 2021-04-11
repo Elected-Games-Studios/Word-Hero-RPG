@@ -26,9 +26,11 @@ public class Ascend : MonoBehaviour
     private GameObject selectSacrificePanel;
     [SerializeField]
     private AscendGrid ascendGrid;
+    [SerializeField]
+    private AscendGoldText AGT;
     private List<Sprite> spritesToDisplay = new List<Sprite>();
     private bool heroesChosenSuccessfully;
-
+    
     HeroRequirements heroRequirements;
     private static int[] currentHeroArray;
     private int[] indexesChosenToSacrifice = new int[] { }; //will be backpack indexes of heroes from AscendGrid Chosen
@@ -42,6 +44,7 @@ public class Ascend : MonoBehaviour
         currentHeroArray = CharectorStats.setTempHero(CharectorStats.getTempHero());
         selectedHeroTier = CharectorStats.HeroTier(currentHeroArray[0]);
         determineRequirements();
+        AGT.GetComponent<Text>().text = heroRequirements.goldReq.ToString();
         setIconsNeedFilled();
     }
 

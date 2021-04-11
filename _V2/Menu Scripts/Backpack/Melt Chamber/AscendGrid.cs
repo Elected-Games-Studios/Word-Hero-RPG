@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class AscendGrid : MonoBehaviour
 {
     [SerializeField]
+    private MeltHeroGridManager MHGM;
+    [SerializeField]
     private GameObject buttonTemplate;
     [SerializeField]
     private Ascend ascend;
@@ -87,6 +89,7 @@ public class AscendGrid : MonoBehaviour
     public void onChoose()
     {    
         ascend.fillIconsWithChosen(HeroesChosen);
+        MHGM.isMaxedActually = false;
         gameObject.SetActive(false);
     }
 

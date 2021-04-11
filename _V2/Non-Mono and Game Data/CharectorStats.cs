@@ -649,7 +649,7 @@ public static class CharectorStats
            else return HeroList[CurrentHero[1]].ToArray();
     }
 
-    //test method added by Joe to add exp to new creation
+    //test methods added by Joe
     public static void testAddExp(int hero, int xp)
     {
         HeroList[hero][2] += xp;
