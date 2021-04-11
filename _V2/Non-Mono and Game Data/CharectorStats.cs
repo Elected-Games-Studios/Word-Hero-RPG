@@ -488,7 +488,7 @@ public static class CharectorStats
        
         //UnityEngine.Debug.Log("temphero xp is: " + HeroList[CurrentHero[0]][2] + "temphero level is " + HeroList[CurrentHero[0]][1]);
     }
-    public static bool buyHeroUpgradeCheck(int chosenCharecter)//call this to set upgrade button to on
+    public static bool buyHeroUpgradeCheck(int chosenCharecter)//may not need ...
     {
         string tier = NamesAndtiers[HeroList[chosenCharecter][0],1];
         int maxXP = XpOfMaxLevel(chosenCharecter);

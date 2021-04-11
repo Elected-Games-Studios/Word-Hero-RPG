@@ -9,6 +9,7 @@ struct HeroRequirements
     public string tier { get; set; }
     public int stars { get; set; }
     public int goldReq { get; set; }
+    public int heroType { get; set; }
 }
 
 public class Ascend : MonoBehaviour
@@ -16,13 +17,28 @@ public class Ascend : MonoBehaviour
     [SerializeField]
     private GameObject meltBackButton;
     [SerializeField]
+    private GameObject selectHeroesButton;
+    [SerializeField]
     private List<GameObject> Icons = new List<GameObject>();
+    [SerializeField]
+    private GameObject confirmPanel;
+
     HeroRequirements heroRequirements;
-    private static int[] selectedHero = CharectorStats.setTempHero(CharectorStats.getTempHero());
-    private string selectedHeroTier = CharectorStats.HeroTier(selectedHero[0]);
+    private static int[] selectedHero;
+    private string selectedHeroTier;
+
+    private void OnEnable()
+    {
+        meltBackButton.GetComponent<Button>().interactable = false;
+        selectedHero = CharectorStats.setTempHero(CharectorStats.getTempHero());
+        selectedHeroTier = CharectorStats.HeroTier(selectedHero[0]);
+        determineRequirements();
+        setIconsNeedFilled();
+    }
 
     private void determineRequirements()
     {
+        heroRequirements.heroType = selectedHero[0];
         switch (selectedHeroTier)
         {
             case "T1":
@@ -133,17 +149,29 @@ public class Ascend : MonoBehaviour
         }
     }
 
-
-    private void OnEnable()
-    {
-        meltBackButton.GetComponent<Button>().interactable = false;
-
-    }
-
     private void setIconsNeedFilled()
     {
         //if hero requires sacrifices, set image active for each required
+        Icons.ForEach((icon) =>
+        {
+            icon.SetActive(false);
+        });
+        for (int i=0; i < heroRequirements.amount; i++)
+        {
+            Icons[i].SetActive(true);
+        }
         //if not, display "No heroes required"
+        if (heroRequirements.amount == 0)
+        {
+            Icons[4].SetActive(true);
+            selectHeroesButton.GetComponent<Button>().interactable = false;
+        }
+    }
+
+    public void ascendHero()
+    {
+        CharectorStats.buyHeroUpgrade(CharectorStats.getTempHero());
+        confirmPanel.SetActive(false);
     }
 
     private void OnDisable()
