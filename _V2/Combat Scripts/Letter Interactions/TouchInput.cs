@@ -13,6 +13,7 @@ public class TouchInput : MonoBehaviour
     private EventSystem m_EventSystem;
     private bool isSwiping = false;
     private bool touchedLetter = false;
+    public bool exitMenuShowing = false;
     private List<Vector3> points = new List<Vector3>();
     private List<RaycastResult> results = new List<RaycastResult>();
     public static event Action AllTickedOff;
@@ -56,10 +57,9 @@ public class TouchInput : MonoBehaviour
             isSwiping = true;
         }
 
-        if (isSwiping && combatLogic.isGameplay)
+        if (isSwiping && combatLogic.isGameplay && exitMenuShowing == false)
         {
             checkLetterInteraction();
-
         }
 
         if (Input.GetButtonUp("Fire1"))
@@ -81,35 +81,38 @@ public class TouchInput : MonoBehaviour
     }
 
     void checkLetterInteraction()
-    {
+    {     
         foreach (RaycastResult result in results)
-        {
-            lr.gameObject.SetActive(true);
-            touchedLetter = true;
-            if (result.gameObject.transform.position == allHits[allHits.Count - 2].transform.position && result.gameObject.GetComponent<LetterListener>().ticked == true)
+            if(result.gameObject.tag == "Letter")
             {
-                allHits[allHits.Count - 1].GetComponent<LetterListener>().RemoveLetterFromCurrent(); //ticks false
-                allHits.RemoveAt(allHits.Count - 1);
-                points.RemoveAt(points.Count - 1);
+                {
+                    lr.gameObject.SetActive(true);
+                    touchedLetter = true;
+                    if (result.gameObject.transform.position == allHits[allHits.Count - 2].transform.position && result.gameObject.GetComponent<LetterListener>().ticked == true)
+                    {
+                        allHits[allHits.Count - 1].GetComponent<LetterListener>().RemoveLetterFromCurrent(); //ticks false
+                        allHits.RemoveAt(allHits.Count - 1);
+                        points.RemoveAt(points.Count - 1);
 
-                for (int i = 0; i < points.Count; i++)
-                {
-                    lr.positionCount = points.Count;
-                    lr.SetPositions(points.ToArray());
+                        for (int i = 0; i < points.Count; i++)
+                        {
+                            lr.positionCount = points.Count;
+                            lr.SetPositions(points.ToArray());
+                        }
+                    }
+                    else if (result.gameObject.GetComponent<LetterListener>().ticked == false) //only add to points if not added yet
+                    {
+                        points.Add(result.gameObject.transform.position);
+                        allHits.Add(result.gameObject);
+                        result.gameObject.GetComponent<LetterListener>().AddLetterToCurrent(); //ticks letter true
+                        for (int i = 0; i < points.Count; i++)
+                        {
+                            lr.positionCount = points.Count;
+                            lr.SetPositions(points.ToArray());
+                        }
+                    }
                 }
-            }
-            else if (result.gameObject.GetComponent<LetterListener>().ticked == false) //only add to points if not added yet
-            {
-                points.Add(result.gameObject.transform.position);
-                allHits.Add(result.gameObject);
-                result.gameObject.GetComponent<LetterListener>().AddLetterToCurrent(); //ticks letter true
-                for (int i = 0; i < points.Count; i++)
-                {
-                    lr.positionCount = points.Count;
-                    lr.SetPositions(points.ToArray());
-                }
-            }
-        }
+            }     
     }
 
     public void DeleteLine()

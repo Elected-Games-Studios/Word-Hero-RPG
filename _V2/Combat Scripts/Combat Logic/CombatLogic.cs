@@ -140,8 +140,6 @@ public class CombatLogic : MonoBehaviour
         //StartCoroutine("enemyWalk");
         CombatWordManager.StartLevel();
         wordsLeft = CombatWordManager.Words.Count;
-        Debug.Log(wordsLeft + " words left");
-
     }
 
     private void InitializeTimer()

@@ -7,6 +7,8 @@ public class openPanel : MonoBehaviour
     [SerializeField]
     private List<GameObject> Panels; //Panels will be populated differently depending on what the script is on. Can be further optimized.
     private GameObject chosenPanel;
+    [SerializeField]
+    private TouchInput touchInput;
 
    public void OpenPanel()
     {
@@ -46,6 +48,7 @@ public class openPanel : MonoBehaviour
         if (chosenPanel != null)
         {
             chosenPanel.gameObject.SetActive(true);
+            touchInput.exitMenuShowing = true;
         }
     }
     public void OpenAscendSelection()
@@ -61,6 +64,7 @@ public class openPanel : MonoBehaviour
         if (chosenPanel != null)
         {
             chosenPanel.gameObject.SetActive(false);
+            touchInput.exitMenuShowing = false;
         }
     }
 
