@@ -15,6 +15,8 @@ public enum CanvasType
     Gameplay,
     Enhance,
     Multiplayer,
+    RankedSearch,
+    PvpBackpack,
     PvP
 }
 
@@ -52,7 +54,7 @@ public class CanvasDisplayManager : MonoBehaviour
         }
         
         CanvasController desiredCanvas = canvasControllerList.Find(x => x.canvasType == _type);
-        
+        Debug.Log("desired" + desiredCanvas);
         if (desiredCanvas != null)
         {
             desiredCanvas.gameObject.SetActive(true);
