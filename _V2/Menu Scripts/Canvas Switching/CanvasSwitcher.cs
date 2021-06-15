@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class CanvasSwitcher : MonoBehaviour
+public class CanvasSwitcher : MonoBehaviour //canvascaller
 {
     public CanvasType desiredCanvasType;
 

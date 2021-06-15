@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StringChecker: MonoBehaviour
 {
-    private Text currentString;
+    private TextMeshPro currentString;
 
     private void Awake()
     {
-        currentString = GameObject.Find("CurrentWord").GetComponent<Text>();
+        currentString = GameObject.Find("CurrentWord").GetComponent<TextMeshPro>();
     }
 
     private void OnEnable()

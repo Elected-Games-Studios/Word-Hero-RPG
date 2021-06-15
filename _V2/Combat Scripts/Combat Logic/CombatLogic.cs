@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,7 @@ public class CombatLogic : MonoBehaviour
 
     private double[] lengthBonus = { .1, .25, .5, .75, 1.5, 3 };
     private double[] diffBonus = { .8, 1, 1.2 };
+    private bool damageIsCritical;
     private List<string> words = CombatWordManager.Words;
     int wordsLeft;
 
@@ -38,7 +40,7 @@ public class CombatLogic : MonoBehaviour
     [SerializeField]
     private GameObject vicDefPanel;
     [SerializeField]
-    private Text vicDefText;
+    private TextMeshPro vicDefText;
     [SerializeField]
     private GameObject levelUpText;
     private GameObject SelectedHero;
@@ -55,14 +57,16 @@ public class CombatLogic : MonoBehaviour
     [SerializeField]
     private List<GameObject> allEnemies;
     [SerializeField]
-    private Text xpText;
+    private List<GameObject> allEnemyPlayerClasses;
+    [SerializeField]
+    private TextMeshPro xpText;
     [SerializeField]
     private GameObject ContinueButton;
     //temporary
     [SerializeField]
-    private Text toSpell;
+    private TextMeshPro toSpell;
     private Slider HPSlider;
-    private Text HPText;
+    private TextMeshPro HPText;
     private Slider eHealthSlider;
     int[] updatedHero;
 
@@ -75,12 +79,15 @@ public class CombatLogic : MonoBehaviour
     public List<Text> allStats;
     //end temporary^
 
+    private bool isPvP = false;
+
     public event Action<int> onDamageEnemy, onDamagePlayer;
     public event Action onEnemyKilled, onLevelComplete, onPlayerKilled;
    // Coroutine CRRef;
 
     void Awake()
     {
+        bgTween.AssignBackgroundsForRegion(region);
         bgTween.changeBackground(level);
         for (int i = 0; i < allCharacters.Count; i++)
         {
@@ -134,8 +141,9 @@ public class CombatLogic : MonoBehaviour
         onLevelComplete += enableContinueButton;
         onPlayerKilled += disableContinueButton;
         InitializePlayer();
-        InitializeEnemy();
-        InitializeTimer();
+        InitializeEnemy();       
+        InitializeTimer(); 
+
         isGameplay = true;
         //StartCoroutine("enemyWalk");
         CombatWordManager.StartLevel();
@@ -144,10 +152,21 @@ public class CombatLogic : MonoBehaviour
 
     private void InitializeTimer()
     {
-        timerMax = 5 + (pAgi - eAgi) / 100;
-        timer = timerMax;
-        timeSlide.maxValue = timerMax;
-        timeSlide.value = timerMax;
+        if (!isPvP)
+        {
+            timerMax = 5 + (pAgi - eAgi) / 100;
+            timer = timerMax;
+            timeSlide.maxValue = timerMax;
+            timeSlide.value = timerMax;
+        }
+        if (isPvP)
+        {
+            //Change timer color for pvp?
+            timerMax = 10; //if no words are spelled by timer value between either player, new word called
+            timer = timerMax;
+            timeSlide.maxValue = timerMax;
+            timeSlide.value = timerMax;
+        }
     }
     private void SetXPText()
     {
@@ -168,52 +187,69 @@ public class CombatLogic : MonoBehaviour
         {
             timer -= (Time.deltaTime);
             if(timer >= 0){timeSlide.value = timer; } else { timeSlide.value = 0; }
-
         }
-        if(timer <= 0)
+        if (timer <= 0)
         {
-            onDamagePlayer?.Invoke(eDmg);
+            if (!isPvP)
+                onDamagePlayer?.Invoke(eDmg);
+            else { 
+            //SELECT NEW WORD FOR PVP
+            }
             InitializeTimer();
         }
     }
 
     #region Bubbles
+
     public void generateBubble(int length) //called once to choose bubble of longest word size, don't need to re-render
     {
-
         bubbles[length - 4].gameObject.SetActive(true);
         populateBubble();
         CombatWordManager.onMaxLengthFound -= generateBubble;
     }
+
     void removeBubble()//Activated by onPlayerKilled
     {
         currentBubble.SetActive(false);
     }
+
     public void populateBubble()
     {
         int length = CombatWordManager.longestWord.Length;
         currentBubble = bubbles[length - 4].gameObject;
-        Text [] lettersArr = currentBubble.GetComponentsInChildren<Text>();
+        TextMeshPro [] lettersArr = currentBubble.GetComponentsInChildren<TextMeshPro>();
         for(int i = 0; i < length; i++)
         {
             lettersArr[i].text = CombatWordManager.shuffledWord[i].ToUpper();
         }
-
         //temp
         toSpell.text = string.Join(" ", CombatWordManager.currentUsableWords);
     }
+
     #endregion
 
     #region Enemy And Player Initialization
     private void InitializeEnemy()//must be called after WordBreak()
-    {
-        displayNewEnemyPrefab();
-        
-        eHealth = (region * 25 + level) + Convert.ToInt32(100 * Math.Pow(2, difficulty));
-        initialEHealth = Convert.ToInt32(eHealth);
-        eDmg = (region * 25 + level) + Convert.ToInt32(10 * Math.Pow(5, difficulty));
-        eAgi = (region * 25 + level) + Convert.ToInt32(10 * Math.Pow(2, difficulty));//needs changed
-        eDef = 0;//needs changed
+    {    
+        if (!isPvP)
+        {
+            displayNewEnemyPrefab();
+            eHealth = (region * 25 + level) + Convert.ToInt32(100 * Math.Pow(2, difficulty));
+            initialEHealth = Convert.ToInt32(eHealth);
+            eDmg = (region * 25 + level) + Convert.ToInt32(10 * Math.Pow(5, difficulty));
+            eAgi = (region * 25 + level) + Convert.ToInt32(10 * Math.Pow(2, difficulty));//needs changed
+            eDef = 0;//needs changed
+        }
+        if (isPvP)
+        {
+            displayEnemyPlayer();
+            //RETRIEVE SERVER VALS
+            eHealth = (region * 25 + level) + Convert.ToInt32(100 * Math.Pow(2, difficulty));
+            initialEHealth = Convert.ToInt32(eHealth);
+            eDmg = (region * 25 + level) + Convert.ToInt32(10 * Math.Pow(5, difficulty));
+            eAgi = (region * 25 + level) + Convert.ToInt32(10 * Math.Pow(2, difficulty));//needs changed
+            eDef = 0;
+        }    
         allStats[0].text += eHealth;
         allStats[1].text += eDmg;
         allStats[2].text += eAgi;
@@ -224,6 +260,7 @@ public class CombatLogic : MonoBehaviour
         eHealthSlider.value = eHealth;
         //^ end temp
     }
+
     private void displayNewEnemyPrefab()
     {       
         int prevIdx = allEnemies.IndexOf(SelectedEnemy);
@@ -240,6 +277,14 @@ public class CombatLogic : MonoBehaviour
         SelectedEnemy = allEnemies[random];
         SelectedEnemy.SetActive(true);
     }
+
+    private void displayEnemyPlayer()
+    {
+        //GET ENEMY CLASS FROM SERVER
+        int enemyClassIndex = 0; //< From server
+        SelectedEnemy = allEnemyPlayerClasses[enemyClassIndex];
+    }
+
     private void InitializePlayer()
     {
         allStats[4].text += pHealth;
@@ -249,7 +294,7 @@ public class CombatLogic : MonoBehaviour
         allStats[8].text += pDef;
 
         HPSlider = GameObject.FindGameObjectWithTag("PlayerHP").GetComponent<Slider>();
-        HPText = HPSlider.GetComponentInChildren<Text>();
+        HPText = HPSlider.GetComponentInChildren<TextMeshPro>();
         HPSlider.maxValue = pHealth;
         HPSlider.value = pHealth;
         HPText.text = HPSlider.value.ToString() + "/" + HPSlider.maxValue.ToString() + "  ";
@@ -310,6 +355,8 @@ public class CombatLogic : MonoBehaviour
         int totalDmg = (pDmg * length * checkCrit()) - eDef;  
         lengthMultiplier += lengthBonus[length-3];
         if (totalDmg >= 2) {eHealth -= totalDmg;} else { eHealth -= 1; }
+        DamagePopup.Create(enemyHolder.transform.position, totalDmg, damageIsCritical);
+        
         if(eHealth <= 0)
         {
             onEnemyKilled?.Invoke();          
@@ -323,7 +370,13 @@ public class CombatLogic : MonoBehaviour
     {
         int result;
         int roll = UnityEngine.Random.Range(0, 10000);
-        if (pCrit >= roll) {result = 2;} else {result = 1;}
+        if (pCrit >= roll) {
+            result = 2;
+            damageIsCritical = true;
+        } else {
+            result = 1;
+            damageIsCritical = true;
+        }
         return result;
     }
 

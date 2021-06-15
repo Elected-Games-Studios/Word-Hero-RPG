@@ -6,12 +6,14 @@ public class GameMaster : MonoBehaviour
 {
     public static int Region, Level, Difficulty;
     public static int BackpackSize = 250;
+    public static float GlobalScreenTransitionTimer = .5f;
     public static int lastCompletedLevel = 0;//need to pass to save
     public static bool[] completedRegionIntros = new bool[] { true, false, false, false, false, false, false, false };//need to pass to save
     public static string[] userIds = new string[2];
     [SerializeField]
     private List<TextAsset> dicList;
     public static GameMaster instance;
+    
 
     private void Awake()
     {

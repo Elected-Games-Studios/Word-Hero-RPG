@@ -8,16 +8,14 @@ public class RegionTween : MonoBehaviour
     public void OnEnable()
     {
         {
-            transform.localPosition = new Vector3(1266, transform.localPosition.y, 0);
-            LeanTween.moveX(gameObject, 0, .2f);
+            transform.localScale = new Vector3(0, 0);
+            transform.LeanScale(new Vector3(1, 1, 1), .5f);
         }
     }
 
     public void OnClose()
     {
-
-        LeanTween.moveX(gameObject, 6f, .2f).setOnComplete(DisableMe);
-       
+        transform.LeanScale(new Vector3(0,0,0),.5f).setOnComplete(DisableMe);  
     }
 
     void DisableMe()
