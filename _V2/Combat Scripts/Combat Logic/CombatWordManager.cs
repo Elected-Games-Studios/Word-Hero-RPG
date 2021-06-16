@@ -94,7 +94,7 @@ public static class CombatWordManager
 	{
 		for(int x = 0; x < currentUsableWords.Count(); x++)
         {
-			if (currentUsableWords[x].ToUpper().Equals(checkString.ToUpper())) return true;
+			if (currentUsableWords[x].ToUpper().Equals(checkString.ToUpper()) && currentUsableWords.Count > 0)  return true;
         }
 		return false;
 	}
@@ -102,6 +102,7 @@ public static class CombatWordManager
 	{
 		if (checkAdd())
 		{
+            UnityEngine.Debug.Log("Checking Word... it's " + checkAdd());
 			wordsSpelled.Add(checkString);
 			currentUsableWords.Remove(checkString.ToLower());
             onCorrectWord?.Invoke(checkString.Count());

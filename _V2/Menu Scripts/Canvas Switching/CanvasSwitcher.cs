@@ -19,7 +19,7 @@ public class CanvasSwitcher : MonoBehaviour //canvascaller
     void OnButtonClicked()
     {
         Debug.Log("clicked " + desiredCanvasType);
-        gameObject.GetComponent<TileListButton>()?.SetTemp();      
+        //gameObject.GetComponent<TileListButton>()?.SetTemp();      
         canvasManager.SwitchCanvas(desiredCanvasType); 
     }
 }

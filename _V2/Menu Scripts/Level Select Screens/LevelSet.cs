@@ -15,11 +15,12 @@ public class LevelSet : MonoBehaviour
         menuButton = GetComponent<Button>();
         menuButton.onClick.AddListener(OnButtonClicked);
         levelMan = LevelManager.instance;
-        confirmLevelSelectionPanel.OpenLevelStartPanel();
+        
     }
 
     void OnButtonClicked()
     {
-        levelMan.SetLevel(desiredLevel - 1);
+        confirmLevelSelectionPanel.OpenLevelStartPanel();
+        levelMan.SetLevel(desiredLevel - 1);        
     }
 }

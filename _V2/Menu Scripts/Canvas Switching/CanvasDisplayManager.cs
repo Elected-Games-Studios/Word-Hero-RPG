@@ -98,6 +98,12 @@ public class CanvasDisplayManager : MonoBehaviour
                 StartCoroutine("SweepCanvasOutTop", lastActiveCanvas);
                 StartCoroutine("SweepCanvasInFromBottom", desiredCanvas as CanvasController);
             }
+            //  World Map to Load Screen, both directions fade to black
+            if ((dType == CanvasType.LoadingScreen && lType == CanvasType.WorldMap))
+            {
+                StartCoroutine("FadeCanvasOutBlack", lastActiveCanvas);
+                StartCoroutine("FadeCanvasInFromBlack", desiredCanvas as CanvasController);
+            }
             CurrentCanvasChanged?.Invoke(desiredCanvas);
             lastActiveCanvas = desiredCanvas;
             

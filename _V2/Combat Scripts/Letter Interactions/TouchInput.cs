@@ -73,6 +73,7 @@ public class TouchInput : MonoBehaviour
             isSwiping = false;
             if (touchedLetter)
             {
+                Debug.Log("wtf bro. Touching Letters?");
                 CombatWordManager.checkWord();
             }
             touchedLetter = false;

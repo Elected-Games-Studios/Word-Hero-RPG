@@ -2796,7 +2796,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1712484499
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 57534db5d9108134cbfe3243cc6de783, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -8785,7 +8785,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1712484499
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: 381c4e21f9ea26f41bec57880fc206b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10543,7 +10543,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1712484499
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: -3
   m_Sprite: {fileID: 21300000, guid: a7ab204018588f1488c3b2190aff62da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -14533,7 +14533,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3056298984052846777}
   - component: {fileID: 3056298984052846783}
-  - component: {fileID: 3056298984052846776}
   m_Layer: 5
   m_Name: WorldMap Title
   m_TagString: Untagged
@@ -14568,39 +14567,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3056298984052846778}
   m_CullTransparentMesh: 0
---- !u!114 &3056298984052846776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3056298984052846778}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_Maskable: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 68c80d64277716a4787a0d3a8cc2409c, type: 3}
-    m_FontSize: 63
-    m_FontStyle: 1
-    m_BestFit: 1
-    m_MinSize: 1
-    m_MaxSize: 300
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Dylan's Mom
 --- !u!1 &3056298984057823489
 GameObject:
   m_ObjectHideFlags: 0
@@ -25119,7 +25085,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1712484499
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: -6
   m_Sprite: {fileID: 21300000, guid: 80faaedcbf1dfc8419e1c3b165d6dd74, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -46896,7 +46862,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1712484499
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: -4
   m_Sprite: {fileID: 21300000, guid: ec90080d3fa157949a2c6be38bb8b149, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -48363,7 +48329,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1712484499
-  m_SortingLayer: 1
+  m_SortingLayer: -1
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 5a8f7f79bcd7e394799f57310f84a027, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

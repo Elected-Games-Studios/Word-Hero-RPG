@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 
@@ -22,7 +23,7 @@ public class LetterListener : MonoBehaviour
         if (!ticked)
         {
             ticked = true;
-            CombatWordManager.addToString(GetComponent<Text>().text);         
+            CombatWordManager.addToString(GetComponent<TextMeshProUGUI>().text);         
         }      
     }
     public void RemoveLetterFromCurrent()

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class CombatLogic : MonoBehaviour
 {
+    public static CombatLogic instance;
     //for simplicity
     int region = GameMaster.Region;
     int level = GameMaster.Level;
@@ -40,7 +41,7 @@ public class CombatLogic : MonoBehaviour
     [SerializeField]
     private GameObject vicDefPanel;
     [SerializeField]
-    private TextMeshPro vicDefText;
+    private TextMeshProUGUI vicDefText;
     [SerializeField]
     private GameObject levelUpText;
     private GameObject SelectedHero;
@@ -59,14 +60,14 @@ public class CombatLogic : MonoBehaviour
     [SerializeField]
     private List<GameObject> allEnemyPlayerClasses;
     [SerializeField]
-    private TextMeshPro xpText;
+    private TextMeshProUGUI xpText;
     [SerializeField]
     private GameObject ContinueButton;
     //temporary
     [SerializeField]
-    private TextMeshPro toSpell;
+    private Text toSpell;
     private Slider HPSlider;
-    private TextMeshPro HPText;
+    private TextMeshProUGUI HPText;
     private Slider eHealthSlider;
     int[] updatedHero;
 
@@ -82,11 +83,13 @@ public class CombatLogic : MonoBehaviour
     private bool isPvP = false;
 
     public event Action<int> onDamageEnemy, onDamagePlayer;
-    public event Action onEnemyKilled, onLevelComplete, onPlayerKilled;
+    public event Action onLevelComplete, onPlayerKilled, onEnemyKilled;
    // Coroutine CRRef;
 
     void Awake()
     {
+        if (instance == null)
+            instance = this;
         bgTween.AssignBackgroundsForRegion(region);
         bgTween.changeBackground(level);
         for (int i = 0; i < allCharacters.Count; i++)
@@ -103,7 +106,7 @@ public class CombatLogic : MonoBehaviour
         }
         SelectedEnemy = allEnemies[0];
         characterAnimator = characterHolder.GetComponentInChildren<Animator>();
-        enemyAnimator = enemyHolder.GetComponentInChildren<Animator>();
+
         heroParticles = SelectedHero.transform.Find("HeroAttackParticles").gameObject;
         characterAnimator.SetBool("inCombat", true);
         bubbles = GetComponentsInChildren<Image>();
@@ -128,12 +131,12 @@ public class CombatLogic : MonoBehaviour
         CombatWordManager.onIncorrectWord += wrongWord;
         CharectorStats.leveledUp += onLeveledUp;
         onDamageEnemy += enemyTakeDamage;
-        onDamageEnemy += enemyGotHitAnim;
+        //onDamageEnemy += enemyGotHitAnim;
         onDamagePlayer += playerTakeDamage;
         onDamagePlayer += enemyAttackAnim;
         onEnemyKilled += nextWord;
         onEnemyKilled += stageLoot;
-        onEnemyKilled += enemyIsDeadAnim;
+        //onEnemyKilled += enemyIsDeadAnim;
         onLevelComplete += levelFinished;
         onLevelComplete += heroCelebrateAnim;
         onPlayerKilled += gameOverSequence;
@@ -141,7 +144,8 @@ public class CombatLogic : MonoBehaviour
         onLevelComplete += enableContinueButton;
         onPlayerKilled += disableContinueButton;
         InitializePlayer();
-        InitializeEnemy();       
+        InitializeEnemy();
+        displayNewEnemyPrefab();
         InitializeTimer(); 
 
         isGameplay = true;
@@ -217,7 +221,7 @@ public class CombatLogic : MonoBehaviour
     {
         int length = CombatWordManager.longestWord.Length;
         currentBubble = bubbles[length - 4].gameObject;
-        TextMeshPro [] lettersArr = currentBubble.GetComponentsInChildren<TextMeshPro>();
+        TextMeshProUGUI [] lettersArr = currentBubble.GetComponentsInChildren<TextMeshProUGUI>();
         for(int i = 0; i < length; i++)
         {
             lettersArr[i].text = CombatWordManager.shuffledWord[i].ToUpper();
@@ -233,7 +237,7 @@ public class CombatLogic : MonoBehaviour
     {    
         if (!isPvP)
         {
-            displayNewEnemyPrefab();
+            //displayNewEnemyPrefab();
             eHealth = (region * 25 + level) + Convert.ToInt32(100 * Math.Pow(2, difficulty));
             initialEHealth = Convert.ToInt32(eHealth);
             eDmg = (region * 25 + level) + Convert.ToInt32(10 * Math.Pow(5, difficulty));
@@ -242,7 +246,7 @@ public class CombatLogic : MonoBehaviour
         }
         if (isPvP)
         {
-            displayEnemyPlayer();
+            //displayEnemyPlayer();
             //RETRIEVE SERVER VALS
             eHealth = (region * 25 + level) + Convert.ToInt32(100 * Math.Pow(2, difficulty));
             initialEHealth = Convert.ToInt32(eHealth);
@@ -261,8 +265,9 @@ public class CombatLogic : MonoBehaviour
         //^ end temp
     }
 
-    private void displayNewEnemyPrefab()
-    {       
+    public void displayNewEnemyPrefab()
+    {
+        isGameplay = true;
         int prevIdx = allEnemies.IndexOf(SelectedEnemy);
         SelectedEnemy.SetActive(false);
         int random = UnityEngine.Random.Range(0, allEnemies.Count);
@@ -276,6 +281,7 @@ public class CombatLogic : MonoBehaviour
         }
         SelectedEnemy = allEnemies[random];
         SelectedEnemy.SetActive(true);
+        enemyAnimator = enemyHolder.GetComponentInChildren<Animator>();
     }
 
     private void displayEnemyPlayer()
@@ -294,7 +300,7 @@ public class CombatLogic : MonoBehaviour
         allStats[8].text += pDef;
 
         HPSlider = GameObject.FindGameObjectWithTag("PlayerHP").GetComponent<Slider>();
-        HPText = HPSlider.GetComponentInChildren<TextMeshPro>();
+        HPText = HPSlider.GetComponentInChildren<TextMeshProUGUI>();
         HPSlider.maxValue = pHealth;
         HPSlider.value = pHealth;
         HPText.text = HPSlider.value.ToString() + "/" + HPSlider.maxValue.ToString() + "  ";
@@ -307,12 +313,13 @@ public class CombatLogic : MonoBehaviour
     {
         enemyAnimator.SetTrigger("attack");
     }
-    void enemyGotHitAnim(int damage)//int satisfies delegate
+    void enemyGotHitAnim()
     {
         enemyAnimator.SetTrigger("gotHit");
     }
     void enemyIsDeadAnim()
     {
+        Debug.Log("Enemy is fucking ded");
         enemyAnimator.SetTrigger("isDead");
     }
     void playerGotHitAnim()
@@ -359,7 +366,12 @@ public class CombatLogic : MonoBehaviour
         
         if(eHealth <= 0)
         {
-            onEnemyKilled?.Invoke();          
+            enemyIsDeadAnim();
+            isGameplay = false;
+        }
+        else
+        {
+            enemyGotHitAnim();
         }
         eHealthSlider.value = eHealth;
         //temp
@@ -421,6 +433,10 @@ public class CombatLogic : MonoBehaviour
     #endregion
 
     #region Activated by onEnemyKilled
+    public void enemyIsDying()
+    {
+        onEnemyKilled?.Invoke();
+    }
     void nextWord()
     {
         timer = timerMax;
@@ -486,12 +502,12 @@ public class CombatLogic : MonoBehaviour
         CombatWordManager.onIncorrectWord -= wrongWord;
         CombatWordManager.onCorrectWord -= spelledWord;
         onDamageEnemy -= enemyTakeDamage;
-        onDamageEnemy -= enemyGotHitAnim;
+        //onDamageEnemy -= enemyGotHitAnim;
         onDamagePlayer -= playerTakeDamage;
         onDamagePlayer -= enemyAttackAnim;
         onEnemyKilled -= nextWord;
         onEnemyKilled -= stageLoot;
-        onEnemyKilled -= enemyIsDeadAnim;
+        //onEnemyKilled -= enemyIsDeadAnim;
         onPlayerKilled -= gameOverSequence;
         onPlayerKilled -= removeBubble;
         onLevelComplete -= enableContinueButton;
