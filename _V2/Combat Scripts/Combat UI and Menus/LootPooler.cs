@@ -5,7 +5,9 @@ using UnityEngine;
 public class LootPooler : MonoBehaviour
 {
     public Dictionary<string, Queue<GameObject>> poolDictionary;
-
+    //[SerializeField]
+    //private AudioClip coinSFX;
+    //private AudioSource LootSFX;
     [System.Serializable]
     public class Pool
     {
@@ -18,6 +20,9 @@ public class LootPooler : MonoBehaviour
 
     void Start()
     {
+        //LootSFX = gameObject.GetComponent<AudioSource>();
+        //LootSFX.clip = coinSFX;
+        onParticleLeaveScreen.particleLeftScreen += RecycleParticle;
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
         foreach(Pool pool in pools)
@@ -41,18 +46,45 @@ public class LootPooler : MonoBehaviour
         {
             Debug.LogWarning("pool with tag " + tag + " not found.");
             return null;
+        };
+        if(poolDictionary[tag].Count > 0)
+        {
+            GameObject objToSpawn = poolDictionary[tag].Dequeue();
+            objToSpawn.SetActive(true);
+            objToSpawn.transform.position = position;
+            objToSpawn.transform.rotation = rotation;
+            //LootSFX.Play();
+            return objToSpawn;
         }
-        GameObject objToSpawn = poolDictionary[tag].Dequeue();
-
-        objToSpawn.SetActive(true);
-        objToSpawn.transform.position = position;
-        objToSpawn.transform.rotation = rotation;
-
-
-
-        poolDictionary[tag].Enqueue(objToSpawn);
-
-        return objToSpawn;
+        else
+        {
+            GameObject spawnObject;
+            for (int i = 0; i< pools.Count; i++)
+            {
+                if(pools[i].tag == tag)
+                {
+                    spawnObject = Instantiate(pools[i].prefab);
+                    spawnObject.SetActive(false);
+                    poolDictionary[tag].Enqueue(spawnObject);                    
+                }
+            }
+            GameObject objToSpawn = poolDictionary[tag].Dequeue();
+            objToSpawn.SetActive(true);
+            objToSpawn.transform.position = position;
+            objToSpawn.transform.rotation = rotation;
+            //LootSFX.Play();
+            return objToSpawn;
+        }
+        //poolDictionary[tag].Enqueue(objToSpawn);
     }
 
+    private void RecycleParticle(GameObject go)
+    {
+        poolDictionary[go.name].Enqueue(go);
+    }
+
+    private void OnDisable()
+    {
+        onParticleLeaveScreen.particleLeftScreen -= RecycleParticle;
+    }
 }

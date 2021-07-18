@@ -136,6 +136,7 @@ public class CombatLogic : MonoBehaviour
         onDamagePlayer += enemyAttackAnim;
         onEnemyKilled += nextWord;
         onEnemyKilled += stageLoot;
+        onEnemyKilled += StartSpawnParticles;
         //onEnemyKilled += enemyIsDeadAnim;
         onLevelComplete += levelFinished;
         onLevelComplete += heroCelebrateAnim;
@@ -307,6 +308,7 @@ public class CombatLogic : MonoBehaviour
     }
     #endregion
 
+    //*******************CHANGE ANIMATORS/PARTICLES TO RESPOND TO PARTICLE HITS*******************
     #region Animators and Particles
     //ALL ANIMS ACTIVATED BY APPROPRIATE EVENT TRIGGERS
     void enemyAttackAnim(int damage)//int satisfies delegate
@@ -330,19 +332,66 @@ public class CombatLogic : MonoBehaviour
     {
         characterAnimator.SetBool("celebrate", true);
     }
-    void StartSpawnParticles() {
-        StartCoroutine("SpawnParticles");
-    }
-    private IEnumerator SpawnParticles()
+    void StartSpawnParticles() 
     {
-        for (int i = 0; i < 10; i++) //num of coins
+        StartCoroutine(SpawnParticles(100, 3, 3));
+    }
+    private IEnumerator SpawnParticles(int goldCount = 0, int greenShardCount = 0 , int purpleShardCount = 0)
+    {
+
+        int totalLoot = goldCount + greenShardCount + purpleShardCount;
+        float lootTimer = 2 / totalLoot;
+        for (int i = 0; i < totalLoot; i++)
         {
-            lootPooler.SpawnFromPool("coin", enemyHolder.transform.position, enemyHolder.transform.rotation);
-            yield return new WaitForSeconds(.05f);
+            int lootselection = UnityEngine.Random.Range(0, 3);
+            switch(lootselection)
+            {
+                case 0:
+                    if(goldCount > 0)
+                    {
+                        lootPooler.SpawnFromPool("coin", enemyHolder.transform.position, enemyHolder.transform.rotation);
+                        goldCount -= 1;
+                    }
+                    else if( greenShardCount > 0)
+                    {
+                        lootPooler.SpawnFromPool("greenShard", enemyHolder.transform.position, enemyHolder.transform.rotation);
+                    }
+                    else if (purpleShardCount > 0)
+                    {
+                        lootPooler.SpawnFromPool("purpleShard", enemyHolder.transform.position, enemyHolder.transform.rotation);
+                    }
+                    break;
+                case 1:
+                    if(greenShardCount > 0)
+                    {
+                        lootPooler.SpawnFromPool("greenShard", enemyHolder.transform.position, enemyHolder.transform.rotation);
+                        greenShardCount -= 1;
+                    }
+                    else
+                    {
+                        lootPooler.SpawnFromPool("coin", enemyHolder.transform.position, enemyHolder.transform.rotation);
+                        goldCount -= 1;
+                    }
+                    break;
+                case 2:
+                    if (purpleShardCount > 0)
+                    {
+                        lootPooler.SpawnFromPool("purpleShard", enemyHolder.transform.position, enemyHolder.transform.rotation);
+                        purpleShardCount -= 1;
+                    }
+                    else
+                    {
+                        lootPooler.SpawnFromPool("coin", enemyHolder.transform.position, enemyHolder.transform.rotation);
+                        goldCount -= 1;
+                    }
+                    break;
+            }
+            yield return new WaitForSeconds(lootTimer);
         }
+        //lootPooler.SpawnFromPool("coin", enemyHolder.transform.position, enemyHolder.transform.rotation);
     }
     #endregion
-
+    //*******************CHANGE ANIMATORS/PARTICLES TO RESPOND TO PARTICLE HITS*******************
     #region Logic Methods
     void spelledWord(int length) //Activated by onCorrectWord
     {
@@ -507,6 +556,7 @@ public class CombatLogic : MonoBehaviour
         onDamagePlayer -= enemyAttackAnim;
         onEnemyKilled -= nextWord;
         onEnemyKilled -= stageLoot;
+        onEnemyKilled -= StartSpawnParticles;
         //onEnemyKilled -= enemyIsDeadAnim;
         onPlayerKilled -= gameOverSequence;
         onPlayerKilled -= removeBubble;
