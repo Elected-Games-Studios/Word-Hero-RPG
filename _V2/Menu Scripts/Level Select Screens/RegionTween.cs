@@ -5,17 +5,24 @@ using UnityEngine.Events;
 
 public class RegionTween : MonoBehaviour
 {
+    public bool rightSideOfScreen;
+    float regionModifier;
     public void OnEnable()
     {
+        if (rightSideOfScreen)
+            regionModifier = 1.5f;
+        else
+            regionModifier = -1.5f;
+
         {
-            transform.localScale = new Vector3(0, 0);
-            transform.LeanScale(new Vector3(1, 1, 1), .5f);
+            transform.localPosition = new Vector2(Screen.width * regionModifier, 0f);
+            transform.LeanMoveLocalX(0, .5f).setEaseInOutQuint();
         }
     }
 
     public void OnClose()
     {
-        transform.LeanScale(new Vector3(0,0,0),.5f).setOnComplete(DisableMe);  
+        transform.LeanMoveLocalX(Screen.width* regionModifier, .5f).setEaseInOutQuad().setOnComplete(DisableMe);  
     }
 
     void DisableMe()

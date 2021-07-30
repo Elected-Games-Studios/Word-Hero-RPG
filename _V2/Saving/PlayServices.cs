@@ -52,14 +52,14 @@ public class PlayServices : MonoBehaviour
             //LoadData(); 
             if(success)
             {
-                Invoke("MoveToNextScene", 3f);
+                //Invoke("MoveToNextScene", 3f);
                 Debug.Log("Google Sign-In has succeeded");
                     //feedback.text = "Google Sign-In has succeeded";
             }
             else
             {
                 Debug.Log("Google Sign-In Failed");
-                Invoke("MoveToNextScene", 3f);
+                //Invoke("MoveToNextScene", 1.25f);
                     //feedback.text = "Google Sign-In Failed";
                     
             }
@@ -109,6 +109,7 @@ public class PlayServices : MonoBehaviour
         {
             LocalSaveEngine.LoadPlayer();
             UnityEngine.Debug.Log("Load Data = Local Load");
+            Invoke("MoveToNextScene", 1f);
         }
     }
 
@@ -133,6 +134,7 @@ public class PlayServices : MonoBehaviour
             if (!isSaving)
             {
                 LocalSaveEngine.LoadPlayer();
+                Invoke("MoveToNextScene", 1f);
             }
             else
             {
@@ -207,21 +209,26 @@ public class PlayServices : MonoBehaviour
                     {
                         SaveManager.LoadSplit(cloudDataString);
                         isCloudDataLoaded = true;
+                        Invoke("MoveToNextScene", 1f);
                     }
                     else
                     {
                         LocalSaveEngine.LoadPlayer();
+                        Invoke("MoveToNextScene", 1f);
                     }
                 }
                 else
                 {
                     LocalSaveEngine.LoadPlayer();
+                    Invoke("MoveToNextScene", 1f);
                 }
             }
             else
             {
                 LocalSaveEngine.LoadPlayer();
+                Invoke("MoveToNextScene", 1f); 
             }
+            Invoke("MoveToNextScene", 1f);
         }
     }
 

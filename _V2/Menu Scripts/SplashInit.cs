@@ -14,16 +14,10 @@ public class SplashInit : MonoBehaviour
         StartCoroutine("FadeLogo");
     }
 
-    private void NextScene()
-    {
-        SceneManager.LoadScene(1);
-    }
-
-    IEnumerator FadeLogo()
+    private void FadeLogo()
     {
         logoCanvas.alpha = 0;
         logoCanvas.LeanAlpha(1, 1f);
-        yield return new WaitForSeconds(2f);
-        Invoke("NextScene", .5f);
+
     }
 }
