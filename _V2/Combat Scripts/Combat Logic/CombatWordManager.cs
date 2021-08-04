@@ -47,7 +47,6 @@ public static class CombatWordManager
             i++;
         }
         longestWord = tempList[i];
-        
         Shuffle();	
 	}
 

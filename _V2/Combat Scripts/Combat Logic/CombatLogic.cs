@@ -115,8 +115,12 @@ public class CombatLogic : MonoBehaviour
         GameObject[] tempBubble = GameObject.FindGameObjectsWithTag("Bubble");
         bubbles = new Image[tempBubble.Length];
         for (int i = 0; i < tempBubble.Length; i++)
-        {
-            bubbles[i] = tempBubble[i].GetComponent<Image>();
+        {            
+            for(int j = 0; j < tempBubble.Length; j++)
+            {
+                if(tempBubble[j].transform.childCount == i + 4)
+                    bubbles[i] = tempBubble[j].GetComponent<Image>();
+            }
         }
         foreach (Image bubble in bubbles) { bubble.gameObject.SetActive(false); }
 
