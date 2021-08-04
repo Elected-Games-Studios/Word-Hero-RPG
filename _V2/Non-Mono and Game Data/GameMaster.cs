@@ -17,6 +17,7 @@ public class GameMaster : MonoBehaviour
 
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         DontDestroyOnLoad(gameObject);
         Region = 0;
         Level = 0;

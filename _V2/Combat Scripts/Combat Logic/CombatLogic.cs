@@ -18,6 +18,7 @@ public class CombatLogic : MonoBehaviour
     private int eDmg, eAgi, eHealth, eDef, initialEHealth;
     private double lengthMultiplier;
     public bool isGameplay = true;
+    public bool beatLevel = false;
     
     public int stagedXP{ get; private set; }
     public int stagedShard1 { get; private set; }
@@ -469,6 +470,7 @@ public class CombatLogic : MonoBehaviour
     #region Activated by onLevelComplete
     void levelFinished()
     {
+        beatLevel = true;
         GameMaster.lastCompletedLevel = GameMaster.Level;
         InvManager.GoldAdd(stagedGold);
         stagedGold = 0;

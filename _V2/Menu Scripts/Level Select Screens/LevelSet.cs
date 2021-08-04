@@ -20,7 +20,7 @@ public class LevelSet : MonoBehaviour
 
     void OnButtonClicked()
     {
-        confirmLevelSelectionPanel.OpenLevelStartPanel();
-        levelMan.SetLevel(desiredLevel - 1);        
+        levelMan.SetLevel(desiredLevel - 1);
+        confirmLevelSelectionPanel.OpenLevelStartPanel();   
     }
 }

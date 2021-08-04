@@ -39,6 +39,14 @@ public class DisableEnemy : StateMachineBehaviour
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         CombatLogic.instance.enemyIsDying();
-        CombatLogic.instance.displayNewEnemyPrefab();
+        if(!CombatLogic.instance.beatLevel)
+        {
+            CombatLogic.instance.displayNewEnemyPrefab();
+        }
+
+    }
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        
     }
 }
