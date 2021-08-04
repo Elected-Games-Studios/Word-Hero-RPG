@@ -91,6 +91,7 @@ public class CombatLogic : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+        CombatAudioManager.instance.AudioFadeIn();
         bgTween.AssignBackgroundsForRegion(region);
         bgTween.changeBackground(level);
         for (int i = 0; i < allCharacters.Count; i++)
@@ -110,7 +111,13 @@ public class CombatLogic : MonoBehaviour
 
         heroParticles = SelectedHero.transform.Find("HeroAttackParticles").gameObject;
         characterAnimator.SetBool("inCombat", true);
-        bubbles = GetComponentsInChildren<Image>();
+
+        GameObject[] tempBubble = GameObject.FindGameObjectsWithTag("Bubble");
+        bubbles = new Image[tempBubble.Length];
+        for (int i = 0; i < tempBubble.Length; i++)
+        {
+            bubbles[i] = tempBubble[i].GetComponent<Image>();
+        }
         foreach (Image bubble in bubbles) { bubble.gameObject.SetActive(false); }
 
         int[] heroStats = CharectorStats.SetCurrentHero(CharectorStats.GetCurrentHero());
@@ -471,6 +478,8 @@ public class CombatLogic : MonoBehaviour
     void levelFinished()
     {
         beatLevel = true;
+        CombatAudioManager.instance.victory = true;
+        CombatAudioManager.instance.LevelEndMusic();
         GameMaster.lastCompletedLevel = GameMaster.Level;
         InvManager.GoldAdd(stagedGold);
         stagedGold = 0;
@@ -535,6 +544,8 @@ public class CombatLogic : MonoBehaviour
     #region Activated by onPlayerKilled
     void gameOverSequence()
     {
+        CombatAudioManager.instance.victory = false;
+        CombatAudioManager.instance.LevelEndMusic();
         vicDefPanel.SetActive(true);
         vicDefText.text = "Defeated!";
         CombatWordManager.resetString();

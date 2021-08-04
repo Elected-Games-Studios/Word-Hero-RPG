@@ -10,8 +10,6 @@ using UnityEngine.UI;
 public class LetterListener : MonoBehaviour
 {
     public bool ticked;
-    [SerializeField]
-
 
     void OnEnable()
     {

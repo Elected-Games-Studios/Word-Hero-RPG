@@ -34,8 +34,6 @@ public class TouchInput : MonoBehaviour
     {
         blankOne = new GameObject();
         blankTwo = new GameObject();
-        blankOne.transform.position = new Vector3(999f, 999f, 999f);
-        blankTwo.transform.position = new Vector3(999f, 999f, 999f);
         allHits.Add(blankOne);
         allHits.Add(blankTwo);
         lr = GameObject.FindWithTag("Line").GetComponent<LineRenderer>();
@@ -73,7 +71,7 @@ public class TouchInput : MonoBehaviour
             isSwiping = false;
             if (touchedLetter)
             {
-                Debug.Log("wtf bro. Touching Letters?");
+                //Debug.Log("wtf bro. Touching Letters?");
                 CombatWordManager.checkWord();
             }
             touchedLetter = false;
@@ -84,36 +82,32 @@ public class TouchInput : MonoBehaviour
     void checkLetterInteraction()
     {     
         foreach (RaycastResult result in results)
-            if(result.gameObject.tag == "Letter")
-            {
-                {
-                    lr.gameObject.SetActive(true);
-                    touchedLetter = true;
-                    if (result.gameObject.transform.position == allHits[allHits.Count - 2].transform.position && result.gameObject.GetComponent<LetterListener>().ticked == true)
-                    {
-                        allHits[allHits.Count - 1].GetComponent<LetterListener>().RemoveLetterFromCurrent(); //ticks false
-                        allHits.RemoveAt(allHits.Count - 1);
-                        points.RemoveAt(points.Count - 1);
+        {
+            var parent = result.gameObject.transform.GetComponentInParent<LetterListener>(); //dynamic reference to letter listener script
 
-                        for (int i = 0; i < points.Count; i++)
-                        {
-                            lr.positionCount = points.Count;
-                            lr.SetPositions(points.ToArray());
-                        }
-                    }
-                    else if (result.gameObject.GetComponent<LetterListener>().ticked == false) //only add to points if not added yet
-                    {
-                        points.Add(result.gameObject.transform.position);
-                        allHits.Add(result.gameObject);
-                        result.gameObject.GetComponent<LetterListener>().AddLetterToCurrent(); //ticks letter true
-                        for (int i = 0; i < points.Count; i++)
-                        {
-                            lr.positionCount = points.Count;
-                            lr.SetPositions(points.ToArray());
-                        }
-                    }
+            if (result.gameObject.tag == "Letter")//includes the hitbox child object
+            {
+                lr.gameObject.SetActive(true);
+                touchedLetter = true;
+                if(!parent.ticked) //if letter has not been hit yet
+                {
+                    points.Add(parent.transform.position);
+                    allHits.Add(parent.gameObject);
+                    parent.AddLetterToCurrent();
                 }
-            }     
+                else if(parent.transform.position == allHits[allHits.Count -2].transform.position) //if letter is the letter hit most recently
+                {
+                    allHits[allHits.Count - 1].GetComponent<LetterListener>().RemoveLetterFromCurrent(); //ticks false
+                    allHits.RemoveAt(allHits.Count - 1);
+                    points.RemoveAt(points.Count - 1);
+                }
+            }
+            for (int i = 0; i < points.Count; i++) //reload line renderer's active positions
+            {
+                lr.positionCount = points.Count;
+                lr.SetPositions(points.ToArray());
+            }
+        }
     }
 
     public void DeleteLine()

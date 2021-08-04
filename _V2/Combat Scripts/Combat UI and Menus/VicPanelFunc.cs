@@ -40,6 +40,7 @@ public class VicPanelFunc : MonoBehaviour
     }
     public void OpenMenuScene()
     {
+        CombatAudioManager.instance.StopMusic();
         gameObject.SetActive(false);
         SceneManager.LoadScene(1);
     }
