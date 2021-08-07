@@ -5,8 +5,14 @@ using UnityEngine.UI;
 
 public class TileListButton : MonoBehaviour //ALSO USED FOR SACRIFICE TILES
 {
+    public List<Sprite> HeroTokens;
+    private Image currentHeroImage;
     [SerializeField]
-    private Text myText;
+    private Text heroName;
+    [SerializeField]
+    private Text heroLevel;
+    [SerializeField]
+    private GameObject heroStars;
     [SerializeField]
     private TileListButtonControl btnControl;
     private int thisButtonIndex;
@@ -20,8 +26,11 @@ public class TileListButton : MonoBehaviour //ALSO USED FOR SACRIFICE TILES
     public int backpackIdx;
     [SerializeField]
     private AscendGrid ag;
-    
 
+    private void Awake()
+    {
+        currentHeroImage = gameObject.GetComponent<Image>();
+    }
     public void SetIndex(int num)
     {
         thisButtonIndex = num;
@@ -38,7 +47,7 @@ public class TileListButton : MonoBehaviour //ALSO USED FOR SACRIFICE TILES
     public void SetText(string textString) //change to image tile later
     {
         myTextString = textString;
-        myText.text = textString;
+        heroName.text = textString;
     }
 
     public void SetTemp()
@@ -52,5 +61,23 @@ public class TileListButton : MonoBehaviour //ALSO USED FOR SACRIFICE TILES
     {
         toggleSacrificeSelect = !toggleSacrificeSelect;
         ag.updateHeroesChosen();
+    }
+
+    public void SetToken(int heroIndex, int tokenLevel, int tokenStars)
+    {
+        currentHeroImage.sprite = HeroTokens[heroIndex];
+        heroLevel.text = "Lvl: " + tokenLevel;
+        for(int i = 0; i< heroStars.transform.childCount; i++)
+        {
+            if(i == tokenStars)
+            {
+                heroStars.transform.GetChild(i).gameObject.SetActive(true);
+            }
+            else
+            {
+                heroStars.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+
     }
 }

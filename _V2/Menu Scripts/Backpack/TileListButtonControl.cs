@@ -36,14 +36,16 @@ public class TileListButtonControl : MonoBehaviour
             }
             buttons.Clear();
         }
-        for (int i = 0; i < AllHeros.Count; i++)
+        for (int i = 0; i < AllHeros.Count; i++) //AllHeros[i][1] references the global index of the Hero Type.
         {
             GameObject button = Instantiate(buttonTemplate) as GameObject;
             buttons.Add(button);           
             button.SetActive(true);
 
+            var tempstats = CharectorStats.UnlockedCharector(i);
             button.GetComponent<TileListButton>().SetText(CharectorStats.HeroName(AllHeros[i][1]));
             button.GetComponent<TileListButton>().SetIndex(i);
+            button.GetComponent<TileListButton>().SetToken(AllHeros[i][1], tempstats[2], tempstats[3]); 
             button.transform.SetParent(buttonTemplate.transform.parent, false);
 
         }

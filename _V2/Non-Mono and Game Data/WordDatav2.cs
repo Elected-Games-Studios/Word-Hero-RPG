@@ -19,24 +19,24 @@ public static class WordDatav2
     { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
-    private static int numberOfRegions = 3;
+    private static int numberOfRegions = 5;
     private static List<int> DifMods = new List<int> { 30, 70, 140, 500 };
     #endregion
     public static int[,,] RegionUnlocks(int region)
     {
-        int[,,] tempregion = new int[2,3,25] 
+        int[,,] tempregion = new int[2, 3, 25]
         { { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
         { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } } };
-        for(int x = 0; x < 3; x++)
+        { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } }};
+        for (int x = 0; x < 3; x++)
         {
-            for(int y = 0; y < 25; y++)
+            for (int y = 0; y < 25; y++)
             {
                 tempregion[0, x, y] = regionsSaves[(region * 2)][x, y];
-                tempregion[1, x, y] = regionsSaves[((region * 2) + 1)][x, y]; 
+                tempregion[1, x, y] = regionsSaves[((region * 2) + 1)][x, y];
             }
         }
         return tempregion;
@@ -45,8 +45,8 @@ public static class WordDatav2
     {
         if (score > regionsSaves[region * 2][dif, level])
         {
-            regionsSaves[region * 2][dif, level] = score;
-            regionsSaves[region * 2 + 1][dif, level] = stars;
+            regionsSaves[region * 2][dif, level] = score;      //Changed the value for every region somehow...
+            regionsSaves[(region * 2) + 1][dif, level] = stars;
         }
         
     }

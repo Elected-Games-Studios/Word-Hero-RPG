@@ -8,15 +8,10 @@ public class AvailableLevels : MonoBehaviour
     private List<GameObject> levelNodes;
     private void OnEnable()
     {
+        Debug.Log("Enabled Sub Map");
         levelNodes.ForEach(node => node.SetActive(false));
-        int[,,] tempRegion = WordDatav2.RegionUnlocks(GameMaster.Region);
-        //int[,,] tempRegion = new int[2, 3, 25]
-        // { { { 00, 00, 00, 00, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        //{ 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        //{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
-        //{ { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        //{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-        //{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } } };
+        int[,,] tempRegion = new int[2,3,25];
+        tempRegion = WordDatav2.RegionUnlocks(GameMaster.Region);
 
 
         int levelCount = 0;

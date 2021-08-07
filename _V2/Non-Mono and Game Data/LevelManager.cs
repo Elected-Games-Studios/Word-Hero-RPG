@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     public void SetRegion(int region)
     {
         GameMaster.Region = region;
+        Debug.Log("Region: " + region);
     }
     public void SetLevel(int level)
     {
